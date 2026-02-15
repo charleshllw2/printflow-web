@@ -1,0 +1,165 @@
+.order-portal-section {
+    background-color: var(--bg-primary);
+}
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.portal-info h2 {
+    margin-bottom: 16px;
+}
+
+.portal-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+}
+
+.info-card {
+    background-color: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.info-card h4 {
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.info-card ul li {
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+}
+
+.info-card ul li::before {
+    content: '•';
+    color: var(--accent-color);
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.portal-form-card {
+    background-color: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 24px;
+}
+
+.upload-area:hover {
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.upload-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.text-sm {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.form-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.control-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-group label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.control-group input[type="number"] {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-family: inherit;
+}
+
+.control-group input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.toggles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 10px 0;
+}
+
+.toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.toggle-row input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    width: 18px;
+    height: 18px;
+}
+
+.price-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.price-tag {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .portal-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}

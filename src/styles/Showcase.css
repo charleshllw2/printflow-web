@@ -1,0 +1,96 @@
+.showcase {
+    background-color: var(--bg-primary);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 300px;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.showcase-item {
+    position: relative;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.showcase-item:hover {
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+/* Gradients to simulate images */
+.item-1 {
+    background: radial-gradient(circle at center, #333, #111);
+}
+
+.item-2 {
+    background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+}
+
+.item-3 {
+    background: linear-gradient(135deg, #222, #000);
+}
+
+.item-4 {
+    background: radial-gradient(circle at top right, #333, #1a1a1a);
+}
+
+/* In a real app, these would be img tags */
+.showcase-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.showcase-item:hover::before {
+    opacity: 1;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    color: #fff;
+    font-weight: 500;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+}
+
+.showcase-item:hover .overlay {
+    transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+    .showcase-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+    .showcase-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 300px;
+    }
+}

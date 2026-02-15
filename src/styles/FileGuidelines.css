@@ -1,0 +1,48 @@
+.file-guidelines-page {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guidelines-header {
+    margin-bottom: 60px;
+}
+
+.guidelines-header p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-top: 16px;
+}
+
+.guideline-section {
+    background-color: var(--bg-secondary);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.guideline-section h2 {
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+    display: inline-block;
+}
+
+.guidelines-list li {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.guidelines-list li strong {
+    color: var(--text-primary);
+    color: var(--accent-color);
+}
+
+.warning-section {
+    border-left: 4px solid #ff4444;
+}
+
+.warning-section h2 {
+    color: #ff4444;
+}
