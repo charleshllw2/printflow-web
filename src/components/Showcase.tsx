@@ -1,9 +1,12 @@
 import '../styles/Showcase.css';
 
 export default function Showcase() {
-    // Placeholder images - using simple colored blocks or generic URLs if available, 
-    // but for now creating a CSS-based placeholder grid as per requirement to not use external unauthorized images unless generated.
-    // I'll use CSS gradients to simulate content.
+    const works = [
+        { id: 1, label: "DTF Transfer Detail", image: "/work-1.jpg" },
+        { id: 2, label: "Full Color Hoodie Print", image: "/work-2.jpg" },
+        { id: 3, label: "Bulk Order Staging", image: "/work-3.jpg" },
+        { id: 4, label: "Vibrant Art Print", image: "/work-4.jpg" },
+    ];
 
     return (
         <section className="section showcase">
@@ -14,26 +17,17 @@ export default function Showcase() {
                 </div>
 
                 <div className="showcase-grid">
-                    <div className="showcase-item item-1">
-                        <div className="overlay">
-                            <span>DTF Transfer Detail</span>
+                    {works.map((work) => (
+                        <div
+                            key={work.id}
+                            className="showcase-item"
+                            style={{ backgroundImage: `url(${work.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                        >
+                            <div className="overlay">
+                                <span>{work.label}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="showcase-item item-2">
-                        <div className="overlay">
-                            <span>Full Color Hoodie Print</span>
-                        </div>
-                    </div>
-                    <div className="showcase-item item-3">
-                        <div className="overlay">
-                            <span>Bulk Order Staging</span>
-                        </div>
-                    </div>
-                    <div className="showcase-item item-4">
-                        <div className="overlay">
-                            <span>Vibrant Art Print</span>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>
