@@ -63,7 +63,8 @@
     margin-bottom: 24px;
 }
 
-.upload-area:hover {
+.upload-area:hover,
+.upload-area.has-file {
     border-color: var(--accent-color);
     background-color: rgba(255, 255, 255, 0.02);
 }
