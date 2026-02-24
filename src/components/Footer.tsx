@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../styles/Footer.css';
 
 export default function Footer() {
@@ -23,6 +24,7 @@ export default function Footer() {
                         <h4>Support</h4>
                         <ul>
                             <li><Link to="/file-guidelines">File Guidelines</Link></li>
+                            <li><Link to="/blog">Blog</Link></li>
                             <li><a href="#contact">Contact Us</a></li>
                             <li><a href="#">FAQ</a></li>
                         </ul>
@@ -42,5 +44,3 @@ export default function Footer() {
         </footer>
     );
 }
-
-import { Link } from 'react-router-dom';

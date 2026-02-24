@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { storage } from '../lib/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import '../styles/OrderPortal.css';
 
 export default function OrderPortal() {
@@ -13,6 +13,7 @@ export default function OrderPortal() {
 
     const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [orderStatus, setOrderStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,48 +39,63 @@ export default function OrderPortal() {
         }
 
         setIsUploading(true);
+        setUploadProgress(0);
         setOrderStatus('idle');
 
-        try {
-            // 1. Upload File to Firebase Storage
-            const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
-            await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(storageRef);
+        // 1. Upload File to Firebase Storage with Progress
+        const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-            // 2. Send Email via FormSubmit.co
-            const formData = {
-                _subject: `New PrintFlow Order: ${width}x${height} - Qty: ${quantity}`,
-                _template: "table",
-                width: `${width} inches`,
-                height: `${height} inches`,
-                quantity: quantity,
-                price_estimate: `$${price.toFixed(2)}`,
-                gang_sheet: isGangSheet ? "Yes" : "No",
-                rush_order: isRush ? "Yes" : "No",
-                apparel_press: isPressed ? "Yes" : "No",
-                file_url: downloadURL,
-                file_name: file.name
-            };
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadProgress(progress);
+            },
+            (error) => {
+                console.error("Upload failed:", error);
+                setOrderStatus('error');
+                setIsUploading(false);
+            },
+            async () => {
+                // Upload completed successfully
+                try {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-            await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+                    // 2. Send Email via FormSubmit.co
+                    const formData = {
+                        _subject: `New PrintFlow Order: ${width}x${height} - Qty: ${quantity}`,
+                        _template: "table",
+                        width: `${width} inches`,
+                        height: `${height} inches`,
+                        quantity: quantity,
+                        price_estimate: `$${price.toFixed(2)}`,
+                        gang_sheet: isGangSheet ? "Yes" : "No",
+                        rush_order: isRush ? "Yes" : "No",
+                        apparel_press: isPressed ? "Yes" : "No",
+                        file_url: downloadURL,
+                        file_name: file.name
+                    };
 
-            setOrderStatus('success');
-            setFile(null);
-            if (fileInputRef.current) fileInputRef.current.value = "";
+                    await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
 
-        } catch (error) {
-            console.error("Order submission failed:", error);
-            setOrderStatus('error');
-        } finally {
-            setIsUploading(false);
-        }
+                    setOrderStatus('success');
+                    setFile(null);
+                    if (fileInputRef.current) fileInputRef.current.value = "";
+                } catch (error) {
+                    console.error("Order processing failed:", error);
+                    setOrderStatus('error');
+                } finally {
+                    setIsUploading(false);
+                }
+            }
+        );
     };
 
     return (
@@ -140,6 +156,19 @@ export default function OrderPortal() {
                                         accept=".png,.jpg,.jpeg,.svg,.ai,.psd,.pdf"
                                     />
                                 </div>
+
+                                {/* Progress Bar */}
+                                {isUploading && (
+                                    <div className="progress-container">
+                                        <div className="progress-header">
+                                            <span>Uploading File...</span>
+                                            <span>{Math.round(uploadProgress)}%</span>
+                                        </div>
+                                        <div className="progress-bar-bg">
+                                            <div className="progress-bar-fill" style={{ width: `${uploadProgress}%` }}></div>
+                                        </div>
+                                    </div>
+                                )}
 
                                 {/* Configuration */}
                                 <div className="form-controls">
@@ -203,7 +232,7 @@ export default function OrderPortal() {
                                         onClick={handleSubmit}
                                         disabled={isUploading}
                                     >
-                                        {isUploading ? 'Uploading & Sending...' : 'Submit Order'}
+                                        {isUploading ? 'Processing Order...' : 'Submit Order'}
                                     </button>
 
                                     {orderStatus === 'error' && (

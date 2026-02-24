@@ -44,6 +44,9 @@ export default function Navbar() {
                         <Link to="/file-guidelines">File Guidelines</Link>
                     </li>
                     <li>
+                        <Link to="/blog">Blog</Link>
+                    </li>
+                    <li>
                         <button onClick={() => scrollToSection('contact')}>Contact</button>
                     </li>
                 </ul>
@@ -72,6 +75,7 @@ export default function Navbar() {
                     <button onClick={() => scrollToSection('order')}>Order DTF</button>
                     <button onClick={() => scrollToSection('services')}>Services</button>
                     <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>
+                    <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
                     <button onClick={() => scrollToSection('contact')}>Contact</button>
                 </div>
             </div>
