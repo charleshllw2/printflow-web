@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Home from "./pages/Home";
 import FileGuidelines from "./pages/FileGuidelines";
 import Admin from "./pages/Admin";
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/login" element={<AdminLogin />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }
