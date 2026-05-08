@@ -68,7 +68,7 @@ export default function OrderPortal() {
                         width: `${width} inches`,
                         height: `${height} inches`,
                         quantity: quantity,
-                        price_estimate: `$${price.toFixed(2)}`,
+                        price_estimate: "Price will be sent after submission",
                         gang_sheet: isGangSheet ? "Yes" : "No",
                         rush_order: isRush ? "Yes" : "No",
                         apparel_press: isPressed ? "Yes" : "No",
@@ -222,9 +222,8 @@ export default function OrderPortal() {
                                         </label>
                                     </div>
 
-                                    <div className="price-summary">
-                                        <span>Estimated Total:</span>
-                                        <span className="price-tag">${price.toFixed(2)}</span>
+                                    <div className="price-summary" style={{ justifyContent: 'center' }}>
+                                        <span className="price-tag" style={{ fontSize: '1.1rem' }}>Price will be sent after submission</span>
                                     </div>
 
                                     <button
