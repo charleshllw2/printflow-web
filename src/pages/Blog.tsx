@@ -5,14 +5,6 @@ import "../styles/Blog.css";
 // Mock data for blog posts - this can be moved to a separate file later
 export const BLOG_POSTS = [
     {
-        id: "mommin-luxury-collection",
-        title: "Mommin' Luxury Collection for Mother's Day",
-        excerpt: "Celebrate Mother's Day with our exclusive Mommin' Luxury Collection. Featuring premium designs that say 'Mommin' But Make It Luxury' and 'Mom. The Original CEO'.",
-        date: "April 30, 2026",
-        image: "/mommin-luxury.png",
-        author: "PrintFlow Studio"
-    },
-    {
         id: "dtf-vs-screen-printing",
         title: "DTF vs Screen Printing: Which is Right for Your Brand?",
         excerpt: "Choosing the right printing method can be tough. We break down the pros and cons of DTF transfers vs traditional screen printing.",

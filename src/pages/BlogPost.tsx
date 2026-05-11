@@ -42,22 +42,6 @@ export default function BlogPost() {
                     <div className="container">
                         <img src={post.image} alt={post.title} />
 
-                        {post.id === "mommin-luxury-collection" ? (
-                            <>
-                                <h2>Celebrate in Style</h2>
-                                <p>
-                                    This Mother's Day, show your appreciation with our exclusive Mommin' Luxury Collection. We believe that being a mom isn't basic—it's boss level. That's why we've designed premium apparel that blends comfort with high-end aesthetics.
-                                </p>
-                                <h3>The Original CEO</h3>
-                                <p>
-                                    Whether you're multi-tasking, strategizing, or just running on love and coffee, our "Mom. The Original CEO" t-shirt is the perfect fit. Made with premium quality materials, it's designed to empower and inspire.
-                                </p>
-                                <h3>Mommin' But Make It Luxury</h3>
-                                <p>
-                                    Grace in the chaos, class in everything. Shop the limited edition collection now and wear it, own it, live it.
-                                </p>
-                            </>
-                        ) : (
                             <>
                                 <h2>Why choosing the right method matters</h2>
                                 <p>
@@ -83,7 +67,6 @@ export default function BlogPost() {
                                     If you're doing high-volume (500+ pieces) simple designs, screen printing is still hard to beat on price. However, for most modern brands looking for quality, flexibility, and vibrant colors across any quantity, DTF is the clear winner.
                                 </p>
                             </>
-                        )}
 
                         <div className="cta-box">
                             <h3>Ready to get started?</h3>
