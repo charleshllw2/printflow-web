@@ -15,6 +15,7 @@ export default function OrderPortal() {
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [orderStatus, setOrderStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Pricing Logic
@@ -41,61 +42,64 @@ export default function OrderPortal() {
         setIsUploading(true);
         setUploadProgress(0);
         setOrderStatus('idle');
+        setErrorMessage('');
 
-        // 1. Upload File to Firebase Storage with Progress
-        const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, file);
+        try {
+            // 1. Upload File to Firebase Storage with Progress
+            const storageRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
 
-        uploadTask.on('state_changed',
-            (snapshot) => {
+            uploadTask.on('state_changed', (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 setUploadProgress(progress);
-            },
-            (error) => {
-                console.error("Upload failed:", error);
-                setOrderStatus('error');
-                setIsUploading(false);
-            },
-            async () => {
-                // Upload completed successfully
-                try {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            });
 
-                    // 2. Send Email via FormSubmit.co
-                    const formData = {
-                        _subject: `New PrintFlow Order: ${width}x${height} - Qty: ${quantity}`,
-                        _template: "table",
-                        width: `${width} inches`,
-                        height: `${height} inches`,
-                        quantity: quantity,
-                        price_estimate: "Price will be sent after submission",
-                        gang_sheet: isGangSheet ? "Yes" : "No",
-                        rush_order: isRush ? "Yes" : "No",
-                        apparel_press: isPressed ? "Yes" : "No",
-                        file_url: downloadURL,
-                        file_name: file.name
-                    };
+            // Wait for the upload to complete
+            await uploadTask;
 
-                    await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    });
+            // Get the download URL
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-                    setOrderStatus('success');
-                    setFile(null);
-                    if (fileInputRef.current) fileInputRef.current.value = "";
-                } catch (error) {
-                    console.error("Order processing failed:", error);
-                    setOrderStatus('error');
-                } finally {
-                    setIsUploading(false);
-                }
+            // 2. Send Email via FormSubmit.co
+            const formData = {
+                _subject: `New PrintFlow Order: ${width}x${height} - Qty: ${quantity}`,
+                _template: "table",
+                width: `${width} inches`,
+                height: `${height} inches`,
+                quantity: quantity,
+                price_estimate: "Price will be sent after submission",
+                gang_sheet: isGangSheet ? "Yes" : "No",
+                rush_order: isRush ? "Yes" : "No",
+                apparel_press: isPressed ? "Yes" : "No",
+                file_url: downloadURL,
+                file_name: file.name
+            };
+
+            const response = await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || data.success === "false" || data.success === false) {
+                throw new Error(data.message || "Failed to send email. Please check FormSubmit configuration.");
             }
-        );
+
+            setOrderStatus('success');
+            setFile(null);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+        } catch (error: any) {
+            console.error("Order processing failed:", error);
+            setErrorMessage(error.message || "Something went wrong. Please try again.");
+            setOrderStatus('error');
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     return (
@@ -235,9 +239,14 @@ export default function OrderPortal() {
                                     </button>
 
                                     {orderStatus === 'error' && (
-                                        <p style={{ color: '#ff4444', marginTop: '10px', textAlign: 'center' }}>
-                                            Something went wrong. Please try again.
-                                        </p>
+                                        <div style={{ marginTop: '15px', padding: '10px', backgroundColor: '#ffeaea', borderRadius: '8px', border: '1px solid #ff4444' }}>
+                                            <p style={{ color: '#ff4444', textAlign: 'center', margin: 0, fontWeight: 'bold' }}>
+                                                Error processing order
+                                            </p>
+                                            <p style={{ color: '#cc0000', textAlign: 'center', margin: '5px 0 0 0', fontSize: '0.9rem' }}>
+                                                {errorMessage}
+                                            </p>
+                                        </div>
                                     )}
 
                                 </div>
