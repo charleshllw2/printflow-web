@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import '../styles/Hero.css';
 
 export default function Hero() {
-    const scrollToOrder = () => {
-        const element = document.getElementById('order');
+    const scrollToContact = () => {
+        const element = document.getElementById('contact');
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
@@ -23,7 +23,7 @@ export default function Hero() {
                         Built for brands, creators, and businesses.
                     </p>
                     <div className="hero-actions">
-                        <button className="btn btn-primary" onClick={scrollToOrder}>
+                        <button className="btn btn-primary" onClick={scrollToContact}>
                             Start Your Order
                         </button>
                         <Link to="/file-guidelines" className="btn btn-secondary">

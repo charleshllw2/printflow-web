@@ -39,7 +39,7 @@ export default function Navbar() {
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>Home</Link>
                         </li>
                         <li>
-                            <button onClick={() => scrollToSection('order')}>Order DTF</button>
+                            <button onClick={() => scrollToSection('contact')}>Order DTF</button>
                         </li>
                         <li>
                             <button onClick={() => scrollToSection('services')}>Services</button>
@@ -57,7 +57,7 @@ export default function Navbar() {
 
                     <div className="navbar-actions">
                         {/* Placeholder for cart or login if needed */}
-                        <button className="btn btn-primary" onClick={() => scrollToSection('order')}>
+                        <button className="btn btn-primary" onClick={() => scrollToSection('contact')}>
                             Start Order
                         </button>
                     </div>
@@ -76,7 +76,7 @@ export default function Navbar() {
                     {/* Mobile Menu */}
                     <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
                         <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-                        <button onClick={() => scrollToSection('order')}>Order DTF</button>
+                        <button onClick={() => scrollToSection('contact')}>Order DTF</button>
                         <button onClick={() => scrollToSection('services')}>Services</button>
                         <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>
                         <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
