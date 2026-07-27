@@ -10,36 +10,129 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <title>PrintFlow Studio</title>
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "PrintShop",
-      "name": "PrintFlow Studio",
-      "image": "https://printflowstudio.com/logo.png",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Your Street Address",
-        "addressLocality": "Chattanooga",
-        "addressRegion": "TN",
-        "postalCode": "37402",
-        "addressCountry": "US"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 35.0456,
-        "longitude": -85.3097
-      },
-      "url": "https://printflowstudio.com",
-      "telephone": "+1423XXXXXXX",
-      "priceRange": "$$",
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "08:00",
-          "closes": "17:00"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["PrintShop", "LocalBusiness"],
+        "@id": "https://printflowstudio.com/#organization",
+        "name": "PrintFlow Studio",
+        "url": "https://printflowstudio.com",
+        "logo": "https://printflowstudio.com/images/logo.png",
+        "image": "https://printflowstudio.com/images/shop-front.jpg",
+        "description": "Premium Direct-to-Film (DTF) transfer printing and custom apparel production facility based in Chattanooga, TN. Providing custom t-shirts, gang sheets, and wholesale apparel printing.",
+        "telephone": "+1-423-555-0199",
+        "email": "support@printflowstudio.com",
+        "priceRange": "$$",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Credit Card, Debit Card, Apple Pay, Google Pay",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Main Street, Suite 100",
+          "addressLocality": "Chattanooga",
+          "addressRegion": "TN",
+          "postalCode": "37402",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 35.0456,
+          "longitude": -85.3097
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "Chattanooga",
+            "sameAs": "https://en.wikipedia.org/wiki/Chattanooga,_Tennessee"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Hamilton County",
+            "sameAs": "https://en.wikipedia.org/wiki/Hamilton_County,_Tennessee"
+          },
+          {
+            "@type": "City",
+            "name": "Cleveland",
+            "sameAs": "https://en.wikipedia.org/wiki/Cleveland,_Tennessee"
+          },
+          {
+            "@type": "City",
+            "name": "Hixson"
+          }
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "08:00",
+            "closes": "17:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/printflowstudio",
+          "https://www.instagram.com/printflowstudio",
+          "https://www.google.com/maps?cid=YOUR_GBP_CID_NUMBER"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Printing Services",
+          "itemListElement": [
+            {
+              "@type": "OfferCatalog",
+              "name": "Custom DTF Transfers & Gang Sheets",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Custom Direct-to-Film (DTF) Transfers",
+                    "description": "High-DPI full-color DTF prints ready to press on cotton, polyester, and blended fabrics."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Custom DTF Gang Sheet Printing",
+                    "description": "Maximize print space by uploading custom gang sheets for bulk apparel production."
+                  }
+                }
+              ]
+            },
+            {
+              "@type": "OfferCatalog",
+              "name": "Apparel Printing Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Custom Shirt Printing Chattanooga",
+                    "description": "Full apparel pressing services for t-shirts, hoodies, workwear, and event merchandise."
+                  }
+                }
+              ]
+            }
+          ]
         }
-      ]
-    }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://printflowstudio.com/#website",
+        "url": "https://printflowstudio.com",
+        "name": "PrintFlow Studio",
+        "publisher": {
+          "@id": "https://printflowstudio.com/#organization"
+        }
+      }
+    ]
+  }
   </script>
 </head>
 <body>
