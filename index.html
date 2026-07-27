@@ -9,8 +9,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <title>PrintFlow Studio</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PrintShop",
+      "name": "PrintFlow Studio",
+      "image": "https://printflowstudio.com/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Your Street Address",
+        "addressLocality": "Chattanooga",
+        "addressRegion": "TN",
+        "postalCode": "37402",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 35.0456,
+        "longitude": -85.3097
+      },
+      "url": "https://printflowstudio.com",
+      "telephone": "+1423XXXXXXX",
+      "priceRange": "$$",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:00"
+        }
+      ]
+    }
+  </script>
 </head>
-
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
