@@ -14,23 +14,33 @@ export default function WhyChooseUs() {
                     <div className="benefits-list">
                         <div className="benefit-item">
                             <span className="benefit-icon">🎨</span>
-                            <h4>Vibrant, True-to-Color Prints</h4>
-                        </div>
-                        <div className="benefit-item">
-                            <span className="benefit-icon">👕</span>
-                            <h4>Soft, Durable Transfers</h4>
-                        </div>
-                        <div className="benefit-item">
-                            <span className="benefit-icon">⚡</span>
-                            <h4>Fast Turnaround Times</h4>
+                            <h4>Professional Print Quality</h4>
+                            <p style={{fontSize: '0.9rem', color: '#6b7280', marginTop: '5px'}}>Vibrant colors and durable prints.</p>
                         </div>
                         <div className="benefit-item">
                             <span className="benefit-icon">📂</span>
-                            <h4>Professional File Handling</h4>
+                            <h4>Helpful Artwork Support</h4>
+                            <p style={{fontSize: '0.9rem', color: '#6b7280', marginTop: '5px'}}>We ensure your files are print-ready.</p>
                         </div>
                         <div className="benefit-item">
                             <span className="benefit-icon">🤝</span>
-                            <h4>Trusted by Creators & Brands</h4>
+                            <h4>Friendly Customer Service</h4>
+                            <p style={{fontSize: '0.9rem', color: '#6b7280', marginTop: '5px'}}>We're here to help you succeed.</p>
+                        </div>
+                        <div className="benefit-item">
+                            <span className="benefit-icon">⚡</span>
+                            <h4>Fast & Organized Production</h4>
+                            <p style={{fontSize: '0.9rem', color: '#6b7280', marginTop: '5px'}}>Reliable turnaround times.</p>
+                        </div>
+                        <div className="benefit-item">
+                            <span className="benefit-icon">👕</span>
+                            <h4>Any Order Size</h4>
+                            <p style={{fontSize: '0.9rem', color: '#6b7280', marginTop: '5px'}}>Solutions for individuals and bulk orders.</p>
+                        </div>
+                        <div className="benefit-item">
+                            <span className="benefit-icon">📍</span>
+                            <h4>Local Chattanooga Service</h4>
+                            <p style={{fontSize: '0.9rem', color: '#6b7280', marginTop: '5px'}}>Proudly serving the Tennessee Valley.</p>
                         </div>
                     </div>
 

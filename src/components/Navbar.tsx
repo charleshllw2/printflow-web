@@ -38,28 +38,44 @@ export default function Navbar() {
                         <li>
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>Home</Link>
                         </li>
-                        <li>
-                            <button onClick={() => scrollToSection('contact')}>Order DTF</button>
+                        <li className="dropdown">
+                            <button className="dropbtn" aria-haspopup="true" aria-expanded="false">Services</button>
+                            <div className="dropdown-content">
+                                <Link to="/custom-t-shirts-chattanooga">Custom T-Shirts</Link>
+                                <Link to="/dtf-transfers-chattanooga">DTF Transfers</Link>
+                                <Link to="/business-apparel-chattanooga">Business Apparel</Link>
+                                <Link to="/promotional-products-chattanooga">Promotional Products</Link>
+                                <Link to="/apparel-design-services">Design Services</Link>
+                            </div>
                         </li>
-                        <li>
-                            <button onClick={() => scrollToSection('services')}>Services</button>
+                        <li className="dropdown">
+                            <button className="dropbtn" aria-haspopup="true" aria-expanded="false">Organizations</button>
+                            <div className="dropdown-content">
+                                <Link to="/church-shirts-chattanooga">Churches</Link>
+                                <Link to="/school-spirit-wear-chattanooga">Schools</Link>
+                                <Link to="/sports-team-shirts-chattanooga">Sports Teams</Link>
+                                <Link to="/family-reunion-shirts">Family Reunions</Link>
+                                <Link to="/event-shirts-chattanooga">Events & Fundraisers</Link>
+                            </div>
                         </li>
                         <li>
                             <Link to="/file-guidelines">File Guidelines</Link>
                         </li>
                         <li>
-                            <Link to="/blog">Blog</Link>
+                            <Link to="/about">About</Link>
                         </li>
                         <li>
-                            <button onClick={() => scrollToSection('contact')}>Contact</button>
+                            <Link to="/faq">FAQ</Link>
+                        </li>
+                        <li>
+                            <Link to="/request-quote">Contact</Link>
                         </li>
                     </ul>
 
                     <div className="navbar-actions">
-                        {/* Placeholder for cart or login if needed */}
-                        <button className="btn btn-primary" onClick={() => scrollToSection('contact')}>
-                            Start Order
-                        </button>
+                        <Link to="/request-quote" className="btn btn-primary">
+                            Request a Quote
+                        </Link>
                     </div>
 
                     {/* Mobile Toggle */}
@@ -76,11 +92,16 @@ export default function Navbar() {
                     {/* Mobile Menu */}
                     <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
                         <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-                        <button onClick={() => scrollToSection('contact')}>Order DTF</button>
-                        <button onClick={() => scrollToSection('services')}>Services</button>
+                        <Link to="/custom-t-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Custom T-Shirts</Link>
+                        <Link to="/dtf-transfers-chattanooga" onClick={() => setMobileMenuOpen(false)}>DTF Transfers</Link>
+                        <Link to="/business-apparel-chattanooga" onClick={() => setMobileMenuOpen(false)}>Business Apparel</Link>
+                        <Link to="/church-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Church Shirts</Link>
+                        <Link to="/school-spirit-wear-chattanooga" onClick={() => setMobileMenuOpen(false)}>School Apparel</Link>
+                        <Link to="/event-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Event Shirts</Link>
                         <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>
-                        <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
-                        <button onClick={() => scrollToSection('contact')}>Contact</button>
+                        <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
+                        <Link to="/faq" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
+                        <Link to="/request-quote" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
                     </div>
                 </div>
             </nav>
