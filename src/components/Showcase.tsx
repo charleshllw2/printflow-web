@@ -7,6 +7,7 @@ export default function Showcase() {
         { id: 3, label: "Typography Hoodie Design", image: "/truth_hoodie.png" },
         { id: 4, label: "Framed Rose Graphic Tee", image: "/moon_rose_shirt_framed.png" },
         { id: 5, label: "Childcare Staff Apparel", image: "/nadine_neighborhood.png" },
+        { id: 6, label: "Floral Boot Lifestyle Graphic", image: "/floral_boot_shirt.png" },
     ];
 
     return (
