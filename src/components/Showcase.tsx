@@ -2,10 +2,11 @@ import '../styles/Showcase.css';
 
 export default function Showcase() {
     const works = [
-        { id: 1, label: "DTF Transfer Detail", image: "/work-1.jpg" },
-        { id: 2, label: "Full Color Hoodie Print", image: "/work-2.jpg" },
-        { id: 3, label: "Bulk Order Staging", image: "/work-3.jpg" },
-        { id: 4, label: "Vibrant Art Print", image: "/work-4.jpg" },
+        { id: 1, label: "Gothic Moon & Rose T-Shirt", image: "/moon_rose_shirt.png" },
+        { id: 2, label: "Ornate Rose Hoodie", image: "/moon_rose_hoodie.png" },
+        { id: 3, label: "Typography Hoodie Design", image: "/truth_hoodie.png" },
+        { id: 4, label: "Framed Rose Graphic Tee", image: "/moon_rose_shirt_framed.png" },
+        { id: 5, label: "Childcare Staff Apparel", image: "/nadine_neighborhood.png" },
     ];
 
     return (
