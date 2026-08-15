@@ -6,19 +6,38 @@ import "../styles/Quote.css";
 export default function Quote() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setStatus('submitting');
-        // Placeholder for real submission logic (e.g. tracking analytics event, API call)
         
-        // Simulating API call
-        setTimeout(() => {
-            // Push to dataLayer for GA4 conversion tracking if it exists
-            if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                (window as any).dataLayer.push({'event': 'quote_form_submit'});
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+        formData.append('_subject', `New Quote Request from ${formData.get('name')}`);
+        formData.append('_captcha', 'false');
+
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                // Push to dataLayer for GA4 conversion tracking if it exists
+                if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                    (window as any).dataLayer.push({'event': 'quote_form_submit'});
+                }
+                setStatus('success');
+                form.reset();
+            } else {
+                setStatus('error');
             }
-            setStatus('success');
-        }, 1500);
+        } catch (error) {
+            console.error("Form submission error", error);
+            setStatus('error');
+        }
     };
 
     return (
@@ -136,6 +155,12 @@ export default function Quote() {
                                         <button type="submit" className="btn btn-primary full-width" style={{padding: '15px', fontSize: '1.1rem'}} disabled={status === 'submitting'}>
                                             {status === 'submitting' ? 'Submitting Request...' : 'Submit Quote Request'}
                                         </button>
+                                        
+                                        {status === 'error' && (
+                                            <div style={{color: '#dc2626', marginTop: '15px', textAlign: 'center', fontWeight: '500'}}>
+                                                Something went wrong submitting your request. Please try again or email us directly.
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </form>
