@@ -16,6 +16,7 @@ import EventShirts from "./pages/Services/EventShirts";
 import PromotionalProducts from "./pages/Services/PromotionalProducts";
 import DesignServices from "./pages/Services/DesignServices";
 import DIYPrintSheets from "./pages/Services/DIYPrintSheets";
+import Services from "./pages/Services";
 import Quote from "./pages/Quote";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
@@ -44,6 +45,7 @@ export default function App() {
         <Route path="/admin" element={<Admin />} />
         
         {/* Service Pages */}
+        <Route path="/services" element={<Services />} />
         <Route path="/custom-t-shirts-chattanooga" element={<CustomTShirts />} />
         <Route path="/dtf-transfers-chattanooga" element={<DTFTransfers />} />
         <Route path="/business-apparel-chattanooga" element={<BusinessApparel />} />

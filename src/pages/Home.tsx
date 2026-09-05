@@ -1,9 +1,7 @@
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import Hero from "../components/Hero";
-import OrderOptions from "../components/OrderOptions";
 import HowItWorks from "../components/HowItWorks";
-import ServicesGrid from "../components/ServicesGrid";
 import WhyChooseUs from "../components/WhyChooseUs";
 import Showcase from "../components/Showcase";
 import Testimonials from "../components/Testimonials";
@@ -54,8 +52,6 @@ export default function Home() {
                 schema={homeSchema}
             />
             <Hero />
-            <ServicesGrid />
-            <OrderOptions />
             <HowItWorks />
             <LocalServiceArea />
             <WhyChooseUs />
