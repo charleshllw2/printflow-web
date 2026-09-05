@@ -17,7 +17,7 @@ export default function Navbar() {
     return (
         <header className="site-header">
             <div className={`announcement-bar ${scrolled ? 'hidden' : ''}`}>
-                <p>⚡️ Next day orders guaranteed if placed by 1 PM EST</p>
+                <p>Fast turnaround available • Local Chattanooga pickup • Nationwide shipping</p>
             </div>
             <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container navbar-container">
@@ -30,23 +30,19 @@ export default function Navbar() {
                         <li>
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>Home</Link>
                         </li>
-                        <li className="dropdown">
-                            <button className="dropbtn" aria-haspopup="true" aria-expanded="false">Services</button>
-                            <div className="dropdown-content">
-                                <Link to="/custom-t-shirts-chattanooga">Custom T-Shirts</Link>
-                                <Link to="/dtf-transfers-chattanooga">DTF Transfers</Link>
-                                <Link to="/business-apparel-chattanooga">Business Apparel</Link>
-                                <Link to="/promotional-products-chattanooga">Promotional Products</Link>
-                                <Link to="/apparel-design-services">Design Services</Link>
-                            </div>
+                        <li>
+                            <Link to="/custom-t-shirts-chattanooga">Custom T-Shirts</Link>
+                        </li>
+                        <li>
+                            <Link to="/dtf-transfers-chattanooga">DTF Transfers</Link>
                         </li>
                         <li className="dropdown">
                             <button className="dropbtn" aria-haspopup="true" aria-expanded="false">Organizations</button>
                             <div className="dropdown-content">
-                                <Link to="/church-shirts-chattanooga">Churches</Link>
-                                <Link to="/school-spirit-wear-chattanooga">Schools</Link>
+                                <Link to="/business-apparel-chattanooga">Business Apparel</Link>
+                                <Link to="/church-shirts-chattanooga">Church Shirts</Link>
+                                <Link to="/school-spirit-wear-chattanooga">School Apparel</Link>
                                 <Link to="/sports-team-shirts-chattanooga">Sports Teams</Link>
-                                <Link to="/family-reunion-shirts">Family Reunions</Link>
                                 <Link to="/event-shirts-chattanooga">Events & Fundraisers</Link>
                             </div>
                         </li>
@@ -89,6 +85,7 @@ export default function Navbar() {
                         <Link to="/business-apparel-chattanooga" onClick={() => setMobileMenuOpen(false)}>Business Apparel</Link>
                         <Link to="/church-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Church Shirts</Link>
                         <Link to="/school-spirit-wear-chattanooga" onClick={() => setMobileMenuOpen(false)}>School Apparel</Link>
+                        <Link to="/sports-team-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Sports Teams</Link>
                         <Link to="/event-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Event Shirts</Link>
                         <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>
                         <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>

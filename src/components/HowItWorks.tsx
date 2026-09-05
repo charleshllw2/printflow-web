@@ -12,31 +12,31 @@ export default function HowItWorks() {
                     <div className="step-card">
                         <div className="step-number">01</div>
                         <h3>Tell Us What You Need</h3>
-                        <p>Request a quote and let us know your garment preferences, quantities, and project deadlines.</p>
+                        <p>Share your quantities, garment preferences, sizes, deadline, and delivery method.</p>
                     </div>
 
                     <div className="step-card">
                         <div className="step-number">02</div>
-                        <h3>Artwork & Design</h3>
-                        <p>Upload your print-ready artwork, or request professional design assistance from our team.</p>
+                        <h3>Submit Your Artwork</h3>
+                        <p>Upload your print-ready design or ask about professional design assistance.</p>
                     </div>
 
                     <div className="step-card">
                         <div className="step-number">03</div>
-                        <h3>Review & Approve</h3>
-                        <p>Review the final project details, quote, and mockups. Approve the project to move forward.</p>
+                        <h3>Review Your Quote</h3>
+                        <p>We’ll confirm pricing, production details, turnaround time, and shipping or pickup.</p>
                     </div>
 
                     <div className="step-card">
                         <div className="step-number">04</div>
-                        <h3>We Produce Your Apparel</h3>
-                        <p>We use industry-grade DTF technology for vibrant colors, sharp detail, and professional results.</p>
+                        <h3>Approve Your Order</h3>
+                        <p>Review and approve the order details and artwork before production begins.</p>
                     </div>
 
                     <div className="step-card">
                         <div className="step-number">05</div>
-                        <h3>Pickup or Shipping</h3>
-                        <p>Pickup locally in Chattanooga, or we arrange secure shipping directly to your location.</p>
+                        <h3>Receive Your Apparel</h3>
+                        <p>Pick up locally in Chattanooga or have your completed order shipped.</p>
                     </div>
                 </div>
             </div>

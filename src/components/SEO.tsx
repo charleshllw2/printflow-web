@@ -4,9 +4,10 @@ interface SEOProps {
   title: string;
   description: string;
   canonicalUrl?: string;
+  schema?: string;
 }
 
-export default function SEO({ title, description, canonicalUrl }: SEOProps) {
+export default function SEO({ title, description, canonicalUrl, schema }: SEOProps) {
   return (
     <Helmet>
       <title>{title}</title>
@@ -19,6 +20,7 @@ export default function SEO({ title, description, canonicalUrl }: SEOProps) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+      {schema && <script type="application/ld+json">{schema}</script>}
     </Helmet>
   );
 }

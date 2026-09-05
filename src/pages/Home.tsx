@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import Hero from "../components/Hero";
+import OrderOptions from "../components/OrderOptions";
 import HowItWorks from "../components/HowItWorks";
 import ServicesGrid from "../components/ServicesGrid";
 import WhyChooseUs from "../components/WhyChooseUs";
@@ -10,14 +11,51 @@ import ContactForm from "../components/ContactForm";
 import LocalServiceArea from "../components/LocalServiceArea";
 
 export default function Home() {
+    const homeSchema = JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "PrintFlow Studio",
+                "url": "https://www.printflowstudio.com",
+                "logo": "https://www.printflowstudio.com/PrintFlowLogo.png"
+            },
+            {
+                "@type": "LocalBusiness",
+                "name": "PrintFlow Studio",
+                "description": "Custom T-shirt printing and DTF transfers in Chattanooga.",
+                "url": "https://www.printflowstudio.com",
+                "telephone": "[OWNER TO INSERT PHONE]",
+                "email": "[OWNER TO INSERT EMAIL]",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Chattanooga",
+                    "addressRegion": "TN",
+                    "addressCountry": "US"
+                },
+                "areaServed": {
+                    "@type": "GeoCircle",
+                    "geoMidpoint": {
+                        "@type": "GeoCoordinates",
+                        "latitude": 35.0456,
+                        "longitude": -85.3097
+                    },
+                    "geoRadius": "50000"
+                }
+            }
+        ]
+    });
+
     return (
         <Layout>
             <SEO 
-                title="Custom T-Shirts & DTF Printing in Chattanooga | PrintFlow Studio" 
-                description="Order custom T-shirts, DTF transfers and branded apparel from PrintFlow Studio in Chattanooga, TN. Quality printing, professional design help and friendly service."
+                title="Custom T-Shirt Printing & DTF Transfers | PrintFlow Studio Chattanooga" 
+                description="PrintFlow Studio provides custom T-shirt printing, DTF transfers, business apparel, church shirts, school apparel, local Chattanooga pickup, and nationwide shipping."
+                schema={homeSchema}
             />
             <Hero />
             <ServicesGrid />
+            <OrderOptions />
             <HowItWorks />
             <LocalServiceArea />
             <WhyChooseUs />

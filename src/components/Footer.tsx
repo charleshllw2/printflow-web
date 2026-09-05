@@ -11,9 +11,9 @@ export default function Footer() {
                     
                     <div className="local-contact" style={{marginTop: '20px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>
                         <p>📍 <strong>Serving:</strong> Chattanooga, Hixson, East Ridge, Ooltewah & Surrounding Areas</p>
-                        <p>📞 <strong>Phone:</strong> [OWNER CONFIRMATION REQUIRED: Phone Number]</p>
-                        <p>✉️ <strong>Email:</strong> [OWNER CONFIRMATION REQUIRED: Email Address]</p>
-                        <p>🏠 <strong>Address:</strong> [OWNER CONFIRMATION REQUIRED: Public Address]</p>
+                        <p>📞 <strong>Phone:</strong> <a href="tel:[INSERT PHONE NUMBER]" style={{color: 'inherit'}}>[INSERT PHONE NUMBER]</a></p>
+                        <p>✉️ <strong>Email:</strong> <a href="mailto:[INSERT BUSINESS EMAIL]" style={{color: 'inherit'}}>[INSERT BUSINESS EMAIL]</a></p>
+                        <p>🏠 <strong>Address:</strong> Local pickup available by arrangement in the Chattanooga area.</p>
                     </div>
                 </div>
 
@@ -47,10 +47,14 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="container footer-bottom">
+            <div className="container footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
                 <p>&copy; {new Date().getFullYear()} PrintFlow Studio. All rights reserved.</p>
-                <div style={{display: 'flex', gap: '15px'}}>
-                    {/* Placeholder for Privacy/Terms */}
+                <div className="policy-links" style={{display: 'flex', gap: '15px', fontSize: '0.8rem'}}>
+                    <Link to="/privacy-policy">Privacy Policy</Link>
+                    <Link to="/terms">Terms & Conditions</Link>
+                    <Link to="/shipping-pickup">Shipping & Pickup</Link>
+                    <Link to="/returns">Returns</Link>
+                    <Link to="/artwork-policy">Artwork Policy</Link>
                 </div>
             </div>
         </footer>

@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import { useParams, Link } from "react-router-dom";
-import { BLOG_POSTS } from "./Blog";
+import { BLOG_POSTS } from "../data/blogPosts";
 import "../styles/Blog.css";
 
 export default function BlogPost() {

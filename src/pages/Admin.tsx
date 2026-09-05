@@ -10,7 +10,7 @@ import {
     query,
     orderBy,
 } from "firebase/firestore";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut, onAuthStateChanged, type User } from "firebase/auth";
 import { db, auth } from "../lib/firebase";
 
 type Quote = {
@@ -26,7 +26,7 @@ export default function Admin() {
     const navigate = useNavigate();
 
     // ---------- AUTH ----------
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [checkingAuth, setCheckingAuth] = useState(true);
 
     // ---------- QUOTES ----------
@@ -51,7 +51,7 @@ export default function Admin() {
         });
 
         return () => unsub();
-    }, []);
+    }, [navigate]);
 
 
     // ---------- LOAD QUOTES ----------
@@ -66,7 +66,7 @@ export default function Admin() {
         const unsub = onSnapshot(q, (snapshot) => {
             const data = snapshot.docs.map((doc) => ({
                 id: doc.id,
-                ...(doc.data() as any),
+                ...(doc.data() as Omit<Quote, 'id'>),
             }));
             setQuotes(data);
         });

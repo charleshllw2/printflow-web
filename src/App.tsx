@@ -18,6 +18,17 @@ import DesignServices from "./pages/Services/DesignServices";
 import Quote from "./pages/Quote";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
+
+// Policies
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import ShippingPickup from "./pages/ShippingPickup";
+import Returns from "./pages/Returns";
+import ArtworkPolicy from "./pages/ArtworkPolicy";
+
+// 404
+import NotFound from "./pages/NotFound";
+
 import "./styles/App.css";
 
 export default function App() {
@@ -47,6 +58,16 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/request-quote" element={<Quote />} />
+
+        {/* Policy Pages */}
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/shipping-pickup" element={<ShippingPickup />} />
+        <Route path="/returns" element={<Returns />} />
+        <Route path="/artwork-policy" element={<ArtworkPolicy />} />
+
+        {/* Catch-all 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
