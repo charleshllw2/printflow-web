@@ -109,6 +109,7 @@ export default function Quote() {
                                             <option value="Event or reunion shirts">Event or reunion shirts</option>
                                             <option value="DTF transfers">DTF transfers</option>
                                             <option value="Gang sheets">Gang sheets</option>
+                                            <option value="DIY DTF Print Sheets / Iron Ons">DIY DTF Print Sheets / Iron Ons</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>

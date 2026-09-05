@@ -36,6 +36,9 @@ export default function Navbar() {
                         <li>
                             <Link to="/dtf-transfers-chattanooga">DTF Transfers</Link>
                         </li>
+                        <li>
+                            <Link to="/diy-dtf-print-sheets">DIY Print Sheets</Link>
+                        </li>
                         <li className="dropdown">
                             <button className="dropbtn" aria-haspopup="true" aria-expanded="false">Organizations</button>
                             <div className="dropdown-content">
@@ -82,6 +85,7 @@ export default function Navbar() {
                         <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
                         <Link to="/custom-t-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Custom T-Shirts</Link>
                         <Link to="/dtf-transfers-chattanooga" onClick={() => setMobileMenuOpen(false)}>DTF Transfers</Link>
+                        <Link to="/diy-dtf-print-sheets" onClick={() => setMobileMenuOpen(false)}>DIY Print Sheets</Link>
                         <Link to="/business-apparel-chattanooga" onClick={() => setMobileMenuOpen(false)}>Business Apparel</Link>
                         <Link to="/church-shirts-chattanooga" onClick={() => setMobileMenuOpen(false)}>Church Shirts</Link>
                         <Link to="/school-spirit-wear-chattanooga" onClick={() => setMobileMenuOpen(false)}>School Apparel</Link>

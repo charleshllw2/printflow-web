@@ -24,6 +24,13 @@ export default function ServicesGrid() {
                         <Link to="/dtf-transfers-chattanooga" className="btn btn-primary">Order Transfers</Link>
                     </div>
 
+                    {/* Card 2b */}
+                    <div className="service-card">
+                        <h3>DIY DTF Print Sheets / Iron Ons</h3>
+                        <p>Order ready-to-press sheets delivered right to your door. (Shipping is extra). Perfect for crafters!</p>
+                        <Link to="/diy-dtf-print-sheets" className="btn btn-primary">Order DIY Sheets</Link>
+                    </div>
+
                     {/* Card 3 */}
                     <div className="service-card">
                         <h3>Business Apparel</h3>

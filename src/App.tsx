@@ -15,6 +15,7 @@ import FamilyReunionShirts from "./pages/Services/FamilyReunionShirts";
 import EventShirts from "./pages/Services/EventShirts";
 import PromotionalProducts from "./pages/Services/PromotionalProducts";
 import DesignServices from "./pages/Services/DesignServices";
+import DIYPrintSheets from "./pages/Services/DIYPrintSheets";
 import Quote from "./pages/Quote";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
@@ -53,6 +54,7 @@ export default function App() {
         <Route path="/event-shirts-chattanooga" element={<EventShirts />} />
         <Route path="/promotional-products-chattanooga" element={<PromotionalProducts />} />
         <Route path="/apparel-design-services" element={<DesignServices />} />
+        <Route path="/diy-dtf-print-sheets" element={<DIYPrintSheets />} />
         
         {/* Core Pages */}
         <Route path="/about" element={<About />} />
