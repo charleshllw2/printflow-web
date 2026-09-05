@@ -11,9 +11,8 @@ export default function Footer() {
                     
                     <div className="local-contact" style={{marginTop: '20px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>
                         <p>📍 <strong>Serving:</strong> Chattanooga, Hixson, East Ridge, Ooltewah & Surrounding Areas</p>
-                        <p>📞 <strong>Phone:</strong> <a href="tel:[INSERT PHONE NUMBER]" style={{color: 'inherit'}}>[INSERT PHONE NUMBER]</a></p>
-                        <p>✉️ <strong>Email:</strong> <a href="mailto:[INSERT BUSINESS EMAIL]" style={{color: 'inherit'}}>[INSERT BUSINESS EMAIL]</a></p>
-                        <p>🏠 <strong>Address:</strong> Local pickup available by arrangement in the Chattanooga area.</p>
+                        <p>📞 <strong>Phone:</strong> <a href="tel:423-681-2218" style={{color: 'inherit'}}>423-681-2218</a></p>
+                        <p>✉️ <strong>Email:</strong> <a href="mailto:hello@printflowstudio.com" style={{color: 'inherit'}}>hello@printflowstudio.com</a></p>
                     </div>
                 </div>
 

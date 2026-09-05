@@ -25,8 +25,8 @@ export default function Home() {
                 "name": "PrintFlow Studio",
                 "description": "Custom T-shirt printing and DTF transfers in Chattanooga.",
                 "url": "https://www.printflowstudio.com",
-                "telephone": "[OWNER TO INSERT PHONE]",
-                "email": "[OWNER TO INSERT EMAIL]",
+                "telephone": "423-681-2218",
+                "email": "hello@printflowstudio.com",
                 "address": {
                     "@type": "PostalAddress",
                     "addressLocality": "Chattanooga",
