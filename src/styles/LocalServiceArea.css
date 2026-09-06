@@ -30,16 +30,3 @@
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6); /* Darker text shadow to help with readability against light sky */
 }
 
-.local-service-section .container {
-    position: relative;
-    z-index: 2;
-}
-
-.local-service-section h2 {
-    color: #111827;
-}
-
-.local-service-section p {
-    color: #1f2937 !important;
-    font-weight: 500;
-}
