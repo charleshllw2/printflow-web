@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
+import "../styles/LocalServiceArea.css";
 
 export default function LocalServiceArea() {
     return (
-        <section className="section local-service-section bg-light" style={{ padding: '60px 0', backgroundColor: '#f9fafb' }}>
+        <section className="section local-service-section">
             <div className="container">
                 <div className="section-header text-center">
                     <h2>Proudly Serving Chattanooga & Surrounding Areas</h2>
-                    <p style={{ maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem', color: '#4b5563' }}>
+                    <p style={{ maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                         PrintFlow Studio is a local custom apparel and DTF printing business. We provide high-quality printing services to businesses, churches, schools, and organizations throughout the region.
                     </p>
                 </div>
