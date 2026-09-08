@@ -1,4 +1,140 @@
-.hero {
+/* Base Cinematic Hero */
+.hero-cinematic {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #050505; /* Dark premium studio background */
+    overflow: hidden;
+    color: white;
+}
+
+.hero-cinematic-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Studio Environment Background */
+.studio-environment {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, #1a202c 0%, #050505 70%);
+    z-index: 0;
+}
+
+/* Initial Hero Content (overlaid on assembled printer) */
+.cinematic-content {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none; /* Let clicks pass through to background if needed */
+}
+
+.cinematic-content .container {
+    pointer-events: auto; /* Re-enable clicks for buttons */
+}
+
+.cinematic-title {
+    font-size: 4.5rem;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.cinematic-subtitle {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.cinematic-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Printer Stage & Assets */
+.printer-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%); /* Slightly lower to balance with text */
+    width: 80vw;
+    max-width: 1200px;
+    height: 60vh;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.printer-layers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.printer-asset {
+    will-change: transform, opacity;
+}
+
+/* Scroll-triggered Text */
+.scroll-text-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.scroll-text h2 {
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #f8fafc;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    margin: 0;
+}
+
+.text-final-layer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.final-logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+/* Fallback / Reduced Motion Styles */
+.fallback-hero {
     position: relative;
     height: 100vh;
     min-height: 700px;
@@ -9,88 +145,46 @@
     overflow: hidden;
     padding: 0;
     margin-top: -80px;
-    /* Offset fixed header */
     padding-top: 80px;
+    background-color: #050505;
 }
 
-.hero-background {
+.hero-background-static {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--bg-primary);
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-        url('/hero.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('/printer/assembled.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     z-index: -1;
 }
 
-.hero-background::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:
-        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23222222' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.5;
-    z-index: -1;
-}
-
-.hero-container {
-    position: relative;
-    z-index: 1;
-}
-
-.hero-content {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.hero-title {
-    font-size: 4.5rem;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    letter-spacing: -0.03em;
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
-    margin-bottom: 40px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .hero-title {
+    .cinematic-title {
         font-size: 3rem;
+        margin-top: 40px;
     }
-
-    .hero-subtitle {
+    
+    .cinematic-subtitle {
         font-size: 1.1rem;
         padding: 0 20px;
     }
-
-    .hero-actions {
-        flex-direction: column;
-        padding: 0 40px;
+    
+    .printer-stage {
+        width: 100vw;
+        height: 50vh;
+        transform: translate(-50%, -30%);
     }
 
-    .hidden-mobile {
-        display: none;
+    .scroll-text h2 {
+        font-size: 2rem;
+        padding: 0 20px;
+    }
+    
+    .final-logo {
+        font-size: 1.8rem;
     }
 }
