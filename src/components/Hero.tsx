@@ -133,15 +133,7 @@ export default function Hero() {
                 <div className="hero-background-static"></div>
                 <div className="container hero-container">
                     <div className="hero-content">
-                        <h1 className="hero-title">
-                            YOUR DESIGN.<br />
-                            OUR PRINT.<br />
-                            <span className="text-accent">YOUR FLOW.</span>
-                        </h1>
-                        <p className="hero-subtitle">
-                            Professional DTF transfers built for bold ideas, brilliant color, and prints made to move.
-                        </p>
-                        <div className="hero-actions">
+                        <div className="hero-actions" style={{ paddingTop: '20vh' }}>
                             <Link to="/request-quote" className="btn btn-primary">
                                 Request a Quote
                             </Link>
@@ -161,15 +153,7 @@ export default function Hero() {
                 {/* Main Hero Content (fades out as scroll starts) */}
                 <div className="cinematic-content initial-content">
                     <div className="container">
-                        <h1 className="cinematic-title">
-                            YOUR DESIGN.<br />
-                            OUR PRINT.<br />
-                            <span className="text-accent">YOUR FLOW.</span>
-                        </h1>
-                        <p className="cinematic-subtitle">
-                            Professional DTF transfers built for bold ideas, brilliant color, and prints made to move.
-                        </p>
-                        <div className="cinematic-actions">
+                        <div className="cinematic-actions" style={{ position: 'absolute', bottom: '15%', left: '50%', transform: 'translateX(-50%)' }}>
                             <Link to="/request-quote" className="btn btn-primary">
                                 Request a Quote
                             </Link>
@@ -183,14 +167,14 @@ export default function Hero() {
                     <div className="printer-layers">
                         <img 
                             ref={assembledRef} 
-                            src="/printer/assembled.jpg" 
+                            src="/printer/assembled.png" 
                             alt="Fully assembled PrintFlow Studio DTF printer" 
                             className="printer-asset printer-assembled"
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain' }}
                         />
                         <img 
                             ref={explodedRef} 
-                            src="/printer/exploded.jpg" 
+                            src="/printer/exploded.png" 
                             alt="Exploded view of PrintFlow Studio DTF printer internal components" 
                             className="printer-asset printer-exploded"
                             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain', opacity: 0 }}
