@@ -1,0 +1,156 @@
+.starter-promo-section {
+    background-color: #050505;
+    padding: 100px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.promo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.promo-content {
+    flex: 1;
+    max-width: 600px;
+}
+
+.promo-headline {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: #FFFFFF;
+}
+
+.promo-description {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #E5E7EB;
+    margin-bottom: 30px;
+}
+
+.promo-offer {
+    margin-bottom: 40px;
+}
+
+.offer-highlight {
+    display: inline-block;
+    background: linear-gradient(90deg, #D000E8, #70258F);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 4px 15px rgba(208, 0, 232, 0.3);
+}
+
+.promo-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(208, 0, 232, 0.1);
+    border: 2px solid #D000E8;
+    color: #D000E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.step-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.promo-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.promo-btn {
+    background-color: #D000E8;
+    color: #FFFFFF;
+    border: none;
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.promo-btn:hover {
+    background-color: #70258F;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(112, 37, 143, 0.5);
+}
+
+.promo-secondary-link {
+    color: #D000E8;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.promo-secondary-link:hover {
+    color: #FFFFFF;
+}
+
+.promo-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.promo-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    object-fit: cover;
+    border: 1px solid #111111;
+}
+
+@media (max-width: 992px) {
+    .promo-container {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .promo-steps {
+        align-items: center;
+    }
+    
+    .step {
+        text-align: left;
+    }
+    
+    .promo-actions {
+        justify-content: center;
+        flex-direction: column;
+        gap: 16px;
+    }
+}

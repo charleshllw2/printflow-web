@@ -1,9 +1,11 @@
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import Hero from "../components/Hero";
+import PricingCards from "../components/PricingCards";
 import CinematicPrinter from "../components/CinematicPrinter";
 import HowItWorks from "../components/HowItWorks";
 import WhyChooseUs from "../components/WhyChooseUs";
+import StarterPackPromo from "../components/StarterPackPromo";
 import Showcase from "../components/Showcase";
 import Testimonials from "../components/Testimonials";
 import ContactForm from "../components/ContactForm";
@@ -53,10 +55,12 @@ export default function Home() {
                 schema={homeSchema}
             />
             <Hero />
+            <PricingCards />
             <CinematicPrinter />
             <HowItWorks />
             <LocalServiceArea />
             <WhyChooseUs />
+            <StarterPackPromo />
             <Showcase />
             <Testimonials />
             <ContactForm />

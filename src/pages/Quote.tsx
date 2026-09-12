@@ -1,11 +1,31 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import "../styles/Quote.css";
 
 export default function Quote() {
+    const [searchParams] = useSearchParams();
+    const packageParam = searchParams.get("package");
+    const serviceParam = searchParams.get("service");
+
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [deliveryMethod, setDeliveryMethod] = useState('');
+    
+    // Determine default values based on URL parameters
+    let defaultService = "";
+    let defaultQuantity = "";
+    let defaultNotes = "";
+
+    if (packageParam === 'business-starter-pack') {
+        defaultService = "Business apparel";
+        defaultQuantity = "10";
+        defaultNotes = "Package Request: Business Apparel Starter Pack";
+    } else if (serviceParam === 'custom-t-shirts') {
+        defaultService = "Custom T-shirts";
+    } else if (serviceParam === 'dtf-transfers') {
+        defaultService = "DTF transfers";
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -62,6 +82,22 @@ export default function Quote() {
                     </div>
 
                     <div className="quote-form-container">
+                        {packageParam === 'business-starter-pack' && status === 'idle' && (
+                            <div className="promo-alert" style={{
+                                backgroundColor: 'rgba(208, 0, 232, 0.1)', 
+                                border: '1px solid #D000E8',
+                                borderRadius: '8px',
+                                padding: '20px',
+                                marginBottom: '30px',
+                                textAlign: 'center'
+                            }}>
+                                <h3 style={{ color: '#D000E8', marginBottom: '10px', fontSize: '1.2rem' }}>Business Apparel Starter Pack</h3>
+                                <p style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                                    You’re requesting the Business Apparel Starter Pack—10 custom logo shirts starting at $199. Complete the details below, and we’ll confirm garment options, artwork, turnaround time, and final pricing.
+                                </p>
+                            </div>
+                        )}
+
                         {status === 'success' ? (
                             <div className="text-center" style={{padding: '40px 0'}}>
                                 <h2>✅ Quote Request Received!</h2>
@@ -100,7 +136,7 @@ export default function Quote() {
 
                                     <div className="form-group full-width">
                                         <label htmlFor="serviceNeeded">Service Needed *</label>
-                                        <select id="serviceNeeded" name="serviceNeeded" required>
+                                        <select id="serviceNeeded" name="serviceNeeded" required defaultValue={defaultService}>
                                             <option value="">Select a service...</option>
                                             <option value="Custom T-shirts">Custom T-shirts</option>
                                             <option value="Business apparel">Business apparel</option>
@@ -126,7 +162,7 @@ export default function Quote() {
 
                                     <div className="form-group">
                                         <label htmlFor="quantity">Estimated Quantity *</label>
-                                        <input type="number" id="quantity" name="quantity" required min="1" placeholder="Number of items" />
+                                        <input type="number" id="quantity" name="quantity" required min="1" placeholder="Number of items" defaultValue={defaultQuantity} />
                                     </div>
                                     
                                     <div className="form-group">
@@ -181,7 +217,7 @@ export default function Quote() {
 
                                     <div className="form-group full-width">
                                         <label htmlFor="notes">Project Details</label>
-                                        <textarea id="notes" name="notes" rows={4} placeholder="Please provide any additional details about your project..."></textarea>
+                                        <textarea id="notes" name="notes" rows={4} placeholder="Please provide any additional details about your project..." defaultValue={defaultNotes}></textarea>
                                     </div>
 
                                     <div className="form-group full-width checkbox-group" style={{marginTop: '10px'}}>
