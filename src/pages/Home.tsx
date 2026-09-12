@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import Hero from "../components/Hero";
+import CinematicPrinter from "../components/CinematicPrinter";
 import HowItWorks from "../components/HowItWorks";
 import WhyChooseUs from "../components/WhyChooseUs";
 import Showcase from "../components/Showcase";
@@ -52,6 +53,7 @@ export default function Home() {
                 schema={homeSchema}
             />
             <Hero />
+            <CinematicPrinter />
             <HowItWorks />
             <LocalServiceArea />
             <WhyChooseUs />
