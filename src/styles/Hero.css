@@ -35,6 +35,14 @@
     max-width: 600px;
 }
 
+.hero-brand-mark {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 24px;
+    opacity: 0.9;
+}
+
 .hero-headline {
     font-size: 4rem;
     font-weight: 800;

@@ -6,6 +6,11 @@ export default function Hero() {
         <section className="hero-section">
             <div className="container hero-split">
                 <div className="hero-content-left">
+                    <img 
+                        src="/logo.png" 
+                        alt="PrintFlow Studio Brand Mark" 
+                        className="hero-brand-mark"
+                    />
                     <h1 className="hero-headline">
                         Custom Apparel <br />
                         <span className="hero-accent">Made Simple.</span>

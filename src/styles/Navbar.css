@@ -49,6 +49,20 @@
 }
 
 .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.nav-logo-icon {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-logo-text {
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.02em;

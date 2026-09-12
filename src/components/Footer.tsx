@@ -6,7 +6,14 @@ export default function Footer() {
         <footer className="footer section">
             <div className="container footer-container">
                 <div className="footer-brand">
-                    <div className="footer-logo">PRINTFLOW<span className="text-accent">STUDIO</span></div>
+                    <Link to="/" className="footer-logo" onClick={() => window.scrollTo(0, 0)}>
+                        <img 
+                            src="/logo.png" 
+                            alt="PrintFlow Studio custom apparel and DTF printing." 
+                            className="footer-logo-icon"
+                        />
+                        <span className="footer-logo-text">PRINTFLOW<span className="text-accent">STUDIO</span></span>
+                    </Link>
                     <p>Custom T-Shirts, DTF Transfers & Premium Apparel for Chattanooga businesses and organizations.</p>
                     
                     <div className="local-contact" style={{marginTop: '20px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>

@@ -21,8 +21,13 @@ export default function Navbar() {
             </div>
             <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container navbar-container">
-                    <Link to="/" className="navbar-logo">
-                        PRINTFLOW<span className="text-accent">STUDIO</span>
+                    <Link to="/" className="navbar-logo" onClick={() => window.scrollTo(0, 0)}>
+                        <img 
+                            src="/logo.png" 
+                            alt="PrintFlow Studio custom apparel and DTF printing." 
+                            className="nav-logo-icon"
+                        />
+                        <span className="nav-logo-text">PRINTFLOW<span className="text-accent">STUDIO</span></span>
                     </Link>
 
                     {/* Desktop Menu */}

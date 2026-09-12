@@ -12,9 +12,23 @@
 }
 
 .footer-brand .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.footer-logo-icon {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-logo-text {
     font-size: 1.5rem;
     font-weight: 800;
-    margin-bottom: 20px;
 }
 
 .footer-brand p {
