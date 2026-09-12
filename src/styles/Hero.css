@@ -1,9 +1,24 @@
 .hero-section {
-    background-color: #ffffff;
+    background-color: #050505;
     padding: 120px 0 80px 0; /* Add padding to push down from the fixed header */
     min-height: 80vh;
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background glow in the section */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(208, 0, 232, 0.05) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .hero-split {
@@ -11,6 +26,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 60px;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content-left {
@@ -22,15 +39,34 @@
     font-size: 4rem;
     font-weight: 800;
     line-height: 1.1;
-    color: #111827; /* Dark black */
+    color: #FFFFFF;
     margin-bottom: 24px;
     letter-spacing: -0.03em;
 }
 
+.hero-accent {
+    color: #D000E8;
+    position: relative;
+}
+
+/* Subtle underline/glow on the accent text */
+.hero-accent::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #D000E8, #70258F);
+    opacity: 0.6;
+    border-radius: 2px;
+    z-index: -1;
+}
+
 .hero-description {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     line-height: 1.6;
-    color: #4b5563; /* Dark gray */
+    color: #E5E7EB; /* Light gray for readability */
     margin-bottom: 40px;
 }
 
@@ -38,39 +74,45 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .hero-btn {
     padding: 16px 32px;
     font-size: 1.1rem;
     font-weight: 600;
-}
-
-.btn-outline {
-    background: transparent;
-    border: 2px solid #111827;
-    color: #111827;
-    border-radius: 4px;
+    border-radius: 6px;
     text-decoration: none;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .hero-btn.btn-primary {
-    background-color: var(--accent-color);
-    color: #ffffff;
-    border: none;
+    background-color: #D000E8;
+    color: #FFFFFF;
+    border: 1px solid #D000E8;
+    box-shadow: 0 4px 15px rgba(208, 0, 232, 0.2);
 }
 
 .hero-btn.btn-primary:hover {
-    background-color: #e60072; /* Slightly darker hot pink for hover */
+    background-color: #70258F;
+    border-color: #70258F;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 0, 127, 0.4);
+    box-shadow: 0 6px 20px rgba(112, 37, 143, 0.5);
 }
 
-.btn-outline:hover {
-    background: #111827;
-    color: #ffffff;
+.hero-btn.btn-outline {
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+.hero-btn.btn-outline:hover {
+    background-color: #111111; /* Soft near-black */
+    border-color: #D000E8;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(208, 0, 232, 0.1);
 }
 
 .hero-trust-list {
@@ -79,21 +121,23 @@
     margin: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 14px;
 }
 
 .hero-trust-list li {
     font-size: 0.95rem;
-    color: #374151;
+    color: #F3F4F6;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .check-icon {
-    color: var(--accent-color); /* Hot pink checkmark */
+    color: #D000E8;
     font-weight: 800;
+    font-size: 1.1rem;
+    text-shadow: 0 0 8px rgba(208, 0, 232, 0.4);
 }
 
 .hero-image-right {
@@ -103,13 +147,33 @@
     align-items: center;
 }
 
-.hero-apparel-img {
+.hero-image-wrapper {
+    position: relative;
     width: 100%;
     max-width: 600px;
+}
+
+.hero-apparel-img {
+    width: 100%;
     height: auto;
     border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     object-fit: cover;
+    position: relative;
+    z-index: 2;
+    border: 1px solid #111111;
+}
+
+.hero-image-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 90%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(208, 0, 232, 0.2), rgba(112, 37, 143, 0.2));
+    filter: blur(40px);
+    z-index: 1;
+    border-radius: 50%;
 }
 
 @media (max-width: 992px) {
@@ -132,10 +196,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
     }
 
     .hero-headline {
-        font-size: 3rem;
+        font-size: 3.2rem;
+    }
+    
+    .hero-accent::after {
+        display: none; /* Simplify on mobile if it wraps awkwardly */
     }
 }

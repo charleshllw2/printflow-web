@@ -8,16 +8,16 @@ export default function Hero() {
                 <div className="hero-content-left">
                     <h1 className="hero-headline">
                         Custom Apparel <br />
-                        <span className="text-accent">Made Simple.</span>
+                        <span className="hero-accent">Made Simple.</span>
                     </h1>
                     <p className="hero-description">
                         Vibrant custom shirts and ready-to-press DTF transfers for Chattanooga businesses, churches, teams, events, and creators—with flexible quantities, fast turnaround, local pickup, and nationwide shipping.
                     </p>
                     <div className="hero-button-group">
-                        <Link to="/request-quote" className="btn btn-primary hero-btn">
+                        <Link to="/request-quote" className="btn hero-btn btn-primary">
                             Get a Fast Quote
                         </Link>
-                        <Link to="/services" className="btn btn-outline hero-btn">
+                        <Link to="/services" className="btn hero-btn btn-outline">
                             Explore Our Services
                         </Link>
                     </div>
@@ -29,11 +29,15 @@ export default function Hero() {
                     </ul>
                 </div>
                 <div className="hero-image-right">
-                    <img 
-                        src="/hero-apparel.jpg" 
-                        alt="High-quality custom printed t-shirts and hoodies" 
-                        className="hero-apparel-img"
-                    />
+                    <div className="hero-image-wrapper">
+                        <img 
+                            src="/hero-apparel.jpg" 
+                            alt="High-quality custom printed t-shirts and hoodies in PrintFlow Studio colors" 
+                            className="hero-apparel-img"
+                        />
+                        {/* Subtle background glow effect */}
+                        <div className="hero-image-glow"></div>
+                    </div>
                 </div>
             </div>
         </section>
