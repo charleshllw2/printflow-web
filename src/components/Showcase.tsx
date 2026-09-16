@@ -4,19 +4,52 @@ export default function Showcase() {
     const works = [
         { 
             id: 1, 
-            label: "Gothic Moon & Rose T-Shirt", 
-            image: "/moon_rose_shirt.png",
-            customerType: "Small Brand",
-            garmentType: "Heavyweight Tee",
-            printMethod: "DTF Transfer",
-            printLocations: "Front",
-            delivery: "Shipped"
+            label: "Chattanooga River City Energy Tee", 
+            image: "/showcase-1.jpg",
+            customerType: "Local Business",
+            garmentType: "Premium Navy Tee",
+            printMethod: "DTF Transfer"
         },
-        { id: 2, label: "Ornate Rose Hoodie", image: "/moon_rose_hoodie.png" },
-        { id: 3, label: "Typography Hoodie Design", image: "/truth_hoodie.png" },
-        { id: 4, label: "Framed Rose Graphic Tee", image: "/moon_rose_shirt_framed.png" },
-        { id: 5, label: "Childcare Staff Apparel", image: "/nadine_neighborhood.png" },
-        { id: 6, label: "Floral Boot Lifestyle Graphic", image: "/floral_boot_shirt.png" },
+        { 
+            id: 2, 
+            label: "Management Dogs Cream Tee", 
+            image: "/showcase-2.jpg",
+            customerType: "Boutique Brand",
+            garmentType: "Classic Cream Tee",
+            printMethod: "DTF Transfer"
+        },
+        { 
+            id: 3, 
+            label: "Management Dogs Red Long-Sleeve", 
+            image: "/showcase-3.jpg",
+            customerType: "Boutique Brand",
+            garmentType: "Red Long-Sleeve",
+            printMethod: "DTF Transfer"
+        },
+        { 
+            id: 4, 
+            label: "Reading After Sundown Long-Sleeve", 
+            image: "/showcase-4.jpg",
+            customerType: "Creator Merch",
+            garmentType: "Brown Long-Sleeve",
+            printMethod: "DTF Transfer"
+        },
+        { 
+            id: 5, 
+            label: "Chattanooga River City Grey Long-Sleeve", 
+            image: "/showcase-5.jpg",
+            customerType: "Local Business",
+            garmentType: "Grey Long-Sleeve",
+            printMethod: "DTF Transfer"
+        },
+        { 
+            id: 6, 
+            label: "Custom Typography Hoodie", 
+            image: "/truth_hoodie.png",
+            customerType: "Small Brand",
+            garmentType: "Heavyweight Hoodie",
+            printMethod: "DTF Transfer"
+        }
     ];
 
     return (
@@ -41,7 +74,6 @@ export default function Showcase() {
                                     <div className="project-details" style={{fontSize: '0.8rem', marginTop: '10px'}}>
                                         {work.customerType && <p>{work.customerType}</p>}
                                         {work.garmentType && <p>{work.garmentType} • {work.printMethod}</p>}
-                                        {work.delivery && <p>{work.delivery}</p>}
                                     </div>
                                 )}
                             </div>
