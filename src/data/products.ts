@@ -76,6 +76,42 @@ export const products: Product[] = [
         category: 'Faith',
         isNew: true,
         sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-6',
+        title: 'Holiday Fuel',
+        image: '/shop/holiday-fuel.jpg',
+        category: 'Seasonal',
+        isNew: true,
+        sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-7',
+        title: 'The Ghost Shift Bakery',
+        image: '/shop/ghost-shift.jpg',
+        category: 'Halloween',
+        sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-8',
+        title: 'Pass the Pie',
+        image: '/shop/pass-the-pie.jpg',
+        category: 'Thanksgiving',
+        sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-9',
+        title: 'Scenic City Sweater Weather',
+        image: '/shop/scenic-city-sweater-weather.jpg',
+        category: 'Chattanooga',
+        sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-10',
+        title: 'Midnight Mischief Club',
+        image: '/shop/midnight-mischief.jpg',
+        category: 'Halloween',
+        sizes: getStandardSizes()
     }
 ];
 
