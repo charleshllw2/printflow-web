@@ -36,7 +36,7 @@ export default function OrderOptions() {
                             <p>Individual transfers and gang-sheet options for apparel decorators, creators, and growing clothing brands.</p>
                         </div>
                         <div className="option-action">
-                            <Link to="/dtf-transfers-chattanooga" className="btn btn-secondary full-width">Explore DTF Transfers</Link>
+                            <Link to="/dtf-transfers-chattanooga" className="btn btn-primary full-width">Explore DTF Transfers</Link>
                         </div>
                     </div>
                 </div>
