@@ -112,6 +112,13 @@ export const products: Product[] = [
         image: '/shop/midnight-mischief.jpg',
         category: 'Halloween',
         sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-11',
+        title: 'Autumn Runs Deep',
+        image: '/shop/autumn-runs-deep.jpg',
+        category: 'Seasonal',
+        sizes: getStandardSizes()
     }
 ];
 
