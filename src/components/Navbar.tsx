@@ -16,9 +16,6 @@ export default function Navbar() {
 
     return (
         <header className="site-header">
-            <div className={`announcement-bar ${scrolled ? 'hidden' : ''}`}>
-                <p>Fast turnaround available • Local Chattanooga pickup • Nationwide shipping</p>
-            </div>
             <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container navbar-container">
                     <Link to="/" className="navbar-logo" onClick={() => window.scrollTo(0, 0)}>
