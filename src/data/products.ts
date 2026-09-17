@@ -119,6 +119,14 @@ export const products: Product[] = [
         image: '/shop/autumn-runs-deep.jpg',
         category: 'Seasonal',
         sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-12',
+        title: 'Want a custom Ready-to-Press DTF Transfers upload here',
+        image: '/shop/custom-upload.jpg',
+        category: 'Custom',
+        isNew: true,
+        sizes: getStandardSizes()
     }
 ];
 
