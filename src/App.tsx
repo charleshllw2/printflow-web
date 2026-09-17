@@ -17,6 +17,7 @@ import PromotionalProducts from "./pages/Services/PromotionalProducts";
 import DesignServices from "./pages/Services/DesignServices";
 import DIYPrintSheets from "./pages/Services/DIYPrintSheets";
 import Services from "./pages/Services";
+import Shop from "./pages/Shop";
 import Quote from "./pages/Quote";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
@@ -59,6 +60,7 @@ export default function App() {
         <Route path="/diy-dtf-print-sheets" element={<DIYPrintSheets />} />
         
         {/* Core Pages */}
+        <Route path="/dtf-transfers" element={<Shop />} />
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/request-quote" element={<Quote />} />
