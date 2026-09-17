@@ -46,12 +46,12 @@ export default function App() {
         
         {/* Service Pages */}
         <Route path="/services" element={<Services />} />
-        <Route path="/custom-t-shirts-chattanooga" element={<CustomTShirts />} />
+        <Route path="/custom-tshirts-chattanooga" element={<CustomTShirts />} />
         <Route path="/dtf-transfers-chattanooga" element={<DTFTransfers />} />
         <Route path="/business-apparel-chattanooga" element={<BusinessApparel />} />
         <Route path="/church-shirts-chattanooga" element={<ChurchShirts />} />
-        <Route path="/school-spirit-wear-chattanooga" element={<SchoolSpiritWear />} />
-        <Route path="/sports-team-shirts-chattanooga" element={<SportsTeamShirts />} />
+        <Route path="/school-shirts-chattanooga" element={<SchoolSpiritWear />} />
+        <Route path="/team-shirts-chattanooga" element={<SportsTeamShirts />} />
         <Route path="/family-reunion-shirts" element={<FamilyReunionShirts />} />
         <Route path="/event-shirts-chattanooga" element={<EventShirts />} />
         <Route path="/promotional-products-chattanooga" element={<PromotionalProducts />} />

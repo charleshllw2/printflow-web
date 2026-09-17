@@ -27,7 +27,7 @@ export default function Footer() {
                     <div>
                         <h4>Services</h4>
                         <ul>
-                            <li><Link to="/custom-t-shirts-chattanooga">Custom T-Shirts</Link></li>
+                            <li><Link to="/custom-tshirts-chattanooga">Custom T-Shirts</Link></li>
                             <li><Link to="/dtf-transfers-chattanooga">DTF Transfers</Link></li>
                             <li><Link to="/business-apparel-chattanooga">Business Apparel</Link></li>
                             <li><Link to="/promotional-products-chattanooga">Promotional Products</Link></li>
@@ -37,8 +37,8 @@ export default function Footer() {
                         <h4>Organizations</h4>
                         <ul>
                             <li><Link to="/church-shirts-chattanooga">Church Shirts</Link></li>
-                            <li><Link to="/school-spirit-wear-chattanooga">School Apparel</Link></li>
-                            <li><Link to="/sports-team-shirts-chattanooga">Sports Teams</Link></li>
+                            <li><Link to="/school-shirts-chattanooga">School Apparel</Link></li>
+                            <li><Link to="/team-shirts-chattanooga">Sports Teams</Link></li>
                             <li><Link to="/event-shirts-chattanooga">Events & Fundraisers</Link></li>
                         </ul>
                     </div>

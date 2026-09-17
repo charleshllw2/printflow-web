@@ -14,7 +14,7 @@ export default function ServicesGrid() {
                     <div className="service-card">
                         <h3>Custom T-Shirts</h3>
                         <p>High-quality custom T-shirt printing for businesses, events, and individuals in Chattanooga.</p>
-                        <Link to="/custom-t-shirts-chattanooga" className="btn btn-primary">Learn More</Link>
+                        <Link to="/custom-tshirts-chattanooga" className="btn btn-primary">Learn More</Link>
                     </div>
 
                     {/* Card 2 */}
@@ -49,7 +49,7 @@ export default function ServicesGrid() {
                     <div className="service-card">
                         <h3>School & Team Apparel</h3>
                         <p>Show your spirit with custom school shirts, club apparel, and sports team gear.</p>
-                        <Link to="/school-spirit-wear-chattanooga" className="btn btn-secondary">Learn More</Link>
+                        <Link to="/school-shirts-chattanooga" className="btn btn-secondary">Learn More</Link>
                     </div>
 
                     {/* Card 6 */}

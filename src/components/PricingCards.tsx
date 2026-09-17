@@ -15,7 +15,7 @@ export default function PricingCards() {
                     <div className="pricing-card">
                         <div className="pricing-card-content">
                             <h3 className="pricing-title">
-                                <Link to="/custom-t-shirts-chattanooga" style={{ color: 'inherit', textDecoration: 'none' }}>Custom Shirts</Link>
+                                <Link to="/custom-tshirts-chattanooga" style={{ color: 'inherit', textDecoration: 'none' }}>Custom Shirts</Link>
                             </h3>
                             <div className="pricing-price">
                                 <span className="starting-at">Starting at</span>
