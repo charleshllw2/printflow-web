@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import Hero from "../components/Hero";
 import PricingCards from "../components/PricingCards";
-import CinematicPrinter from "../components/CinematicPrinter";
+import ProductionProcess from "../components/ProductionProcess";
 import HowItWorks from "../components/HowItWorks";
 import WhyChooseUs from "../components/WhyChooseUs";
 import StarterPackPromo from "../components/StarterPackPromo";
@@ -56,7 +56,7 @@ export default function Home() {
             />
             <Hero />
             <PricingCards />
-            <CinematicPrinter />
+            <ProductionProcess />
             <HowItWorks />
             <LocalServiceArea />
             <WhyChooseUs />
