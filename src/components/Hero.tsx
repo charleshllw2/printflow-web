@@ -36,8 +36,8 @@ export default function Hero() {
                 <div className="hero-image-right">
                     <div className="hero-image-wrapper">
                         <img 
-                            src="/hero-apparel.jpg" 
-                            alt="High-quality custom printed t-shirts and hoodies in PrintFlow Studio colors" 
+                            src="/hero-apparel-group.jpg" 
+                            alt="Group of people wearing custom printed t-shirts and hoodies" 
                             className="hero-apparel-img"
                         />
                         {/* Subtle background glow effect */}
