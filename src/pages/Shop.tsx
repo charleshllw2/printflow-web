@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import { products, getActiveCategories, defaultDescription, defaultPressingInstructions } from '../data/products';
 import type { Product } from '../data/products';
+import CustomUploadModal from '../components/CustomUploadModal';
 import '../styles/Shop.css';
 
 export default function Shop() {
@@ -314,54 +315,63 @@ export default function Shop() {
             {/* QUICK VIEW MODAL */}
             {selectedProduct && activeSize && (
                 <div className="modal-overlay" onClick={closeQuickView}>
-                    <div className="modal-content" onClick={e => e.stopPropagation()}>
-                        <button className="modal-close" onClick={closeQuickView} aria-label="Close modal">×</button>
-                        
-                        <div className="modal-grid">
-                            <div className="modal-image-col">
-                                <img src={selectedProduct.image} alt={selectedProduct.title} className="modal-image" />
-                            </div>
-                            <div className="modal-info-col">
-                                <div className="modal-category">{selectedProduct.category}</div>
-                                <h2>{selectedProduct.title}</h2>
-                                <div className="modal-price">${activeSize.price.toFixed(2)}</div>
-                                
-                                <p className="modal-desc">{selectedProduct.description || defaultDescription}</p>
-                                
-                                <div className="modal-form">
-                                    <div className="form-group">
-                                        <label htmlFor="size-select">Select Size</label>
-                                        <select 
-                                            id="size-select" 
-                                            value={selectedSizeId} 
-                                            onChange={(e) => setSelectedSizeId(e.target.value)}
-                                        >
-                                            {selectedProduct.sizes.map(size => (
-                                                <option key={size.id} value={size.id}>
-                                                    {size.label} - ${size.price.toFixed(2)}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <p className="size-hint">Exact Dimensions: {activeSize.dimensions}</p>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="qty">Quantity</label>
-                                        <input 
-                                            type="number" 
-                                            id="qty" 
-                                            min="1" 
-                                            max={activeSize.inventory} 
-                                            value={quantity} 
-                                            onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                                        />
-                                    </div>
-
-                                    <div className="checkout-notices">
-                                        <div className="transfer-only-notice">
-                                            <strong>TRANSFER ONLY</strong> — This purchase does not include a shirt or garment.
+                    {selectedProduct.category === 'Custom' ? (
+                        <CustomUploadModal 
+                            product={selectedProduct} 
+                            activeSize={activeSize} 
+                            selectedSizeId={selectedSizeId} 
+                            setSelectedSizeId={setSelectedSizeId} 
+                            closeModal={closeQuickView} 
+                        />
+                    ) : (
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <button className="modal-close" onClick={closeQuickView} aria-label="Close modal">×</button>
+                            
+                            <div className="modal-grid">
+                                <div className="modal-image-col">
+                                    <img src={selectedProduct.image} alt={selectedProduct.title} className="modal-image" />
+                                </div>
+                                <div className="modal-info-col">
+                                    <div className="modal-category">{selectedProduct.category}</div>
+                                    <h2>{selectedProduct.title}</h2>
+                                    <div className="modal-price">${activeSize.price.toFixed(2)}</div>
+                                    
+                                    <p className="modal-desc">{selectedProduct.description || defaultDescription}</p>
+                                    
+                                    <div className="modal-form">
+                                        <div className="form-group">
+                                            <label htmlFor="size-select">Select Size</label>
+                                            <select 
+                                                id="size-select" 
+                                                value={selectedSizeId} 
+                                                onChange={(e) => setSelectedSizeId(e.target.value)}
+                                            >
+                                                {selectedProduct.sizes.map(size => (
+                                                    <option key={size.id} value={size.id}>
+                                                        {size.label} - ${size.price.toFixed(2)}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <p className="size-hint">Exact Dimensions: {activeSize.dimensions}</p>
                                         </div>
-                                        <label className="acknowledgment-checkbox">
+
+                                        <div className="form-group">
+                                            <label htmlFor="qty">Quantity</label>
+                                            <input 
+                                                type="number" 
+                                                id="qty" 
+                                                min="1" 
+                                                max={activeSize.inventory} 
+                                                value={quantity} 
+                                                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                                            />
+                                        </div>
+
+                                        <div className="checkout-notices">
+                                            <div className="transfer-only-notice">
+                                                <strong>TRANSFER ONLY</strong> — This purchase does not include a shirt or garment.
+                                            </div>
+                                            <label className="acknowledgment-checkbox">
                                             <input 
                                                 type="checkbox" 
                                                 checked={acknowledgmentChecked}
@@ -387,6 +397,7 @@ export default function Shop() {
                             </div>
                         </div>
                     </div>
+                    )}
                 </div>
             )}
         </Layout>
