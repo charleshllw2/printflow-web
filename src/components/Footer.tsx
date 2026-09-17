@@ -46,7 +46,6 @@ export default function Footer() {
                         <h4>Support</h4>
                         <ul>
                             <li><Link to="/file-guidelines">File Guidelines</Link></li>
-                            <li><Link to="/about">About Us</Link></li>
                             <li><Link to="/faq">FAQ</Link></li>
                             <li><Link to="/request-quote">Request a Quote</Link></li>
                         </ul>

@@ -45,9 +45,6 @@ export default function Navbar() {
                             <Link to="/file-guidelines">File Guidelines</Link>
                         </li>
                         <li>
-                            <Link to="/about">About</Link>
-                        </li>
-                        <li>
                             <Link to="/faq">FAQ</Link>
                         </li>
                         <li>
@@ -78,7 +75,6 @@ export default function Navbar() {
                         <Link to="/dtf-transfers" onClick={() => setMobileMenuOpen(false)}>Shop Transfers</Link>
                         <Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
                         <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>
-                        <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
                         <Link to="/faq" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
                         <Link to="/request-quote" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
                     </div>
