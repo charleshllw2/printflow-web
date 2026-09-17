@@ -76,13 +76,6 @@ export const products: Product[] = [
         category: 'Faith',
         isNew: true,
         sizes: getStandardSizes()
-    },
-    {
-        id: 'prod-6',
-        title: 'Seasonal Design (Placeholder)',
-        image: '/shop/social-battery.jpg', // Placeholder for 6th item
-        category: 'Seasonal',
-        sizes: getStandardSizes()
     }
 ];
 
