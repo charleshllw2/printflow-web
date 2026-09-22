@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const stripe = stripeKey ? new Stripe(stripeKey) : null;
 const SITE_URL = process.env.SITE_URL || "https://www.printflowstudio.com";
 const PRODUCTS = {
   "PF-001": "Pumpkin Sips Become Twinkle-Light Nights",
