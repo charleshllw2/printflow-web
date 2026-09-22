@@ -1,0 +1,70 @@
+// @ts-nocheck
+export const SHOP_PRODUCTS = [
+  {
+    id: "PF-001",
+    name: "Pumpkin Sips Become Twinkle-Light Nights",
+    category: "Fall to Christmas",
+    price: 27.99,
+    mockup: "/shop/7bbb19ac89c8587f68dbd3b70e5f680106d86c03.jpg",
+    artwork: "/shop/d699f89ee93e2371b8d2d493972c65a93d936195.jpg",
+  },
+  {
+    id: "PF-002",
+    name: "Autumn Bows Before Christmas Glows",
+    category: "Fall to Christmas",
+    price: 27.99,
+    mockup: "/shop/8541e6e3c1127721ee5c255dc0c7ba40f1d545c5.jpg",
+    artwork: "/shop/1960bb5e4efe7618e8bf0a7cba6b46023c23be5a.jpg",
+  },
+  {
+    id: "PF-003",
+    name: "Cozy Starts With Leaves and Ends in Lights",
+    category: "Fall to Christmas",
+    price: 27.99,
+    mockup: "/shop/3f77ba27750e4e06a673b22fb34108659de7bfa8.jpg",
+    artwork: "/shop/d368ee8059198f60961fd15c877d6b58f67ffe1c.jpg",
+  },
+  {
+    id: "PF-004",
+    name: "When the Pumpkins Glow, the Sleigh Bells Follow",
+    category: "Fall to Christmas",
+    price: 27.99,
+    mockup: "/shop/2f2c338be686639adba926e5207583164ab1d67f.jpg",
+    artwork: "/shop/bb0f22e6831a5733995186f0146930374b085979.jpg",
+  },
+  {
+    id: "PF-005",
+    name: "Grateful by Day, Ghostly by Night",
+    category: "Halloween",
+    price: 27.99,
+    mockup: "/shop/3ee47f3cdc64ee6164ee8cae480890fe166146e7.jpg",
+    artwork: "/shop/b950526891c46a4258ce2723c1ff18af6818286c.jpg",
+  },
+  {
+    id: "PF-006",
+    name: "October Dressed the World in My Colors",
+    category: "Fall",
+    price: 27.99,
+    mockup: "/shop/3569748afbc7c0b555774e732abe891ba472e501.jpg",
+    artwork: "/shop/fd9d0ed8b74d5da6a98ef1f8f0d6688906efb2e7.jpg",
+  },
+  {
+    id: "PF-007",
+    name: "My Happy Place Has Pumpkins and Moonlight",
+    category: "Halloween",
+    price: 27.99,
+    mockup: "/shop/40f23fbc6b241c6b863053d93e2322d514cbe34b.jpg",
+    artwork: "/shop/59635ef52b946d3724fdd3becd623e1edb836139.jpg",
+  },
+  {
+    id: "PF-008",
+    name: "Wrapped in Warmth, Stirred with Spice",
+    category: "Fall",
+    price: 27.99,
+    mockup: "/shop/64021007cb9ddeea692c834e41ffb2cb1ed51e63.jpg",
+    artwork: "/shop/0608fabf51e3d0626f1bc51724b4701807109707.jpg",
+  },
+];
+
+export const STANDARD_SIZES = ["S", "M", "L", "XL"];
+export const STANDARD_COLORS = ["Black", "White", "Sand"];

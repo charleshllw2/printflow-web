@@ -8,6 +8,9 @@ export default function Quote() {
     const [searchParams] = useSearchParams();
     const packageParam = searchParams.get("package");
     const serviceParam = searchParams.get("service");
+    const designParam = searchParams.get("design");
+    const designNameParam = searchParams.get("designName");
+    const requestParam = searchParams.get("request");
 
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [deliveryMethod, setDeliveryMethod] = useState('');
@@ -21,6 +24,8 @@ export default function Quote() {
         defaultService = "Business apparel";
         defaultQuantity = "10";
         defaultNotes = "Package Request: Business Apparel Starter Pack";
+    } else if (designParam && designNameParam && requestParam) {
+        defaultNotes = `I’m interested in ${designParam} — ${designNameParam}. I would like pricing for ${requestParam}.`;
     } else if (serviceParam === 'custom-t-shirts') {
         defaultService = "Custom T-shirts";
     } else if (serviceParam === 'dtf-transfers') {

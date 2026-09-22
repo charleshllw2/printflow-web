@@ -33,6 +33,9 @@ export default function Navbar() {
                             <Link to="/" onClick={() => window.scrollTo(0, 0)}>Home</Link>
                         </li>
                         <li>
+                            <Link to="/shop">Shop Designs</Link>
+                        </li>
+                        <li>
                             <Link to="/dtf-transfers">Shop Transfers</Link>
                         </li>
                         <li>
@@ -69,6 +72,7 @@ export default function Navbar() {
                     {/* Mobile Menu */}
                     <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
                         <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+                        <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop Designs</Link>
                         <Link to="/dtf-transfers" onClick={() => setMobileMenuOpen(false)}>Shop Transfers</Link>
                         <Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
                         <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>

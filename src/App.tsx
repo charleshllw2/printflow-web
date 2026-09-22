@@ -18,6 +18,7 @@ import DesignServices from "./pages/Services/DesignServices";
 import DIYPrintSheets from "./pages/Services/DIYPrintSheets";
 import Services from "./pages/Services";
 import Shop from "./pages/Shop";
+import ShopCatalog from "./pages/ShopPage";
 import Quote from "./pages/Quote";
 import FAQ from "./pages/FAQ";
 
@@ -71,6 +72,7 @@ export default function App() {
         <Route path="/artwork-policy" element={<ArtworkPolicy />} />
 
         {/* Catch-all 404 */}
+        <Route path="/shop" element={<ShopCatalog />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -22,6 +22,9 @@ export default function Hero() {
                         <Link to="/request-quote" className="btn hero-btn btn-primary">
                             Get a Fast Quote
                         </Link>
+                        <Link to="/shop" className="btn hero-btn btn-primary">
+                            Shop Designs
+                        </Link>
                         <Link to="/services" className="btn hero-btn btn-outline">
                             Explore Our Services
                         </Link>
