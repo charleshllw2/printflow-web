@@ -19,6 +19,7 @@ import DIYPrintSheets from "./pages/Services/DIYPrintSheets";
 import Services from "./pages/Services";
 import Shop from "./pages/Shop";
 import ShopCatalog from "./pages/ShopPage";
+import ShopProductPage from "./pages/ShopProductPage";
 import Quote from "./pages/Quote";
 import FAQ from "./pages/FAQ";
 
@@ -73,6 +74,7 @@ export default function App() {
 
         {/* Catch-all 404 */}
         <Route path="/shop" element={<ShopCatalog />} />
+        <Route path="/shop/:slug" element={<ShopProductPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

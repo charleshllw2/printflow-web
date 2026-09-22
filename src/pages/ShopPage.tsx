@@ -1,11 +1,14 @@
 import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { SHOP_PRODUCTS, STANDARD_COLORS, STANDARD_SIZES } from "../data/shopProducts";
+import { SHOP_PRODUCTS } from "../data/shopProducts";
+import Layout from "../components/Layout";
+import SEO from "../components/SEO";
 import "./shop.css";
 
 interface Product {
   id: string;
   name: string;
+  slug: string;
   category: string;
   price: number;
   mockup: string;
@@ -16,92 +19,31 @@ interface ProductCardProps {
   product: Product;
 }
 
-
 function ProductCard({ product }: ProductCardProps) {
-  const [view, setView] = useState("mockup");
-  const [size, setSize] = useState("M");
-  const [color, setColor] = useState("Black");
-  const [quantity, setQuantity] = useState(1);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-
-  const quoteQuery = new URLSearchParams({
-    design: product.id,
-    designName: product.name,
-    request: "custom apparel or DTF transfer",
-  }).toString();
-
-  async function buyNow() {
-    setBusy(true);
-    setError("");
-    try {
-      const response = await fetch("/api/create-shop-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id, size, color, quantity }),
-      });
-      const data = await response.json();
-      if (!response.ok || !data.url) throw new Error(data.error || "Checkout could not be started.");
-      window.location.assign(data.url);
-    } catch (checkoutError: any) {
-      setError(checkoutError.message || "An unexpected error occurred.");
-      setBusy(false);
-    }
-  }
-
   return (
     <article className="shop-card">
       <div className="shop-image-wrap">
-        <img
-          src={view === "mockup" ? product.mockup : product.artwork}
-          alt={view === "mockup" ? `${product.name} shirt mockup` : `${product.name} artwork`}
-          loading="lazy"
-          onClick={() => setView(view === "mockup" ? "artwork" : "mockup")}
-          style={{ cursor: "pointer" }}
-        />
-        <div className="shop-image-tabs" aria-label="Choose product image">
-          <button className={view === "mockup" ? "active" : ""} onClick={() => setView("mockup")}>Mockup</button>
-          <button className={view === "artwork" ? "active" : ""} onClick={() => setView("artwork")}>Design</button>
-        </div>
+        <Link to={`/shop/${product.slug}`} tabIndex={-1}>
+          <img
+            src={product.mockup}
+            alt={`${product.name} shirt mockup`}
+            loading="lazy"
+          />
+        </Link>
       </div>
 
       <div className="shop-card-body">
-        <span className="shop-id">{product.id} · {product.category}</span>
-        <h2 onClick={() => setView(view === "mockup" ? "artwork" : "mockup")} style={{ cursor: "pointer" }}>{product.name}</h2>
-        <p className="shop-price">Standard tee <strong>${product.price.toFixed(2)}</strong></p>
+        <span className="shop-id">{product.category}</span>
+        <h2><Link to={`/shop/${product.slug}`}>{product.name}</Link></h2>
+        <p className="shop-price"><strong>${product.price.toFixed(2)}</strong></p>
 
-        <div className="shop-options">
-          <label>Size
-            <select value={size} onChange={(event: any) => setSize(event.target.value)}>
-              {STANDARD_SIZES.map((value) => <option key={value}>{value}</option>)}
-            </select>
-          </label>
-          <label>Color
-            <select value={color} onChange={(event: any) => setColor(event.target.value)}>
-              {STANDARD_COLORS.map((value) => <option key={value}>{value}</option>)}
-            </select>
-          </label>
-          <label>Qty
-            <select value={quantity} onChange={(event: any) => setQuantity(Number(event.target.value))}>
-              {[1, 2, 3, 4, 5].map((value) => <option key={value}>{value}</option>)}
-            </select>
-          </label>
-        </div>
-
-        <button className="shop-buy" onClick={buyNow} disabled={busy}>
-          {busy ? "Opening secure checkout…" : "Buy Standard Tee"}
-        </button>
-        <Link className="shop-custom" to={`/request-quote?${quoteQuery}`}>
-          Request another garment or DTF transfer
+        <Link className="shop-buy" to={`/shop/${product.slug}`} style={{ textDecoration: 'none' }}>
+          View Design
         </Link>
-        {error && <p className="shop-error" role="alert">{error}</p>}
       </div>
     </article>
   );
 }
-
-import Layout from "../components/Layout";
-import SEO from "../components/SEO";
 
 export default function Shop() {
   const [searchParams] = useSearchParams();
@@ -144,31 +86,17 @@ export default function Shop() {
                   "item": "https://www.printflowstudio.com/shop"
                 }
               ]
-            },
-            ...SHOP_PRODUCTS.map(p => ({
-              "@type": "Product",
-              "name": p.name,
-              "image": "https://www.printflowstudio.com" + p.mockup,
-              "description": "Original design by PrintFlow Studio. Available as a standard tee or custom DTF transfer.",
-              "sku": p.id,
-              "offers": {
-                "@type": "Offer",
-                "url": "https://www.printflowstudio.com/shop",
-                "priceCurrency": "USD",
-                "price": p.price.toFixed(2),
-                "availability": "https://schema.org/InStock"
-              }
-            }))
+            }
           ]
         })}
       />
       <main className="shop-page">
         <section className="shop-intro">
           <p className="shop-eyebrow">PRINTFLOW STUDIO DESIGN SHOP</p>
-          <h1>Pick a design. Make it yours.</h1>
-          <p className="shop-reassurance" style={{ marginTop: '5px', marginBottom: '15px' }}><strong>Original designs • Quality DTF printing • Chattanooga pickup • Nationwide shipping</strong></p>
-          <p>Shop a standard tee online, or request another garment, size, color, or ready-to-press DTF transfer.</p>
-          <p className="shop-custom-path" style={{ marginTop: '10px' }}>Don't see exactly what you want? <Link to="/request-quote" style={{ textDecoration: 'underline', color: 'var(--accent-color, #D000E8)', fontWeight: 'bold' }}>Request a custom design or custom shirt.</Link></p>
+          <h1>Shop PrintFlow Studio</h1>
+          <p className="shop-reassurance" style={{ marginTop: '5px', marginBottom: '15px' }}><strong>Original Designs • Quality DTF Printing • Chattanooga Pickup • Nationwide Shipping</strong></p>
+          <p>Original designs. Quality apparel. Made by PrintFlow Studio.</p>
+          <button className="btn btn-primary" onClick={() => window.scrollTo({ top: (document.querySelector('.shop-filters')?.getBoundingClientRect().top || 0) + window.scrollY - 100, behavior: 'smooth'})} style={{ marginTop: '20px' }}>Shop Designs</button>
         </section>
 
         {searchParams.get("paid") === "1" && (
@@ -186,7 +114,15 @@ export default function Shop() {
         </nav>
 
         <section className="shop-grid" aria-live="polite">
-          {products.map((product) => <ProductCard key={product.id} product={product} />)}
+          {products.map((product) => <ProductCard key={product.id} product={product as Product} />)}
+        </section>
+
+        <section className="shop-custom-cta" style={{ textAlign: 'center', marginTop: '60px', padding: '40px 20px', background: '#f9f9f9', borderRadius: '16px' }}>
+          <h2>Don't See What You're Looking For?</h2>
+          <p style={{ margin: '15px 0 25px', color: '#555' }}>Have an idea of your own? PrintFlow Studio can help bring it to life.</p>
+          <Link to="/request-quote" className="btn btn-outline" style={{ display: 'inline-block', padding: '12px 30px', fontWeight: 'bold' }}>
+            Request a Custom Design
+          </Link>
         </section>
       </main>
     </Layout>

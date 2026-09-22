@@ -3,6 +3,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-001",
     name: "Pumpkin Sips Become Twinkle-Light Nights",
+    slug: "pumpkin-sips-become-twinkle-light-nights",
     category: "Fall to Christmas",
     price: 27.99,
     mockup: "/shop/7bbb19ac89c8587f68dbd3b70e5f680106d86c03.jpg",
@@ -11,6 +12,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-002",
     name: "Autumn Bows Before Christmas Glows",
+    slug: "autumn-bows-before-christmas-glows",
     category: "Fall to Christmas",
     price: 27.99,
     mockup: "/shop/8541e6e3c1127721ee5c255dc0c7ba40f1d545c5.jpg",
@@ -19,6 +21,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-003",
     name: "Cozy Starts With Leaves and Ends in Lights",
+    slug: "cozy-starts-with-leaves-and-ends-in-lights",
     category: "Fall to Christmas",
     price: 27.99,
     mockup: "/shop/3f77ba27750e4e06a673b22fb34108659de7bfa8.jpg",
@@ -27,6 +30,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-004",
     name: "When the Pumpkins Glow, the Sleigh Bells Follow",
+    slug: "when-the-pumpkins-glow-the-sleigh-bells-follow",
     category: "Fall to Christmas",
     price: 27.99,
     mockup: "/shop/2f2c338be686639adba926e5207583164ab1d67f.jpg",
@@ -35,6 +39,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-005",
     name: "Grateful by Day, Ghostly by Night",
+    slug: "grateful-by-day-ghostly-by-night",
     category: "Halloween",
     price: 27.99,
     mockup: "/shop/3ee47f3cdc64ee6164ee8cae480890fe166146e7.jpg",
@@ -43,6 +48,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-006",
     name: "October Dressed the World in My Colors",
+    slug: "october-dressed-the-world-in-my-colors",
     category: "Fall",
     price: 27.99,
     mockup: "/shop/3569748afbc7c0b555774e732abe891ba472e501.jpg",
@@ -51,6 +57,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-007",
     name: "My Happy Place Has Pumpkins and Moonlight",
+    slug: "my-happy-place-has-pumpkins-and-moonlight",
     category: "Halloween",
     price: 27.99,
     mockup: "/shop/40f23fbc6b241c6b863053d93e2322d514cbe34b.jpg",
@@ -59,6 +66,7 @@ export const SHOP_PRODUCTS = [
   {
     id: "PF-008",
     name: "Wrapped in Warmth, Stirred with Spice",
+    slug: "wrapped-in-warmth-stirred-with-spice",
     category: "Fall",
     price: 27.99,
     mockup: "/shop/64021007cb9ddeea692c834e41ffb2cb1ed51e63.jpg",
