@@ -1,0 +1,118 @@
+const fs = require('fs');
+
+const shopPath = 'src/pages/ShopPage.tsx';
+let shopContent = fs.readFileSync(shopPath, 'utf8');
+
+// 1. Remove @ts-nocheck
+shopContent = shopContent.replace('// @ts-nocheck\n', '');
+
+// 2. Add Types
+const types = `
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  mockup: string;
+  artwork: string;
+}
+
+interface ProductCardProps {
+  product: Product;
+}
+`;
+shopContent = shopContent.replace('import "./shop.css";', 'import "./shop.css";\n' + types);
+
+// 3. Fix ProductCard signature
+shopContent = shopContent.replace('function ProductCard({ product }) {', 'function ProductCard({ product }: ProductCardProps) {');
+
+// 4. Update SEO tags & Schema
+const oldSEO = `<SEO \n        title="Shop Original T-Shirt Designs | PrintFlow Studio"\n        description="Shop original PrintFlow Studio T-shirt designs or request custom apparel and ready-to-press DTF transfers in Chattanooga, Tennessee."\n      />`;
+
+const newSEO = `<SEO 
+        title="Shop Custom T-Shirts & Apparel | PrintFlow Studio"
+        description="Shop original PrintFlow Studio apparel and designs. Quality DTF printing, fast Chattanooga pickup, and nationwide shipping. Buy online today!"
+        canonicalUrl="https://www.printflowstudio.com/shop"
+        schema={JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "CollectionPage",
+              "@id": "https://www.printflowstudio.com/shop",
+              "name": "Shop Custom T-Shirts & Apparel | PrintFlow Studio",
+              "description": "Shop original PrintFlow Studio apparel and designs. Quality DTF printing, fast Chattanooga pickup, and nationwide shipping. Buy online today!",
+              "url": "https://www.printflowstudio.com/shop"
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://www.printflowstudio.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Shop",
+                  "item": "https://www.printflowstudio.com/shop"
+                }
+              ]
+            },
+            ...SHOP_PRODUCTS.map(p => ({
+              "@type": "Product",
+              "name": p.name,
+              "image": "https://www.printflowstudio.com" + p.mockup,
+              "description": "Original design by PrintFlow Studio. Available as a standard tee or custom DTF transfer.",
+              "sku": p.id,
+              "offers": {
+                "@type": "Offer",
+                "url": "https://www.printflowstudio.com/shop",
+                "priceCurrency": "USD",
+                "price": p.price.toFixed(2),
+                "availability": "https://schema.org/InStock"
+              }
+            }))
+          ]
+        })}
+      />`;
+shopContent = shopContent.replace(oldSEO, newSEO);
+
+// 5. Add Reassurance & Custom Path
+const oldIntro = `<section className="shop-intro">
+          <p className="shop-eyebrow">PRINTFLOW STUDIO DESIGN SHOP</p>
+          <h1>Pick a design. Make it yours.</h1>
+          <p>Shop a standard tee online, or request another garment, size, color, or ready-to-press DTF transfer.</p>
+        </section>`;
+
+const newIntro = `<section className="shop-intro">
+          <p className="shop-eyebrow">PRINTFLOW STUDIO DESIGN SHOP</p>
+          <h1>Pick a design. Make it yours.</h1>
+          <p className="shop-reassurance"><strong>Original designs • Quality DTF printing • Chattanooga pickup • Nationwide shipping</strong></p>
+          <p>Shop a standard tee online, or request another garment, size, color, or ready-to-press DTF transfer.</p>
+          <p className="shop-custom-path">Don't see exactly what you want? <Link to="/request-quote" style={{ textDecoration: 'underline', color: 'var(--accent-color, #e5482d)' }}>Request a custom design or custom shirt.</Link></p>
+        </section>`;
+shopContent = shopContent.replace(oldIntro, newIntro);
+
+// 6. Make Image & Title Clickable
+const oldImage = `<img
+          src={view === "mockup" ? product.mockup : product.artwork}
+          alt={view === "mockup" ? \`\${product.name} shirt mockup\` : \`\${product.name} artwork\`}
+          loading="lazy"
+        />`;
+const newImage = `<img
+          src={view === "mockup" ? product.mockup : product.artwork}
+          alt={view === "mockup" ? \`\${product.name} shirt mockup\` : \`\${product.name} artwork\`}
+          loading="lazy"
+          onClick={() => setView(view === "mockup" ? "artwork" : "mockup")}
+          style={{ cursor: 'pointer' }}
+        />`;
+shopContent = shopContent.replace(oldImage, newImage);
+
+const oldTitle = `<h2>{product.name}</h2>`;
+const newTitle = `<h2 onClick={() => setView(view === "mockup" ? "artwork" : "mockup")} style={{ cursor: 'pointer' }}>{product.name}</h2>`;
+shopContent = shopContent.replace(oldTitle, newTitle);
+
+fs.writeFileSync(shopPath, shopContent);
+console.log("Updated ShopPage.tsx successfully.");
