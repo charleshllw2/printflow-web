@@ -117,9 +117,9 @@ export default function Shop() {
           {products.map((product) => <ProductCard key={product.id} product={product as Product} />)}
         </section>
 
-        <section className="shop-custom-cta" style={{ textAlign: 'center', marginTop: '60px', padding: '40px 20px', background: '#f9f9f9', borderRadius: '16px' }}>
+        <section className="shop-custom-cta" style={{ textAlign: 'center', marginTop: '60px', padding: '40px 20px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
           <h2>Don't See What You're Looking For?</h2>
-          <p style={{ margin: '15px 0 25px', color: '#555' }}>Have an idea of your own? PrintFlow Studio can help bring it to life.</p>
+          <p style={{ margin: '15px 0 25px', color: 'var(--text-secondary)' }}>Have an idea of your own? PrintFlow Studio can help bring it to life.</p>
           <Link to="/request-quote" className="btn btn-outline" style={{ display: 'inline-block', padding: '12px 30px', fontWeight: 'bold' }}>
             Request a Custom Design
           </Link>
