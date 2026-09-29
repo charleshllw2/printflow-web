@@ -196,7 +196,7 @@ export default function Shop() {
                     <div className="promo-box" style={{display: 'inline-block', background: 'white', color: '#111', padding: '2rem', borderRadius: '0.5rem', boxShadow: '0 10px 25px rgba(0,0,0,0.2)'}}>
                         <div style={{fontWeight: 'bold', fontSize: '1.5rem', color: 'var(--accent-primary, #D000E8)', marginBottom: '0.5rem'}}>3 Transfers for $27.99</div>
                         <p style={{fontSize: '0.9rem', color: '#666', marginBottom: '1.5rem'}}>Mix and match eligible Adult Standard designs.</p>
-                        <button className="btn btn-outline" disabled style={{opacity: 0.6, cursor: 'not-allowed'}}>Bundle Feature Coming Soon</button>
+                        {/* Bundle feature hidden until ready */}
                     </div>
                 </div>
             </section>

@@ -38,7 +38,7 @@ export default function Navbar() {
                         <li><Link to="/business-shirts-chattanooga">Business Apparel</Link></li>
                         <li><Link to="/dtf-transfers-chattanooga">DTF Transfers</Link></li>
                         <li><Link to="/shop">Shop</Link></li>
-                        <li><Link to="/#portfolio">Our Work</Link></li>
+                        <li><Link to="/our-work">Our Work</Link></li>
                         <li><Link to="/#how-it-works">How It Works</Link></li>
                         <li><Link to="/faq">FAQ</Link></li>
                     </ul>

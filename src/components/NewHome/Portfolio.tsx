@@ -6,24 +6,24 @@ export default function Portfolio() {
         
         <div className="portfolio-editorial-grid">
           <div className="portfolio-item">
-            <div className="portfolio-image placeholder-img"></div>
+            <div className="portfolio-image" style={{ backgroundImage: "url('/shop/management-dogs.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
             <div className="portfolio-meta">
               <h3>Custom Business Apparel</h3>
-              <p>DTF Printed • Next Level Tees</p>
+              <p>DTF Printed • Premium Tees</p>
             </div>
           </div>
           <div className="portfolio-item">
-            <div className="portfolio-image placeholder-img"></div>
-            <div className="portfolio-meta">
-              <h3>Church Event Shirts</h3>
-              <p>DTF Printed • Gildan Softstyle</p>
-            </div>
-          </div>
-          <div className="portfolio-item">
-            <div className="portfolio-image placeholder-img"></div>
+            <div className="portfolio-image" style={{ backgroundImage: "url('/shop/social-battery.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
             <div className="portfolio-meta">
               <h3>Creator Merch</h3>
-              <p>DTF Printed • Premium Hoodies</p>
+              <p>DTF Printed • Premium Apparel</p>
+            </div>
+          </div>
+          <div className="portfolio-item">
+            <div className="portfolio-image" style={{ backgroundImage: "url('/shop/chattanooga-bridge.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+            <div className="portfolio-meta">
+              <h3>Local Chattanooga Brand</h3>
+              <p>DTF Printed • High-Quality Garments</p>
             </div>
           </div>
         </div>

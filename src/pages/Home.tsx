@@ -5,9 +5,10 @@ import SocialProof from "../components/NewHome/SocialProof";
 import Portfolio from "../components/NewHome/Portfolio";
 import HowItWorks from "../components/NewHome/HowItWorks";
 import ShopByNeed from "../components/NewHome/ShopByNeed";
+import SingleShirt from "../components/NewHome/SingleShirt";
 import BusinessApparel from "../components/NewHome/BusinessApparel";
 import OwnerStory from "../components/NewHome/OwnerStory";
-import BehindTheScenes from "../components/NewHome/BehindTheScenes";
+// import BehindTheScenes from "../components/NewHome/BehindTheScenes";
 import "../styles/NewHome.css";
 
 export default function Home() {
@@ -43,11 +44,12 @@ export default function Home() {
                 <Hero />
                 <SocialProof />
                 <Portfolio />
+                <SingleShirt />
                 <HowItWorks />
                 <ShopByNeed />
                 <BusinessApparel />
                 <OwnerStory />
-                <BehindTheScenes />
+                {/* <BehindTheScenes /> - Hidden until real production videos/photos are ready */}
             </main>
         </Layout>
     );

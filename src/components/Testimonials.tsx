@@ -53,7 +53,7 @@ export default function Testimonials() {
                     </>
                 ) : (
                     <div className="section-header text-center" style={{ maxWidth: '600px', margin: '0 auto' }}>
-                        <h2>Customer Reviews Coming Soon</h2>
+                        <h2>Client Testimonials</h2>
                         <p style={{ marginTop: '20px', color: 'var(--text-secondary)' }}>
                             We’re building this section with feedback and project photos from real PrintFlow Studio customers.
                         </p>

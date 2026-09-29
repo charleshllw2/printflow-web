@@ -1,0 +1,37 @@
+.sticky-mobile-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border-color);
+  padding: 15px 20px;
+  z-index: 1000;
+  display: none;
+}
+
+.sticky-cta-container {
+  display: flex;
+  gap: 15px;
+  max-width: 100%;
+}
+
+.sticky-cta-container .cta-btn {
+  flex: 1;
+  text-align: center;
+  padding: 14px 10px;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .sticky-mobile-cta {
+    display: block;
+  }
+  
+  /* Ensure content doesn't get hidden behind the sticky bar */
+  body {
+    padding-bottom: 80px;
+  }
+}

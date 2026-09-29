@@ -24,6 +24,7 @@ import ShopCart from "./pages/ShopCart";
 import ShopProductPage from "./pages/ShopProductPage";
 import Quote from "./pages/Quote";
 import FAQ from "./pages/FAQ";
+import OurWork from "./pages/OurWork";
 
 // Policies
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/custom-apparel-chattanooga" element={<CustomApparel />} />
           
           {/* Core Pages */}
+          <Route path="/our-work" element={<OurWork />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/request-quote" element={<Quote />} />
 
