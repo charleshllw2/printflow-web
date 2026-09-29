@@ -1,136 +1,83 @@
 import { Link } from 'react-router-dom';
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
-import StarterPackPromo from "../../components/StarterPackPromo";
 
 export default function BusinessApparel() {
   const schema = JSON.stringify({
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "name": "PrintFlow Studio",
-        "image": "https://printflowstudio.com/logo.png",
-        "url": "https://printflowstudio.com",
-        "telephone": "423-681-2218",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Chattanooga",
-          "addressLocality": "Chattanooga",
-          "addressRegion": "TN",
-          "addressCountry": "US"
-        }
-      },
-      {
-        "@type": "Service",
-        "name": "Custom Business Apparel",
-        "provider": {
-          "@id": "https://printflowstudio.com"
-        },
-        "areaServed": {
-          "@type": "City",
-          "name": "Chattanooga"
-        },
-        "description": "Professional custom business apparel in Chattanooga, TN. We print company shirts, employee uniforms, and logo shirts for local businesses."
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://printflowstudio.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Services",
-            "item": "https://printflowstudio.com/services"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Custom Business Apparel Chattanooga"
-          }
-        ]
-      }
-    ]
+    "@type": "Service",
+    "serviceType": "Custom Business Apparel",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "PrintFlow Studio"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Chattanooga"
+    },
+    "description": "Professional custom logo shirts and branded business apparel in Chattanooga."
   });
 
   return (
     <Layout>
       <SEO 
-        title="Custom Business Apparel Chattanooga TN | Logo & Employee Shirts" 
-        description="Need custom business apparel in Chattanooga? PrintFlow Studio offers premium company logo shirts, employee uniforms, and branded apparel."
-        canonicalUrl="https://printflowstudio.com/business-apparel-chattanooga"
+        title="Custom Business Shirts & Logo Apparel Chattanooga | PrintFlow Studio" 
+        description="Make your Chattanooga business look like a brand. Premium custom logo shirts, uniform tees, and business apparel. Starter packs of 10 shirts from $199."
+        canonicalUrl="https://www.printflowstudio.com/business-shirts-chattanooga"
         schema={schema}
       />
-      
-      <div className="bg-dark text-white py-16">
-        <div className="container text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Custom Business Apparel in Chattanooga, TN</h1>
-          <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-300">
-            Professional company shirts and branded apparel designed for Chattanooga small businesses. From staff uniforms to promotional event apparel, we help your team look their best.
-          </p>
-          <Link to="/request-quote?service=business-apparel" className="btn btn-primary btn-lg">
-            Get a Business Apparel Quote
-          </Link>
-        </div>
-      </div>
-
-      <div className="container py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Elevate Your Chattanooga Business</h2>
-            <p className="text-lg text-gray-700 mb-4">
-              Your team's appearance speaks volumes about your brand. Our premium <strong>custom business apparel Chattanooga</strong> services ensure that your employees look professional, cohesive, and recognizable.
-            </p>
-            <p className="text-lg text-gray-700 mb-6">
-              Whether you need rugged <strong>employee shirts Chattanooga</strong> tradesmen can rely on, or soft, premium <strong>company shirts Chattanooga</strong> startups love, PrintFlow Studio has you covered. We specialize in printing high-quality <strong>logo shirts Chattanooga</strong> businesses are proud to wear.
-            </p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-6">
-              <li><strong>Staff Uniforms:</strong> Durable, comfortable apparel for daily wear.</li>
-              <li><strong>Promotional Apparel:</strong> Giveaways that clients will actually want to wear.</li>
-              <li><strong>Event Apparel:</strong> Stand out at your next Chattanooga trade show or local event.</li>
-            </ul>
-            <Link to="/request-quote?package=business-starter" className="btn btn-outline font-bold">Request Business Pricing</Link>
+      <main className="seo-landing-page">
+        <section className="seo-hero">
+          <div className="container">
+            <p className="hero-eyebrow">CHATTANOOGA BUSINESS APPAREL</p>
+            <h1>Make Your Business Look Like a Brand</h1>
+            <p className="hero-support">Professional branded apparel for your employees, crews, and company events. We take your company logo and turn it into high-quality custom shirts your team will actually want to wear.</p>
+            <Link to="/request-quote" className="btn btn-primary mt-4">Quote My Business Shirts</Link>
           </div>
-          <div className="bg-gray-100 p-8 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="text-2xl font-bold mb-4 text-accent">Small Business & Bulk Orders</h3>
-            <p className="text-gray-700 mb-4">
-              We understand the unique needs of Chattanooga small businesses. That's why we make the ordering process simple, whether it's your first time ordering branded apparel Chattanooga TN style, or you need a fast reorder for new hires.
-            </p>
-            <ul className="space-y-3">
-              <li>✓ No massive minimum requirements</li>
-              <li>✓ Fast, local Chattanooga turnaround</li>
-              <li>✓ Simple and rapid reordering for growing teams</li>
-              <li>✓ Volume discounts for bulk orders</li>
-            </ul>
-          </div>
-        </div>
+        </section>
 
-        {/* Feature the existing Business Apparel Starter Pack */}
-        <div className="mb-16">
-            <h2 className="text-3xl font-bold text-center mb-8">Popular Business Packages</h2>
-            <StarterPackPromo />
-        </div>
-
-        <div className="text-center bg-dark text-white p-12 rounded-xl">
-          <h2 className="text-3xl font-bold mb-4">Equip Your Team Today</h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Ready to upgrade your company shirts? Request a custom quote and let PrintFlow Studio provide the best branded apparel for your Chattanooga business.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/request-quote?service=business-apparel" className="btn btn-primary btn-lg">
-              Get a Business Apparel Quote
-            </Link>
-            <Link to="/custom-tshirts-chattanooga" className="btn btn-outline light btn-lg border-white text-white">
-              View All Custom Shirts
-            </Link>
+        <section className="starter-pack-feature section bg-secondary" style={{ textAlign: 'center' }}>
+          <div className="container">
+            <h2 style={{ fontSize: '2.5rem', color: 'var(--accent-color)', marginBottom: '15px' }}>THE BUSINESS STARTER PACK</h2>
+            <p style={{ fontSize: '1.2rem', marginBottom: '30px' }}>10 Custom Logo Shirts Starting at $199</p>
+            <p style={{ maxWidth: '600px', margin: '0 auto 30px', color: 'var(--text-secondary)' }}>Perfect for small businesses, new crews, or seasonal events. Get a consistent, professional look without having to order hundreds of shirts at once.</p>
+            <Link to="/request-quote?service=business_starter_pack" className="btn btn-outline">Claim Starter Pack</Link>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section className="seo-faqs section">
+          <div className="container">
+            <h2>Why Businesses Choose PrintFlow Studio</h2>
+            
+            <div className="faq-grid">
+              <div className="faq-item">
+                <h3>Vibrant Full-Color Logos</h3>
+                <p>Unlike traditional screen printing that limits colors or charges per color, our DTF printing technology allows your company logo to be printed in vibrant, photorealistic full color with no extra setup fees per color.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Flexible Employee Sizing</h3>
+                <p>Order exactly what your crew needs. Mix and match sizes from Small to 3XL so every employee gets a shirt that fits them perfectly.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Durability for the Job</h3>
+                <p>We use high-quality apparel and commercial-grade transfers designed to withstand the wear and tear of daily work environments.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Easy Reordering</h3>
+                <p>Once we have your logo perfectly dialed in, ordering shirts for new hires is incredibly simple and fast.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="seo-cta section bg-secondary" style={{ textAlign: 'center' }}>
+          <div className="container">
+            <h2>Outfit Your Team Today</h2>
+            <p style={{ margin: '20px auto', maxWidth: '600px', color: 'var(--text-secondary)' }}>Upload your company logo and let us know how many shirts you need.</p>
+            <Link to="/request-quote" className="btn btn-primary">Start Business Order</Link>
+          </div>
+        </section>
+      </main>
     </Layout>
   );
 }

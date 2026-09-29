@@ -79,3 +79,22 @@
 .shop-card h2 a:hover {
   color: var(--accent-color, #D000E8);
 }
+
+/* Shopify controls reuse the existing shop palette and card layout. */
+.shop-no-image{display:grid;place-items:center;height:100%;min-height:180px;color:#555;background:#f2f2f2}
+.shop-state{padding:32px 20px;border:1px solid #ddd;border-radius:16px;margin:20px 0;background:#fafafa;color:#333}
+.shop-gallery{display:flex;gap:10px;overflow-x:auto;margin-top:16px;padding:4px}
+.shop-gallery button{flex:0 0 72px;height:90px;border:2px solid transparent;border-radius:8px;overflow:hidden;padding:0;cursor:pointer}.shop-gallery button[aria-pressed=true]{border-color:var(--accent-color,#D000E8)}.shop-gallery img{width:100%;height:100%;object-fit:cover}
+.shop-options input{width:100%;min-height:44px;padding:8px;border:1px solid #ccc;border-radius:10px;font:inherit}
+.shop-description{white-space:pre-line}.shop-price del{font-size:.9em;color:#666}.shop-product-details .shop-success{margin-top:16px}.shop-buy:disabled,.shop-custom:disabled{cursor:not-allowed;opacity:.6}
+.shop-cart-lines{margin-top:24px}.shop-cart-line{display:grid;grid-template-columns:100px 1fr auto;gap:20px;padding:24px 0;border-bottom:1px solid #ddd}.shop-cart-line h2{font-size:1.2rem}.shop-cart-line a{color:inherit}.shop-cart-image{height:125px;overflow:hidden;border-radius:12px}.shop-cart-image img{width:100%;height:100%;object-fit:cover}.shop-cart-quantity{display:flex;align-items:end;flex-wrap:wrap;gap:8px}.shop-cart-quantity button,.shop-cart-quantity select{min-width:44px;min-height:44px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#222;padding:8px;cursor:pointer}.shop-cart-quantity label{display:grid;font-size:.8rem}.shop-cart-summary{max-width:420px;margin:32px 0 0 auto}.shop-cart-summary p{margin:12px 0}.nav-cart{color:inherit;white-space:nowrap;padding:10px;font-weight:700}
+.shop-page button:focus-visible,.shop-product-page button:focus-visible{outline:3px solid #7b2cbf;outline-offset:3px}
+@media(max-width:620px){.shop-cart-line{grid-template-columns:70px minmax(0,1fr);gap:12px}.shop-cart-line>strong{grid-column:2}.shop-cart-image{height:90px}.shop-product-page{padding:100px 15px 50px}}
+/* Keep text readable on the site's dark background and existing white cards. */
+.shop-card,.shop-card h2{color:#171717}.shop-card-body>p:not(.shop-price){color:#555;margin-bottom:12px}
+.shop-product-details .shop-price,.shop-product-details .shop-price strong,.shop-cart-line .shop-price,.shop-cart-line .shop-price strong{color:var(--text-primary,#fff)}
+.shop-product-details .shop-description,.shop-product-meta .shipping-info,.back-to-shop,.shop-product-details .shop-price del{color:var(--text-secondary,#aaa)}
+.shop-product-details .shop-custom{color:var(--text-primary,#fff);border-color:var(--border-color,#555)}
+.shop-options select,.shop-options input{color:#171717}.shop-product-details .shop-error,.shop-page>.shop-error{color:#ff9cab}
+.product-image-container>img{width:100%;height:100%;object-fit:contain;padding:1rem}.product-card:focus-within .quick-view-overlay{opacity:1}
+@media(hover:none){.quick-view-overlay{opacity:1;background:transparent;align-items:end;padding-bottom:40px}}

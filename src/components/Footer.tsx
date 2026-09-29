@@ -14,12 +14,18 @@ export default function Footer() {
                         />
                         <span className="footer-logo-text">PRINTFLOW<span className="text-accent">STUDIO</span></span>
                     </Link>
-                    <p>Custom T-Shirts, DTF Transfers & Premium Apparel for Chattanooga businesses and organizations.</p>
+                    <p>Serving Chattanooga, Tennessee and surrounding communities.</p>
                     
                     <div className="local-contact" style={{marginTop: '20px', fontSize: '0.9rem', color: 'var(--text-secondary)'}}>
-                        <p>📍 <strong>Serving:</strong> Chattanooga, Hixson, East Ridge, Ooltewah & Surrounding Areas</p>
                         <p>📞 <strong>Phone:</strong> <a href="tel:423-681-2218" style={{color: 'inherit'}}>423-681-2218</a></p>
                         <p>✉️ <strong>Email:</strong> <a href="mailto:hello@printflowstudio.com" style={{color: 'inherit'}}>hello@printflowstudio.com</a></p>
+                    </div>
+
+                    <div className="social-links" style={{marginTop: '20px', display: 'flex', gap: '15px'}}>
+                        {/* Verified social profiles */}
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{color: 'var(--text-primary)'}}>Instagram</a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{color: 'var(--text-primary)'}}>Facebook</a>
+                        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" style={{color: 'var(--text-primary)'}}>TikTok</a>
                     </div>
                 </div>
 
@@ -27,39 +33,32 @@ export default function Footer() {
                     <div>
                         <h4>Services</h4>
                         <ul>
-                            <li><Link to="/custom-tshirts-chattanooga">Custom T-Shirts</Link></li>
-                            <li><Link to="/dtf-transfers-chattanooga">DTF Transfers</Link></li>
-                            <li><Link to="/business-apparel-chattanooga">Business Apparel</Link></li>
-                            <li><Link to="/promotional-products-chattanooga">Promotional Products</Link></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4>Organizations</h4>
-                        <ul>
+                            <li><Link to="/custom-t-shirts-chattanooga">Custom Shirts</Link></li>
+                            <li><Link to="/business-shirts-chattanooga">Business Apparel</Link></li>
                             <li><Link to="/church-shirts-chattanooga">Church Shirts</Link></li>
-                            <li><Link to="/school-shirts-chattanooga">School Apparel</Link></li>
-                            <li><Link to="/team-shirts-chattanooga">Sports Teams</Link></li>
-                            <li><Link to="/event-shirts-chattanooga">Events & Fundraisers</Link></li>
+                            <li><Link to="/event-shirts-chattanooga">Event Shirts</Link></li>
+                            <li><Link to="/team-shirts-chattanooga">Team Shirts</Link></li>
+                            <li><Link to="/dtf-transfers-chattanooga">DTF Transfers</Link></li>
                         </ul>
                     </div>
                     <div>
-                        <h4>Support</h4>
+                        <h4>Company</h4>
                         <ul>
-                            <li><Link to="/file-guidelines">File Guidelines</Link></li>
+                            <li><Link to="/shop">Shop</Link></li>
+                            <li><Link to="/#portfolio">Our Work</Link></li>
                             <li><Link to="/faq">FAQ</Link></li>
-                            <li><Link to="/request-quote">Request a Quote</Link></li>
+                            <li><Link to="/request-quote">Get Quote</Link></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div className="container footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+            <div className="container footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px', marginTop: '40px', paddingTop: '20px', borderTop: '1px solid var(--border-color)' }}>
                 <p>&copy; {new Date().getFullYear()} PrintFlow Studio. All rights reserved.</p>
                 <div className="policy-links" style={{display: 'flex', gap: '15px', fontSize: '0.8rem'}}>
                     <Link to="/privacy-policy">Privacy Policy</Link>
-                    <Link to="/terms">Terms & Conditions</Link>
-                    <Link to="/shipping-pickup">Shipping & Pickup</Link>
+                    <Link to="/terms">Terms</Link>
+                    <Link to="/shipping-pickup">Shipping</Link>
                     <Link to="/returns">Returns</Link>
-                    <Link to="/artwork-policy">Artwork Policy</Link>
                 </div>
             </div>
         </footer>

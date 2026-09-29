@@ -1,0 +1,370 @@
+/* Premium Homepage Styles */
+
+.premium-homepage {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* HERO */
+.premium-hero {
+  padding: 160px 20px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+}
+
+.hero-heading {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 30px;
+}
+
+.hero-support {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.hero-trust-strip {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  padding: 20px 0;
+}
+
+.strip-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.strip-content .dot {
+  color: var(--accent-color);
+}
+
+/* SOCIAL PROOF */
+.premium-social-proof {
+  background: var(--bg-primary);
+  text-align: center;
+}
+
+.sp-header h2 {
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+}
+
+.sp-rating {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.sp-rating .stars {
+  color: #fbbf24;
+  margin-right: 10px;
+}
+
+.sp-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.sp-review-card {
+  background: var(--bg-secondary);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.sp-review-card .stars {
+  color: #fbbf24;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.sp-review-card .review-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.sp-review-card .review-author {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.sp-link {
+  color: var(--accent-color);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* PORTFOLIO */
+.portfolio-heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 60px;
+}
+
+.portfolio-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+.portfolio-image {
+  aspect-ratio: 4/5;
+  background: var(--bg-tertiary);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.portfolio-meta h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.portfolio-meta p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* HOW IT WORKS */
+.hiw-heading {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 60px;
+}
+
+.hiw-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto 50px;
+}
+
+.hiw-step {
+  background: var(--bg-secondary);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.hiw-step .step-num {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.hiw-step h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.hiw-step p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.hiw-cta {
+  text-align: center;
+}
+
+/* SHOP BY NEED */
+.sbn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.sbn-card {
+  display: block;
+  background: var(--bg-secondary);
+  padding: 40px 30px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--text-primary);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.sbn-card:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  transform: translateY(-5px);
+}
+
+.sbn-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+
+.sbn-card p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* BUSINESS APPAREL */
+.premium-business-promo {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bp-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bp-content {
+  text-align: center;
+  max-width: 800px;
+}
+
+.bp-content h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  margin-bottom: 30px;
+}
+
+.bp-price-block {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.bp-qty {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.bp-price {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent-color);
+}
+
+.bp-support {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.bp-process {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  list-style: none;
+  margin-bottom: 40px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* OWNER STORY */
+.os-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.os-image {
+  aspect-ratio: 3/4;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+}
+
+.os-content h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 30px;
+  line-height: 1.1;
+}
+
+.os-content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+/* BEHIND THE SCENES */
+.bts-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.bts-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 10px;
+}
+
+.bts-header p {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 0.1em;
+}
+
+.bts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.placeholder-video {
+  aspect-ratio: 9/16;
+  background: var(--bg-tertiary);
+  border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+  .hero-ctas {
+    flex-direction: column;
+  }
+  .strip-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .os-container {
+    grid-template-columns: 1fr;
+  }
+}

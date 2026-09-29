@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 
@@ -6,12 +7,19 @@ export default function EventShirts() {
     <Layout>
       <SEO 
         title="Custom Event Shirts Chattanooga | PrintFlow Studio" 
-        description="Custom shirts for events, fundraisers, festivals, and 5Ks in Chattanooga. High-volume printing with professional quality."
+        description="Make your next Chattanooga event memorable with custom printed shirts. Perfect for family reunions, charity runs, festivals, and celebrations."
+        canonicalUrl="https://www.printflowstudio.com/event-shirts-chattanooga"
       />
-      <div className="container" style={{ paddingTop: '100px', paddingBottom: '100px' }}>
-        <h1>Custom Event Shirts</h1>
-        <p>Information about custom event shirts and fundraisers.</p>
-      </div>
+      <main className="seo-landing-page">
+        <section className="seo-hero">
+          <div className="container">
+            <p className="hero-eyebrow">CUSTOM EVENT APPAREL</p>
+            <h1>Shirts to Remember Your Event</h1>
+            <p className="hero-support">Family reunions, charity 5Ks, corporate retreats, and community festivals. We supply premium custom shirts that make your Chattanooga event truly memorable.</p>
+            <Link to="/request-quote" className="btn btn-primary mt-4">Quote Event Shirts</Link>
+          </div>
+        </section>
+      </main>
     </Layout>
   );
 }

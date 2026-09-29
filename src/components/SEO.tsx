@@ -6,9 +6,11 @@ interface SEOProps {
   canonicalUrl?: string;
   schema?: string;
   ogImage?: string;
+  ogType?: string;
+  ogImageAlt?: string;
 }
 
-export default function SEO({ title, description, canonicalUrl, schema, ogImage }: SEOProps) {
+export default function SEO({ title, description, canonicalUrl, schema, ogImage, ogType = "website", ogImageAlt }: SEOProps) {
   const defaultImage = "https://printflowstudio.com/logo.png";
   const imageToUse = ogImage || defaultImage;
 
@@ -19,8 +21,9 @@ export default function SEO({ title, description, canonicalUrl, schema, ogImage 
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       <meta property="og:image" content={imageToUse} />
+      {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />

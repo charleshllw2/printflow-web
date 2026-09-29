@@ -1,73 +1,233 @@
-.quote-form-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+.quote-page {
+  padding: 120px 20px 80px;
+  min-height: 80vh;
+  background-color: var(--bg-primary);
 }
 
-.quote-grid {
+.quote-container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.quote-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.quote-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: -0.02em;
+}
+
+.quote-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.quote-progress {
+  margin-bottom: 40px;
+  position: relative;
+  background: var(--bg-tertiary);
+  height: 4px;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+.quote-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.quote-progress-text {
+  position: absolute;
+  right: 0;
+  top: -25px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.quote-step-content {
+  background: var(--bg-secondary);
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.quote-step-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.quote-subtext {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  font-size: 0.95rem;
+}
+
+.quote-options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.quote-option-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.quote-option-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.quote-option-btn.selected {
+  background: var(--accent-glow);
+  border-color: var(--accent-color);
+}
+
+.quote-upload-section {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+.quote-label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.quote-file-input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.quote-file-name {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+}
+
+.quote-input {
+  width: 100%;
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  margin-bottom: 15px;
+}
+
+.quote-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.quote-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.quote-form-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-submit-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 1.1rem;
+  margin-top: 20px;
+}
+
+.quote-back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.quote-back-btn:hover {
+  color: var(--text-primary);
+}
+
+.quote-error {
+  color: #ff4444;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.quote-success-content {
+  text-align: center;
+  background: var(--bg-secondary);
+  padding: 60px 40px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.quote-success-content h1 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.quote-success-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+  .quote-options-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.full-width {
-    grid-column: 1 / -1;
-}
-
-.quote-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #374151;
-}
-
-.quote-form input[type="text"],
-.quote-form input[type="email"],
-.quote-form input[type="tel"],
-.quote-form input[type="date"],
-.quote-form input[type="number"],
-.quote-form select,
-.quote-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-}
-
-.quote-form input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    background: #f9fafb;
-    border: 1px dashed #d1d5db;
-    border-radius: 6px;
-}
-
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-}
-
-.checkbox-group label {
-    margin-bottom: 0;
-    font-weight: 400;
-}
-
-@media (max-width: 768px) {
-    .quote-grid {
-        grid-template-columns: 1fr;
-    }
-    .quote-form-container {
-        padding: 20px;
-    }
+  }
 }

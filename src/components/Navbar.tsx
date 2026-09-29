@@ -14,11 +14,16 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const closeMenu = () => {
+      setMobileMenuOpen(false);
+      window.scrollTo(0, 0);
+    };
+
     return (
         <header className="site-header">
             <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
                 <div className="container navbar-container">
-                    <Link to="/" className="navbar-logo" onClick={() => window.scrollTo(0, 0)}>
+                    <Link to="/" className="navbar-logo" onClick={closeMenu}>
                         <img 
                             src="/logo.png" 
                             alt="PrintFlow Studio custom apparel and DTF printing." 
@@ -29,32 +34,18 @@ export default function Navbar() {
 
                     {/* Desktop Menu */}
                     <ul className="navbar-menu">
-                        <li>
-                            <Link to="/" onClick={() => window.scrollTo(0, 0)}>Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/shop">Shop Designs</Link>
-                        </li>
-                        <li>
-                            <Link to="/dtf-transfers">Shop Transfers</Link>
-                        </li>
-                        <li>
-                            <Link to="/services">Services</Link>
-                        </li>
-                        <li>
-                            <Link to="/file-guidelines">File Guidelines</Link>
-                        </li>
-                        <li>
-                            <Link to="/faq">FAQ</Link>
-                        </li>
-                        <li>
-                            <Link to="/request-quote">Contact</Link>
-                        </li>
+                        <li><Link to="/custom-t-shirts-chattanooga">Custom Shirts</Link></li>
+                        <li><Link to="/business-shirts-chattanooga">Business Apparel</Link></li>
+                        <li><Link to="/dtf-transfers-chattanooga">DTF Transfers</Link></li>
+                        <li><Link to="/shop">Shop</Link></li>
+                        <li><Link to="/#portfolio">Our Work</Link></li>
+                        <li><Link to="/#how-it-works">How It Works</Link></li>
+                        <li><Link to="/faq">FAQ</Link></li>
                     </ul>
 
                     <div className="navbar-actions">
                         <Link to="/request-quote" className="btn btn-primary">
-                            Request a Quote
+                            GET A QUOTE
                         </Link>
                     </div>
 
@@ -71,13 +62,14 @@ export default function Navbar() {
 
                     {/* Mobile Menu */}
                     <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
-                        <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-                        <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop Designs</Link>
-                        <Link to="/dtf-transfers" onClick={() => setMobileMenuOpen(false)}>Shop Transfers</Link>
-                        <Link to="/services" onClick={() => setMobileMenuOpen(false)}>Services</Link>
-                        <Link to="/file-guidelines" onClick={() => setMobileMenuOpen(false)}>File Guidelines</Link>
-                        <Link to="/faq" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
-                        <Link to="/request-quote" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+                        <Link to="/custom-t-shirts-chattanooga" onClick={closeMenu}>Custom Shirts</Link>
+                        <Link to="/business-shirts-chattanooga" onClick={closeMenu}>Business Apparel</Link>
+                        <Link to="/dtf-transfers-chattanooga" onClick={closeMenu}>DTF Transfers</Link>
+                        <Link to="/shop" onClick={closeMenu}>Shop</Link>
+                        <Link to="/#portfolio" onClick={closeMenu}>Our Work</Link>
+                        <Link to="/#how-it-works" onClick={closeMenu}>How It Works</Link>
+                        <Link to="/faq" onClick={closeMenu}>FAQ</Link>
+                        <Link to="/request-quote" onClick={closeMenu} style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>Get A Quote</Link>
                     </div>
                 </div>
             </nav>

@@ -5,179 +5,117 @@ import SEO from "../../components/SEO";
 export default function CustomTShirts() {
   const schema = JSON.stringify({
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "name": "PrintFlow Studio",
-        "image": "https://printflowstudio.com/logo.png",
-        "url": "https://printflowstudio.com",
-        "telephone": "423-681-2218",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Chattanooga",
-          "addressLocality": "Chattanooga",
-          "addressRegion": "TN",
-          "addressCountry": "US"
-        }
-      },
-      {
-        "@type": "Service",
-        "name": "Custom T-Shirt Printing",
-        "provider": {
-          "@id": "https://printflowstudio.com"
-        },
-        "areaServed": {
-          "@type": "City",
-          "name": "Chattanooga"
-        },
-        "description": "Professional custom T-shirt printing in Chattanooga for businesses, schools, churches, and events."
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://printflowstudio.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Services",
-            "item": "https://printflowstudio.com/services"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Custom T-Shirts Chattanooga"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the turnaround time for custom shirts in Chattanooga?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Our standard turnaround time is typically 5-10 business days, depending on the size and complexity of your custom apparel order."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do you have a minimum order requirement?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "We offer flexible order quantities to accommodate everything from small family reunions to large corporate events."
-            }
-          }
-        ]
-      }
-    ]
+    "@type": "Service",
+    "serviceType": "Custom T-Shirt Printing",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "PrintFlow Studio"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Chattanooga"
+    },
+    "description": "Custom T-Shirt printing services in Chattanooga. Single shirts to bulk orders."
   });
 
   return (
     <Layout>
       <SEO 
-        title="Custom T-Shirts Chattanooga | Local Shirt Printing | PrintFlow Studio" 
-        description="Looking for custom T-shirts in Chattanooga, TN? PrintFlow Studio offers professional custom apparel, fast turnaround, local pickup, and nationwide shipping."
-        canonicalUrl="https://printflowstudio.com/custom-tshirts-chattanooga"
+        title="Custom T-Shirt Printing Chattanooga TN | PrintFlow Studio" 
+        description="Premium custom T-shirt printing in Chattanooga. No complicated ordering. From one single shirt to bulk orders for your business or event. Get a fast quote today."
+        canonicalUrl="https://www.printflowstudio.com/custom-t-shirts-chattanooga"
         schema={schema}
       />
-      
-      <div className="bg-dark text-white py-16">
-        <div className="container text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Custom T-Shirt Printing in Chattanooga, TN</h1>
-          <p className="text-xl max-w-3xl mx-auto mb-8 text-gray-300">
-            High-quality custom shirts in Chattanooga, TN. We provide vibrant custom printed shirts for local businesses, schools, churches, teams, organizations, family reunions, events, and fundraisers.
-          </p>
-          <Link to="/request-quote?service=custom-t-shirts" className="btn btn-primary btn-lg">
-            Start Your Order
-          </Link>
-        </div>
-      </div>
-
-      <div className="container py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Chattanooga Shirt Printing Services</h2>
-            <p className="text-lg text-gray-700 mb-4">
-              At PrintFlow Studio, we make custom apparel Chattanooga locals trust. Whether you need a handful of custom shirts for a family gathering or hundreds of printed garments for a corporate event, our premium custom T-shirt printing in Chattanooga ensures you get the best quality. 
-            </p>
-            <p className="text-lg text-gray-700 mb-6">
-              We proudly serve individuals, businesses, and organizations throughout Chattanooga and the surrounding Tennessee Valley with flexible quantities and fast turnarounds.
-            </p>
-            <Link to="/request-quote" className="btn btn-outline font-bold">Get a Quote</Link>
+      <main className="seo-landing-page">
+        <section className="seo-hero">
+          <div className="container">
+            <p className="hero-eyebrow">PRINTFLOW STUDIO SERVICES</p>
+            <h1>Custom T-Shirt Printing in Chattanooga, TN</h1>
+            <p className="hero-support">We turn your logo, artwork, or idea into premium custom apparel. Whether you need a single special shirt or matching apparel for your entire organization, we make the printing process simple.</p>
+            <Link to="/request-quote" className="btn btn-primary mt-4">Get a Custom Quote</Link>
           </div>
-          <div className="bg-gray-100 p-8 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="text-2xl font-bold mb-4 text-accent">Who We Serve</h3>
-            <ul className="space-y-3">
-              <li><strong><Link to="/business-apparel-chattanooga" className="text-dark hover:text-accent">Business Shirts:</Link></strong> Professional branded uniforms and staff shirts.</li>
-              <li><strong><Link to="/church-shirts-chattanooga" className="text-dark hover:text-accent">Church & Ministry Shirts:</Link></strong> Apparel for youth groups, volunteers, and events.</li>
-              <li><strong><Link to="/school-shirts-chattanooga" className="text-dark hover:text-accent">Team and School Apparel:</Link></strong> Spirit wear, club shirts, and coach apparel.</li>
-              <li><strong>Event Shirts:</strong> Runs, charity fundraisers, and festivals.</li>
-              <li><strong>Family Reunion Shirts:</strong> Matching custom printed shirts for your next family gathering.</li>
-            </ul>
-          </div>
-        </div>
+        </section>
 
-        <div className="bg-gray-50 p-10 rounded-xl mb-16 border border-gray-200 text-center">
-          <h2 className="text-3xl font-bold mb-6">How Ordering Works</h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div>
-              <div className="text-accent text-4xl font-bold mb-2">1</div>
-              <h4 className="font-bold mb-2">Request a Quote</h4>
-              <p className="text-sm text-gray-600">Tell us what you need and submit your artwork.</p>
-            </div>
-            <div>
-              <div className="text-accent text-4xl font-bold mb-2">2</div>
-              <h4 className="font-bold mb-2">Review Proof</h4>
-              <p className="text-sm text-gray-600">We send a digital mockup for your approval.</p>
-            </div>
-            <div>
-              <div className="text-accent text-4xl font-bold mb-2">3</div>
-              <h4 className="font-bold mb-2">We Print</h4>
-              <p className="text-sm text-gray-600">Your custom apparel is expertly printed in-house.</p>
-            </div>
-            <div>
-              <div className="text-accent text-4xl font-bold mb-2">4</div>
-              <h4 className="font-bold mb-2">Pickup or Ship</h4>
-              <p className="text-sm text-gray-600">Enjoy local Chattanooga pickup or nationwide shipping.</p>
+        <section className="seo-process section bg-secondary">
+          <div className="container">
+            <h2>How Ordering Works</h2>
+            <div className="process-grid">
+              <div className="process-step">
+                <h3>1. Tell Us Your Idea</h3>
+                <p>Fill out our fast quote form to let us know how many shirts you need and upload any artwork or logos you have.</p>
+              </div>
+              <div className="process-step">
+                <h3>2. Review Your Proof</h3>
+                <p>We'll ensure your artwork is print-ready, help you choose the best garment, and provide a clear quote and mockup.</p>
+              </div>
+              <div className="process-step">
+                <h3>3. We Print It</h3>
+                <p>Your shirts are professionally printed using high-quality DTF technology right here in the Chattanooga area.</p>
+              </div>
+              <div className="process-step">
+                <h3>4. Pick Up or Ship</h3>
+                <p>Grab your order locally from our Chattanooga facility, or we can ship it directly to your door.</p>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="max-w-4xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            <div className="border-b border-gray-200 pb-4">
-              <h4 className="font-bold text-lg mb-2">Do you offer local Chattanooga pickup?</h4>
-              <p className="text-gray-700">Yes! We offer convenient local Chattanooga pickup for all orders. If you aren't local, we also provide fast nationwide shipping.</p>
-            </div>
-            <div className="border-b border-gray-200 pb-4">
-              <h4 className="font-bold text-lg mb-2">What is the turnaround time for custom shirts in Chattanooga?</h4>
-              <p className="text-gray-700">Our standard turnaround time is typically 5-10 business days, depending on the size and complexity of your custom apparel order.</p>
-            </div>
-            <div className="border-b border-gray-200 pb-4">
-              <h4 className="font-bold text-lg mb-2">Do you have a minimum order requirement?</h4>
-              <p className="text-gray-700">We offer flexible order quantities to accommodate everything from small family reunions to large corporate events.</p>
+        <section className="seo-faqs section">
+          <div className="container">
+            <h2>Common Questions About Custom Shirts</h2>
+            
+            <div className="faq-grid">
+              <div className="faq-item">
+                <h3>Can you make one shirt?</h3>
+                <p>Yes. While we regularly handle bulk orders for businesses, we proudly print single custom shirts. Your one special design still receives our professional printing process.</p>
+              </div>
+              
+              <div className="faq-item">
+                <h3>How much does it cost?</h3>
+                <p>Custom shirts start at $27.99 for a standard tee. Final pricing depends on the specific garment chosen, quantity, and print locations (e.g., front and back). <Link to="/request-quote">Get a quote for exact pricing.</Link></p>
+              </div>
+              
+              <div className="faq-item">
+                <h3>Can you print my logo?</h3>
+                <p>Absolutely. We regularly print highly detailed, full-color business and organizational logos. Just upload your highest resolution file (PNG, JPG, PDF, or SVG) when requesting a quote.</p>
+              </div>
+              
+              <div className="faq-item">
+                <h3>Can you print front and back?</h3>
+                <p>Yes. We can print on the front, back, and even the sleeves of most garments.</p>
+              </div>
+
+              <div className="faq-item">
+                <h3>Can I choose different sizes and colors?</h3>
+                <p>Yes, you can mix and match sizes (S, M, L, XL, etc.) and shirt colors within the same order.</p>
+              </div>
+
+              <div className="faq-item">
+                <h3>Can you help with my design?</h3>
+                <p>If your artwork isn't perfectly print-ready, we will help optimize it for the best possible result before it goes to production.</p>
+              </div>
+              
+              <div className="faq-item">
+                <h3>What kinds of shirts can I choose?</h3>
+                <p>We offer everything from standard economy tees to premium, ultra-soft fashion fits, hoodies, and crewnecks from top brands.</p>
+              </div>
+              
+              <div className="faq-item">
+                <h3>Can I pick it up locally or have it shipped?</h3>
+                <p>Both! Local customers can pick up their orders in Chattanooga, or we can ship nationwide.</p>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="text-center bg-dark text-white p-12 rounded-xl">
-          <h2 className="text-3xl font-bold mb-4">Ready to Print Your Custom Apparel?</h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Experience the easiest custom t-shirt printing in Chattanooga. Request pricing today and our team will get back to you quickly!
-          </p>
-          <Link to="/request-quote?service=custom-t-shirts" className="btn btn-primary btn-lg">
-            Start Your Order
-          </Link>
-          <p className="mt-4 text-sm text-gray-400">or explore our <Link to="/dtf-transfers-chattanooga" className="text-accent hover:underline">Custom DTF Transfers</Link></p>
-        </div>
-      </div>
+        <section className="seo-cta section bg-secondary" style={{ textAlign: 'center' }}>
+          <div className="container">
+            <h2>Ready to Make Your Shirt?</h2>
+            <p style={{ margin: '20px auto', maxWidth: '600px', color: 'var(--text-secondary)' }}>Get started in less than a minute. Tell us what you need and we'll send you pricing and a timeline.</p>
+            <Link to="/request-quote" className="btn btn-primary">Start My Order</Link>
+          </div>
+        </section>
+      </main>
     </Layout>
   );
 }

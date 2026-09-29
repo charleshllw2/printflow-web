@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { storage, db } from '../lib/firebase';
-import type { Product } from '../data/products';
+import type { Product, TransferSize } from '../data/products';
 
 interface CustomUploadModalProps {
     product: Product;
-    activeSize: any;
+    activeSize: TransferSize;
     selectedSizeId: string;
     setSelectedSizeId: (id: string) => void;
     closeModal: () => void;
@@ -69,9 +69,9 @@ export default function CustomUploadModal({ product, activeSize, selectedSizeId,
             setTimeout(() => {
                 closeModal();
             }, 3000);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Upload error:', err);
-            setError(err.message || 'An error occurred during upload. Please try again.');
+            setError('An error occurred during upload. Please try again.');
         } finally {
             setIsUploading(false);
         }

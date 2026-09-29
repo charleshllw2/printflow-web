@@ -1,43 +1,31 @@
-import { useMemo, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { SHOP_PRODUCTS } from "../data/shopProducts";
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { commerce } from "../lib/commerce";
+import type { Product, Catalog } from "../lib/commerce";
+import { ShopImage, Price, ShopState } from "../components/ShopUI";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import "./shop.css";
 
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  category: string;
-  price: number;
-  mockup: string;
-  artwork: string;
-}
-
-interface ProductCardProps {
-  product: Product;
-}
+interface ProductCardProps { product: Product; }
 
 function ProductCard({ product }: ProductCardProps) {
   return (
     <article className="shop-card">
       <div className="shop-image-wrap">
-        <Link to={`/shop/${product.slug}`} tabIndex={-1}>
-          <img
-            src={product.mockup}
-            alt={`${product.name} shirt mockup`}
-            loading="lazy"
-          />
+        <Link to={`/shop/${product.handle}`} tabIndex={-1}>
+          <ShopImage image={product.featuredImage} title={product.title} />
         </Link>
       </div>
 
       <div className="shop-card-body">
-        <span className="shop-id">{product.category}</span>
-        <h2><Link to={`/shop/${product.slug}`}>{product.name}</Link></h2>
-        <p className="shop-price"><strong>${product.price.toFixed(2)}</strong></p>
+        <span className="shop-id">{product.productType}</span>
+        <h2><Link to={`/shop/${product.handle}`}>{product.title}</Link></h2>
+        {product.priceRange.minVariantPrice.amount !== product.priceRange.maxVariantPrice.amount && <small>From</small>}
+        <Price price={product.priceRange.minVariantPrice} compare={product.compareAtPriceRange.minVariantPrice} />
+        <p>{product.availableForSale ? product.options.filter(o => o.name !== "Title").map(o => `${o.values.length} ${o.name.toLowerCase()} options`).join(" · ") : "Sold Out"}</p>
 
-        <Link className="shop-buy" to={`/shop/${product.slug}`} style={{ textDecoration: 'none' }}>
+        <Link className="shop-buy" to={`/shop/${product.handle}`} style={{ textDecoration: 'none' }}>
           View Design
         </Link>
       </div>
@@ -46,12 +34,26 @@ function ProductCard({ product }: ProductCardProps) {
 }
 
 export default function Shop() {
-  const [searchParams] = useSearchParams();
+  const [catalog, setCatalog] = useState<Catalog>({ nodes: [], pageInfo: { hasNextPage: false, endCursor: null } });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    let active = true;
+    commerce<Catalog>('resource=products').then(data => { if (active) { setCatalog(data); setError(""); } }).catch(e => { if (active) setError(e.message); }).finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [attempt]);
+  async function loadMore() {
+    setLoading(true); setError("");
+    try { const next = await commerce<Catalog>(`resource=products&after=${encodeURIComponent(catalog.pageInfo.endCursor || '')}`); setCatalog(previous => ({ ...next, nodes: [...previous.nodes, ...next.nodes.filter(p => !previous.nodes.some(old => old.id === p.id))] })); }
+    catch (e) { setError(e instanceof Error ? e.message : 'Please try again.'); }
+    finally { setLoading(false); }
+  }
   const [category, setCategory] = useState("All");
-  const categories = ["All", ...new Set(SHOP_PRODUCTS.map((product) => product.category))];
+  const categories = ["All", ...new Set(catalog.nodes.map((product) => product.productType).filter(Boolean))];
   const products = useMemo(
-    () => category === "All" ? SHOP_PRODUCTS : SHOP_PRODUCTS.filter((product) => product.category === category),
-    [category]
+    () => category === "All" ? catalog.nodes : catalog.nodes.filter((product) => product.productType === category),
+    [category, catalog.nodes]
   );
 
   return (
@@ -99,12 +101,6 @@ export default function Shop() {
           <button className="btn btn-primary" onClick={() => window.scrollTo({ top: (document.querySelector('.shop-filters')?.getBoundingClientRect().top || 0) + window.scrollY - 100, behavior: 'smooth'})} style={{ marginTop: '20px' }}>Shop Designs</button>
         </section>
 
-        {searchParams.get("paid") === "1" && (
-          <div className="shop-success" role="status">
-            Thank you! Your payment was received. PrintFlow Studio will contact you with production details.
-          </div>
-        )}
-
         <nav className="shop-filters" aria-label="Design categories">
           {categories.map((value) => (
             <button key={value} className={category === value ? "active" : ""} onClick={() => setCategory(value)}>
@@ -113,9 +109,14 @@ export default function Shop() {
           ))}
         </nav>
 
+        {error && <ShopState error={error} retry={() => { setLoading(true); setAttempt(attempt + 1); }} />}
+        {loading && <ShopState loading />}
+        {!loading && !error && !products.length && <ShopState />}
         <section className="shop-grid" aria-live="polite">
           {products.map((product) => <ProductCard key={product.id} product={product as Product} />)}
         </section>
+
+        {catalog.pageInfo.hasNextPage && <button className="btn btn-outline" disabled={loading} onClick={loadMore}>Load more designs</button>}
 
         <section className="shop-custom-cta" style={{ textAlign: 'center', marginTop: '60px', padding: '40px 20px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
           <h2>Don't See What You're Looking For?</h2>

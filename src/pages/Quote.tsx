@@ -1,252 +1,260 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { storage, db } from '../lib/firebase';
 import "../styles/Quote.css";
 
+// Analytics Helper
+const trackEvent = (eventName: string, params: Record<string, any> = {}) => {
+  if (typeof window !== "undefined" && (window as any).gtag) {
+    (window as any).gtag("event", eventName, params);
+  } else {
+    console.log(`[Analytics Mock] ${eventName}`, params);
+  }
+};
+
 export default function Quote() {
-    const [searchParams] = useSearchParams();
-    const packageParam = searchParams.get("package");
-    const serviceParam = searchParams.get("service");
-    const designParam = searchParams.get("design");
-    const designNameParam = searchParams.get("designName");
-    const requestParam = searchParams.get("request");
+  const [searchParams] = useSearchParams();
+  const initialService = searchParams.get("service") || "";
 
-    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-    const [deliveryMethod, setDeliveryMethod] = useState('');
-    
-    // Determine default values based on URL parameters
-    let defaultService = "";
-    let defaultQuantity = "";
-    let defaultNotes = "";
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-    if (packageParam === 'business-starter-pack') {
-        defaultService = "Business apparel";
-        defaultQuantity = "10";
-        defaultNotes = "Package Request: Business Apparel Starter Pack";
-    } else if (designParam && designNameParam && requestParam) {
-        defaultNotes = `I’m interested in ${designParam} — ${designNameParam}. I would like pricing for ${requestParam}.`;
-    } else if (serviceParam === 'custom-t-shirts') {
-        defaultService = "Custom T-shirts";
-    } else if (serviceParam === 'dtf-transfers') {
-        defaultService = "DTF transfers";
+  const [quantity, setQuantity] = useState("");
+  const [purpose, setPurpose] = useState("");
+  const [locations, setLocations] = useState("");
+  const [artworkStatus, setArtworkStatus] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [date, setDate] = useState("");
+  const [delivery, setDelivery] = useState("");
+  
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactOrg, setContactOrg] = useState("");
+  const [contactNotes, setContactNotes] = useState("");
+
+  const handleNext = (currentStepName: string) => {
+    trackEvent("quote_step_completed", { step, step_name: currentStepName });
+    setStep(s => s + 1);
+    window.scrollTo(0, 0);
+  };
+
+  const handlePrev = () => setStep(s => s - 1);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+      trackEvent("artwork_uploaded", { file_type: e.target.files[0].type });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactName || !contactEmail) {
+      setError("Please provide at least your name and email.");
+      return;
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setStatus('submitting');
-        
-        const form = e.currentTarget;
-        const formData = new FormData(form);
-        formData.append('_subject', `New Quote Request from ${formData.get('name')}`);
-        formData.append('_captcha', 'false');
+    setIsSubmitting(true);
+    setError("");
 
-        // Check if artwork is attached for analytics
-        const artworkFile = formData.get('artwork') as File;
-        const hasArtwork = artworkFile && artworkFile.size > 0;
+    try {
+      let fileUrl = "";
+      if (file) {
+        const fileRef = ref(storage, `quotes/${Date.now()}_${file.name}`);
+        const snapshot = await uploadBytes(fileRef, file);
+        fileUrl = await getDownloadURL(snapshot.ref);
+      }
 
-        try {
-            const response = await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json'
-                },
-                body: formData
-            });
+      await addDoc(collection(db, "quote_requests"), {
+        quantity,
+        purpose,
+        locations,
+        artworkStatus,
+        fileUrl,
+        dateNeeded: date,
+        deliveryMethod: delivery,
+        contactName,
+        contactEmail,
+        contactPhone,
+        contactOrg,
+        notes: contactNotes,
+        initialService,
+        createdAt: serverTimestamp(),
+      });
 
-            if (response.ok) {
-                // Push to dataLayer for GA4 conversion tracking if it exists (no PII sent to GA4)
-                if (typeof window !== 'undefined' && (window as unknown as { dataLayer: unknown[] }).dataLayer) {
-                    (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
-                        'event': 'quote_form_submit',
-                        'has_artwork': hasArtwork
-                    });
-                }
-                setStatus('success');
-                form.reset();
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            console.error("Form submission error", error);
-            setStatus('error');
-        }
-    };
+      trackEvent("quote_submitted", { method: "multi_step_form" });
+      setSuccess(true);
+    } catch (err: any) {
+      console.error(err);
+      setError("An error occurred while submitting your quote. Please try again or contact us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
+  if (success) {
     return (
-        <Layout>
-            <SEO 
-                title="Request a Quote | PrintFlow Studio" 
-                description="Request a quote for custom apparel, T-shirts, or DTF transfers in Chattanooga. Upload artwork and get a fast estimate."
-            />
-            <div className="section bg-light" style={{ padding: '60px 0', backgroundColor: '#f9fafb' }}>
-                <div className="container">
-                    <div className="section-header text-center">
-                        <h1>Request a Custom Quote</h1>
-                        <p>Fill out the details below and we'll get back to you with an estimate as soon as possible.</p>
-                    </div>
-
-                    <div className="quote-form-container">
-                        {packageParam === 'business-starter-pack' && status === 'idle' && (
-                            <div className="promo-alert" style={{
-                                backgroundColor: 'rgba(208, 0, 232, 0.1)', 
-                                border: '1px solid #D000E8',
-                                borderRadius: '8px',
-                                padding: '20px',
-                                marginBottom: '30px',
-                                textAlign: 'center'
-                            }}>
-                                <h3 style={{ color: '#D000E8', marginBottom: '10px', fontSize: '1.2rem' }}>Business Apparel Starter Pack</h3>
-                                <p style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: 1.5 }}>
-                                    You’re requesting the Business Apparel Starter Pack—10 custom logo shirts starting at $199. Complete the details below, and we’ll confirm garment options, artwork, turnaround time, and final pricing.
-                                </p>
-                            </div>
-                        )}
-
-                        {status === 'success' ? (
-                            <div className="text-center" style={{padding: '40px 0'}}>
-                                <h2>✅ Quote Request Received!</h2>
-                                <p style={{marginTop: '15px'}}>Thank you for reaching out. Our team will review your project details and contact you shortly with an estimate and next steps.</p>
-                                <button className="btn btn-primary" onClick={() => setStatus('idle')} style={{marginTop: '20px'}}>Submit Another Request</button>
-                            </div>
-                        ) : (
-                            <form className="quote-form" onSubmit={handleSubmit}>
-                                <div className="quote-grid">
-                                    <div className="form-group">
-                                        <label htmlFor="name">Full Name *</label>
-                                        <input type="text" id="name" name="name" required placeholder="John Doe" />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="businessName">Business / Organization Name</label>
-                                        <input type="text" id="businessName" name="businessName" placeholder="Optional" />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="email">Email Address *</label>
-                                        <input type="email" id="email" name="email" required placeholder="john@example.com" />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="phone">Phone Number</label>
-                                        <input type="tel" id="phone" name="phone" placeholder="(Optional)" />
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label htmlFor="contactMethod">Preferred Contact Method *</label>
-                                        <select id="contactMethod" name="contactMethod" required>
-                                            <option value="email">Email</option>
-                                            <option value="phone">Phone Call</option>
-                                            <option value="text">Text Message</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label htmlFor="serviceNeeded">Service Needed *</label>
-                                        <select id="serviceNeeded" name="serviceNeeded" required defaultValue={defaultService}>
-                                            <option value="">Select a service...</option>
-                                            <option value="Custom T-shirts">Custom T-shirts</option>
-                                            <option value="Business apparel">Business apparel</option>
-                                            <option value="Church or ministry apparel">Church or ministry apparel</option>
-                                            <option value="School or team apparel">School or team apparel</option>
-                                            <option value="Event or reunion shirts">Event or reunion shirts</option>
-                                            <option value="DTF transfers">DTF transfers</option>
-                                            <option value="Gang sheets">Gang sheets</option>
-                                            <option value="DIY DTF Print Sheets / Iron Ons">DIY DTF Print Sheets / Iron Ons</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div className="form-group">
-                                        <label htmlFor="garmentType">Garment Type</label>
-                                        <input type="text" id="garmentType" name="garmentType" placeholder="e.g. Premium Tees, Hoodies, Hats" />
-                                    </div>
-                                    
-                                    <div className="form-group">
-                                        <label htmlFor="garmentColors">Garment Colors</label>
-                                        <input type="text" id="garmentColors" name="garmentColors" placeholder="e.g. Black, Navy, White" />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="quantity">Estimated Quantity *</label>
-                                        <input type="number" id="quantity" name="quantity" required min="1" placeholder="Number of items" defaultValue={defaultQuantity} />
-                                    </div>
-                                    
-                                    <div className="form-group">
-                                        <label htmlFor="sizes">Adult and Youth Sizes</label>
-                                        <input type="text" id="sizes" name="sizes" placeholder="e.g. Adult S-XXL, Youth M-L" />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="neededBy">Needed-By Date *</label>
-                                        <input type="date" id="neededBy" name="neededBy" required />
-                                        <p style={{fontSize: '0.75rem', color: '#6b7280', marginTop: '5px'}}>
-                                            Submitting a requested date does not guarantee availability. Turnaround is confirmed with your quote.
-                                        </p>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="printLocations">Number of Print Locations</label>
-                                        <input type="text" id="printLocations" name="printLocations" placeholder="e.g. 1 (Front), 2 (Front & Back)" />
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label htmlFor="delivery">Local Pickup or Shipping *</label>
-                                        <select id="delivery" name="delivery" required onChange={(e) => setDeliveryMethod(e.target.value)}>
-                                            <option value="">Select an option...</option>
-                                            <option value="pickup">Local Pickup (Chattanooga)</option>
-                                            <option value="shipping">Shipping Needed</option>
-                                        </select>
-                                    </div>
-
-                                    {deliveryMethod === 'shipping' && (
-                                        <div className="form-group full-width">
-                                            <label htmlFor="zipCode">Shipping ZIP Code *</label>
-                                            <input type="text" id="zipCode" name="zipCode" required placeholder="Enter ZIP Code" />
-                                        </div>
-                                    )}
-
-                                    <div className="form-group full-width">
-                                        <label htmlFor="artwork">Upload Artwork</label>
-                                        <input type="file" id="artwork" name="artwork" accept=".png,.svg,.ai,.psd,.pdf,.jpg,.jpeg" />
-                                        <p style={{fontSize: '0.75rem', color: '#6b7280', marginTop: '5px'}}>
-                                            Accepted formats: PNG, SVG, AI, PSD, PDF, JPG. Max size: 10MB.
-                                        </p>
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label>Design assistance needed? *</label>
-                                        <div style={{display: 'flex', gap: '15px', marginTop: '5px'}}>
-                                            <label style={{fontWeight: 'normal'}}><input type="radio" name="designHelp" value="yes" required /> Yes</label>
-                                            <label style={{fontWeight: 'normal'}}><input type="radio" name="designHelp" value="no" /> No</label>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group full-width">
-                                        <label htmlFor="notes">Project Details</label>
-                                        <textarea id="notes" name="notes" rows={4} placeholder="Please provide any additional details about your project..." defaultValue={defaultNotes}></textarea>
-                                    </div>
-
-                                    <div className="form-group full-width checkbox-group" style={{marginTop: '10px'}}>
-                                        <input type="checkbox" id="consent" name="consent" required />
-                                        <label htmlFor="consent">I consent to being contacted regarding this quote request. *</label>
-                                    </div>
-
-                                    <div className="form-group full-width" style={{marginTop: '20px'}}>
-                                        <button type="submit" className="btn btn-primary full-width" style={{padding: '15px', fontSize: '1.1rem'}} disabled={status === 'submitting'}>
-                                            {status === 'submitting' ? 'Submitting Request...' : 'Submit Quote Request'}
-                                        </button>
-                                        
-                                        {status === 'error' && (
-                                            <div style={{color: '#dc2626', marginTop: '15px', textAlign: 'center', fontWeight: '500'}}>
-                                                Something went wrong submitting your request. Please try again or email us directly.
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </form>
-                        )}
-                    </div>
-                </div>
+      <Layout>
+        <SEO title="Quote Requested | PrintFlow Studio" description="Thank you for requesting a custom apparel quote from PrintFlow Studio." />
+        <main className="quote-page quote-success-page">
+          <div className="container quote-container">
+            <div className="quote-success-content">
+              <h1>THANK YOU — WE'VE GOT YOUR REQUEST.</h1>
+              <p>Your idea is officially in the queue. We will review your details and reach out shortly (usually within 1 business day) with pricing, recommendations, and the next steps to get your custom shirts printed right.</p>
+              <Link to="/" className="btn btn-primary">Return to Home</Link>
             </div>
-        </Layout>
+          </div>
+        </main>
+      </Layout>
     );
+  }
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>WHAT ARE YOU MAKING?</h2>
+            <div className="quote-options-grid">
+              {['One shirt', '2–9 shirts', '10–24 shirts', '25–49 shirts', '50+ shirts', 'Not sure yet'].map(opt => (
+                <button key={opt} type="button" className={`quote-option-btn ${quantity === opt ? 'selected' : ''}`} onClick={() => { setQuantity(opt); handleNext("quantity"); }}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>WHAT IS IT FOR?</h2>
+            <div className="quote-options-grid">
+              {['Personal', 'Business', 'Church', 'Team', 'Event', 'Brand/Merch', 'Other'].map(opt => (
+                <button key={opt} type="button" className={`quote-option-btn ${purpose === opt ? 'selected' : ''}`} onClick={() => { setPurpose(opt); handleNext("purpose"); }}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>WHAT DO YOU WANT PRINTED?</h2>
+            <div className="quote-options-grid">
+              {['Front', 'Back', 'Front + Back', 'Sleeve', 'Multiple locations', 'Not sure'].map(opt => (
+                <button key={opt} type="button" className={`quote-option-btn ${locations === opt ? 'selected' : ''}`} onClick={() => { setLocations(opt); handleNext("locations"); }}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      case 4:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>ARTWORK</h2>
+            <div className="quote-options-grid">
+              {['I have print-ready artwork', 'I have artwork but need help', 'I only have an idea', 'I need a design created'].map(opt => (
+                <button key={opt} type="button" className={`quote-option-btn ${artworkStatus === opt ? 'selected' : ''}`} onClick={() => setArtworkStatus(opt)}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+            
+            {artworkStatus && (
+              <div className="quote-upload-section">
+                <label className="quote-label">Attach File (PNG, JPG, PDF, SVG) - Optional</label>
+                <input type="file" accept=".png,.jpg,.jpeg,.pdf,.svg" onChange={handleFileChange} className="quote-file-input" />
+                {file && <p className="quote-file-name">Attached: {file.name}</p>}
+                <button type="button" className="btn btn-primary mt-4" onClick={() => handleNext("artwork")}>Continue</button>
+              </div>
+            )}
+          </div>
+        );
+      case 5:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>WHEN DO YOU NEED IT?</h2>
+            <p className="quote-subtext">Selecting a date does not guarantee availability for rush orders, but helps us prioritize your request.</p>
+            <input type="date" className="quote-input" value={date} onChange={e => setDate(e.target.value)} />
+            <button type="button" className="btn btn-primary mt-4" onClick={() => handleNext("date")} disabled={!date}>Continue</button>
+          </div>
+        );
+      case 6:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>HOW WILL YOU RECEIVE IT?</h2>
+            <div className="quote-options-grid">
+              {['Chattanooga-area pickup', 'Shipping', 'Not sure'].map(opt => (
+                <button key={opt} type="button" className={`quote-option-btn ${delivery === opt ? 'selected' : ''}`} onClick={() => { setDelivery(opt); handleNext("delivery"); }}>
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      case 7:
+        return (
+          <div className="quote-step-content animate-fade-in">
+            <h2>ALMOST DONE. WHO ARE WE TALKING TO?</h2>
+            <div className="quote-form-grid">
+              <input type="text" placeholder="Name *" className="quote-input" value={contactName} onChange={e => setContactName(e.target.value)} required />
+              <input type="email" placeholder="Email Address *" className="quote-input" value={contactEmail} onChange={e => setContactEmail(e.target.value)} required />
+              <input type="tel" placeholder="Phone Number" className="quote-input" value={contactPhone} onChange={e => setContactPhone(e.target.value)} />
+              <input type="text" placeholder="Business / Organization (Optional)" className="quote-input" value={contactOrg} onChange={e => setContactOrg(e.target.value)} />
+              <textarea placeholder="Any additional notes or details?" className="quote-input quote-textarea" value={contactNotes} onChange={e => setContactNotes(e.target.value)}></textarea>
+            </div>
+            
+            {error && <p className="quote-error" role="alert">{error}</p>}
+            
+            <button type="submit" className="btn btn-primary quote-submit-btn" disabled={isSubmitting || !contactName || !contactEmail}>
+              {isSubmitting ? "SUBMITTING..." : "GET MY QUOTE"}
+            </button>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <Layout>
+      <SEO 
+        title="Request a Custom Quote | PrintFlow Studio" 
+        description="Get a fast quote for custom t-shirts, business apparel, DTF transfers and more from PrintFlow Studio in Chattanooga." 
+        canonicalUrl="https://www.printflowstudio.com/request-quote"
+      />
+      <main className="quote-page">
+        <div className="container quote-container">
+          <header className="quote-header">
+            <h1>LET'S MAKE YOUR SHIRT.</h1>
+            <p>Tell us what you're creating. It should only take about a minute.</p>
+          </header>
+
+          <div className="quote-progress">
+            <div className="quote-progress-bar" style={{ width: `${(step / 7) * 100}%` }}></div>
+            <span className="quote-progress-text">{step} of 7</span>
+          </div>
+
+          <form className="quote-form" onSubmit={handleSubmit}>
+            {renderStep()}
+          </form>
+
+          {step > 1 && step <= 7 && (
+            <button type="button" className="quote-back-btn" onClick={handlePrev}>
+              ← Back
+            </button>
+          )}
+        </div>
+      </main>
+    </Layout>
+  );
 }

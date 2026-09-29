@@ -1,8 +1,8 @@
 {
+  "functions": { "api/product-page.js": { "includeFiles": "dist/index.html" } },
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/shop/cart", "destination": "/index.html" },
+    { "source": "/shop/:handle", "destination": "/api/product-page?handle=:handle" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

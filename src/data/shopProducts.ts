@@ -1,4 +1,4 @@
-// @ts-nocheck
+// Deprecated: migration reference only. The live catalog now comes from Shopify.
 export const SHOP_PRODUCTS = [
   {
     id: "PF-001",

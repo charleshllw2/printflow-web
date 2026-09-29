@@ -208,3 +208,8 @@
         display: flex;
     }
 }
+/* Leave room for the commerce link on narrower desktop screens. */
+@media (min-width:1051px) and (max-width:1280px) {
+    .navbar-menu,.navbar-actions { display:none; }
+    .navbar-toggle { display:flex; }
+}
