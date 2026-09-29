@@ -14,18 +14,18 @@ export default function SocialProof() {
           {/* TODO: Owner must replace these placeholders with verbatim Google Review text once authorized */}
           <div className="sp-review-card">
             <div className="stars">★★★★★</div>
-            <p className="review-text">"Placeholder for verified Google review. PrintFlow Studio owner to paste verbatim review here."</p>
-            <p className="review-author">— [Customer First Name], Chattanooga</p>
+            <p className="review-text">"He was amazing to work with sent him my design and he made it and had it ready the next day! Will be returning as a customer"</p>
+            <p className="review-author">— Diana H.</p>
           </div>
           <div className="sp-review-card">
             <div className="stars">★★★★★</div>
-            <p className="review-text">"Placeholder for verified Google review. PrintFlow Studio owner to paste verbatim review here."</p>
-            <p className="review-author">— [Customer First Name], Chattanooga</p>
+            <p className="review-text">"Thank you print flow studio I love my new shirt I will definitely be back for more"</p>
+            <p className="review-author">— Ashley C.</p>
           </div>
           <div className="sp-review-card">
             <div className="stars">★★★★★</div>
-            <p className="review-text">"Placeholder for verified Google review. PrintFlow Studio owner to paste verbatim review here."</p>
-            <p className="review-author">— [Customer First Name], Chattanooga</p>
+            <p className="review-text">"Great work and great people"</p>
+            <p className="review-author">— Shirley</p>
           </div>
         </div>
         
