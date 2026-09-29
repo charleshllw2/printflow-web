@@ -1,12 +1,16 @@
+import { Link } from "react-router-dom";
+import SEO from "../components/SEO";
 import Layout from "../components/Layout";
 import "../styles/FileGuidelines.css";
 
 export default function FileGuidelines() {
     return (
         <Layout>
+            <SEO title="Artwork & File Guidelines | PrintFlow Studio" description="Prepare artwork for custom shirts and DTF transfers: file formats, transparent backgrounds, resolution and print sizing from PrintFlow Studio." />
             <div className="container section file-guidelines-page">
                 <div className="guidelines-header text-center">
                     <h1>File Guidelines</h1>
+                    <p>For artwork ownership and permissions, see our <Link to="/artwork-policy">artwork policy</Link>.</p>
                     <p>Follow these requirements to ensure the best print quality for your DTF transfers.</p>
                 </div>
 

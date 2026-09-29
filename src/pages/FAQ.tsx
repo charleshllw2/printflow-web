@@ -77,7 +77,7 @@ export default function FAQ() {
         },
         {
             question: "How long does custom shirt printing take?",
-            answer: "[ADMIN TODO: Confirm standard turnaround policy] Typically, standard orders are processed within 5-7 business days after proof approval, but timelines can vary based on order size and complexity."
+            answer: "Timing depends on your order size, garment choice and artwork. Include your needed-by date when requesting a quote so we can confirm a production and pickup or shipping schedule."
         },
         {
             question: "What happens after I request a quote?",
@@ -85,18 +85,6 @@ export default function FAQ() {
         }
     ];
 
-    const faqSchema = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": faqData.map(faq => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.answer
-            }
-        }))
-    });
 
     return (
         <Layout>
@@ -104,7 +92,6 @@ export default function FAQ() {
                 title="Frequently Asked Questions | PrintFlow Studio" 
                 description="Find answers to common questions about custom T-shirt printing, DTF transfers, artwork requirements, pricing, and shipping in Chattanooga." 
                 canonicalUrl="https://www.printflowstudio.com/faq"
-                schema={faqSchema}
             />
             <main className="seo-landing-page" style={{ paddingTop: '120px' }}>
                 <div className="container">

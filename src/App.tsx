@@ -1,5 +1,6 @@
+import { Helmet } from "react-helmet-async";
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import FileGuidelines from "./pages/FileGuidelines";
 const Admin = lazy(() => import("./pages/Admin"));
@@ -37,9 +38,11 @@ import NotFound from "./pages/NotFound";
 
 import "./styles/App.css";
 
-export default function App() {
+export function AppRoutes() {
+  const { pathname } = useLocation();
   return (
-    <BrowserRouter>
+    <>
+      {["/admin", "/login"].includes(pathname) && <Helmet><meta name="robots" content="noindex,nofollow" /></Helmet>}
       <Suspense fallback={<div role="status" style={{ padding: "120px 24px" }}>Loading…</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -85,6 +88,10 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-    </BrowserRouter>
+    </>
   );
+}
+
+export default function App() {
+  return <BrowserRouter><AppRoutes /></BrowserRouter>;
 }

@@ -12,32 +12,12 @@ import OwnerStory from "../components/NewHome/OwnerStory";
 import "../styles/NewHome.css";
 
 export default function Home() {
-    const homeSchema = JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "Organization",
-                "name": "PrintFlow Studio",
-                "url": "https://www.printflowstudio.com",
-                "logo": "https://www.printflowstudio.com/PrintFlowLogo.png"
-            },
-            {
-                "@type": "LocalBusiness",
-                "name": "PrintFlow Studio",
-                "description": "Custom T-shirt printing and DTF transfers in Chattanooga.",
-                "url": "https://www.printflowstudio.com",
-                "telephone": "423-681-2218",
-                "email": "hello@printflowstudio.com"
-            }
-        ]
-    });
 
     return (
         <Layout>
-            <SEO 
-                title="Custom T-Shirt Printing | PrintFlow Studio Chattanooga" 
-                description="Custom shirts and apparel made easy in Chattanooga. From one special shirt to apparel for your entire business, church, team or event."
-                schema={homeSchema}
+            <SEO
+                title="Custom T-Shirts & DTF Printing in Chattanooga | PrintFlow Studio"
+                description="Custom shirts and DTF printing in Chattanooga for businesses, churches, teams and events. Order one or many, with local pickup available."
                 canonicalUrl="https://www.printflowstudio.com/"
             />
             <main className="premium-homepage">

@@ -1,8 +1,22 @@
 {
-  "functions": { "api/product-page.js": { "includeFiles": "dist/index.html" } },
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/business-apparel-chattanooga", "destination": "/business-shirts-chattanooga", "permanent": true },
+    { "source": "/custom-tshirts-chattanooga", "destination": "/custom-t-shirts-chattanooga", "permanent": true },
+    { "source": "/diy-dtf-print-sheets", "destination": "/dtf-transfers-chattanooga", "permanent": true },
+    { "source": "/school-shirts-chattanooga", "destination": "/team-shirts-chattanooga", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/api/:path*", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/admin", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/login", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/app-shell", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/kss-mock/:path*", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/kss-mock.zip", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+  ],
   "rewrites": [
-    { "source": "/shop/cart", "destination": "/index.html" },
-    { "source": "/shop/:handle", "destination": "/api/product-page?handle=:handle" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/admin", "destination": "/app-shell.html" },
+    { "source": "/login", "destination": "/app-shell.html" }
   ]
 }

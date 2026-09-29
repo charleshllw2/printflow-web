@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /shop/cart
+Disallow: /kss-mock
 
 Sitemap: https://www.printflowstudio.com/sitemap.xml

@@ -19,6 +19,7 @@ export default function ShopProductPage() {
   if (!product) {
     return (
       <Layout>
+        <SEO noindex title="Product Not Found | PrintFlow Studio" description="This product could not be found." />
         <main className="shop-product-page">
           <Link to="/shop" className="back-to-shop">← Back to Shop</Link>
           <h1>Product not found.</h1>

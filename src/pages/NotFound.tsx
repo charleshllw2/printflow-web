@@ -5,7 +5,7 @@ import SEO from "../components/SEO";
 export default function NotFound() {
     return (
         <Layout>
-            <SEO title="Page Not Found | PrintFlow Studio" description="The page you are looking for could not be found." />
+            <SEO noindex title="Page Not Found | PrintFlow Studio" description="The page you are looking for could not be found." />
             <div className="container section text-center" style={{ paddingTop: '150px', paddingBottom: '150px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ fontSize: '6rem', fontWeight: '800', lineHeight: 1, marginBottom: '20px', color: 'var(--accent-color)' }}>404</div>
                 <h1 style={{ fontSize: '2.5rem', marginBottom: '20px' }}>Page Not Found</h1>

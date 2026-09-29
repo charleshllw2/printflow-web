@@ -1,3 +1,4 @@
+import SEO from "../components/SEO";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 import "../styles/Blog.css";
@@ -6,6 +7,7 @@ import { BLOG_POSTS } from "../data/blogPosts";
 export default function Blog() {
     return (
         <Layout>
+            <SEO title="Custom Apparel & DTF Printing Guides | PrintFlow Studio" description="Read PrintFlow Studio guides to custom apparel, DTF transfers and preparing artwork for your next printing project." />
             <div className="blog-page">
                 <section className="blog-hero">
                     <div className="container">

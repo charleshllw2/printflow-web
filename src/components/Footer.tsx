@@ -34,6 +34,8 @@ export default function Footer() {
                         <h4>Services</h4>
                         <ul>
                             <li><Link to="/custom-t-shirts-chattanooga">Custom Shirts</Link></li>
+                            <li><Link to="/custom-apparel-chattanooga">Custom Apparel</Link></li>
+                            <li><Link to="/services">All Services</Link></li>
                             <li><Link to="/business-shirts-chattanooga">Business Apparel</Link></li>
                             <li><Link to="/church-shirts-chattanooga">Church Shirts</Link></li>
                             <li><Link to="/event-shirts-chattanooga">Event Shirts</Link></li>
@@ -47,6 +49,8 @@ export default function Footer() {
                             <li><Link to="/shop">Shop</Link></li>
                             <li><Link to="/our-work">Our Work</Link></li>
                             <li><Link to="/faq">FAQ</Link></li>
+                            <li><Link to="/file-guidelines">Artwork Guidelines</Link></li>
+                            <li><Link to="/blog">Printing Guides</Link></li>
                             <li><Link to="/request-quote">Get Quote</Link></li>
                         </ul>
                     </div>

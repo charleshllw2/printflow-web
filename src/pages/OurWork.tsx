@@ -19,7 +19,7 @@ export default function OurWork() {
         schema={schema}
       />
       <main className="seo-landing-page" style={{ paddingTop: '120px' }}>
-        <Portfolio />
+        <Portfolio headingLevel={1} />
       </main>
     </Layout>
   );

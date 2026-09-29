@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file-if-exists=.env.local scripts/dev.mjs",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .seo-build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "node --test tests/*.test.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:seo": "npm run build && node --test tests/seo.test.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -19,7 +20,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.12.0"
+    "react-router-dom": "^7.12.0",
+    "stripe": "^20.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

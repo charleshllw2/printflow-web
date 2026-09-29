@@ -14,7 +14,7 @@ export default function ServicesGrid() {
                     <div className="service-card">
                         <h3>Custom T-Shirts</h3>
                         <p>High-quality custom T-shirt printing for businesses, events, and individuals in Chattanooga.</p>
-                        <Link to="/custom-tshirts-chattanooga" className="btn btn-primary">Learn More</Link>
+                        <Link to="/custom-t-shirts-chattanooga" className="btn btn-primary">Learn More</Link>
                     </div>
 
                     {/* Card 2 */}
@@ -28,14 +28,14 @@ export default function ServicesGrid() {
                     <div className="service-card">
                         <h3>DIY DTF Print Sheets / Iron Ons</h3>
                         <p>Order ready-to-press sheets delivered right to your door. (Shipping is extra). Perfect for crafters!</p>
-                        <Link to="/diy-dtf-print-sheets" className="btn btn-primary">Order DIY Sheets</Link>
+                        <Link to="/dtf-transfers-chattanooga" className="btn btn-primary">Order DIY Sheets</Link>
                     </div>
 
                     {/* Card 3 */}
                     <div className="service-card">
                         <h3>Business Apparel</h3>
                         <p>Professional branded shirts and uniforms to give your team a cohesive look.</p>
-                        <Link to="/business-apparel-chattanooga" className="btn btn-primary">Outfit Your Team</Link>
+                        <Link to="/business-shirts-chattanooga" className="btn btn-primary">Outfit Your Team</Link>
                     </div>
 
                     {/* Card 4 */}
@@ -49,7 +49,7 @@ export default function ServicesGrid() {
                     <div className="service-card">
                         <h3>School & Team Apparel</h3>
                         <p>Show your spirit with custom school shirts, club apparel, and sports team gear.</p>
-                        <Link to="/school-shirts-chattanooga" className="btn btn-secondary">Learn More</Link>
+                        <Link to="/team-shirts-chattanooga" className="btn btn-secondary">Learn More</Link>
                     </div>
 
                     {/* Card 6 */}

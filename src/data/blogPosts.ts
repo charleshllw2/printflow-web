@@ -12,7 +12,7 @@ export const BLOG_POSTS = [
         title: "5 Tips to Optimize Your Designs for DTF Transfers",
         excerpt: "Getting the best results from DTF starts with your artwork. Learn how to prepare your files for maximum vibrancy and durability.",
         date: "February 15, 2026",
-        image: "https://images.unsplash.com/photo-1572044162444-ad60f128bde3?auto=format&fit=crop&q=80&w=800",
+        image: "/production-process.jpg",
         author: "Charles Holloway"
     },
     {

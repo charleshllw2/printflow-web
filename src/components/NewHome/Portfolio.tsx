@@ -1,4 +1,5 @@
-export default function Portfolio() {
+export default function Portfolio({ headingLevel = 2 }: { headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   const projects = [
     {
       title: "Custom Business Apparel",
@@ -35,12 +36,12 @@ export default function Portfolio() {
   return (
     <section id="portfolio" className="premium-portfolio section">
       <div className="container">
-        <h2 className="portfolio-heading">REAL SHIRTS.<br/>REAL PROJECTS.<br/>PRINTED BY PRINTFLOW.</h2>
+        <Heading className="portfolio-heading">REAL SHIRTS.<br/>REAL PROJECTS.<br/>PRINTED BY PRINTFLOW.</Heading>
         
         <div className="portfolio-editorial-grid">
           {projects.map((project, index) => (
             <div className="portfolio-item" key={index}>
-              <div className="portfolio-image" style={{ backgroundImage: `url('${project.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+              <img className="portfolio-image" src={project.image} alt={project.title + " — " + project.description} loading="lazy" style={{ width: '100%', objectFit: 'cover', display: 'block' }} />
               <div className="portfolio-meta">
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>

@@ -1,4 +1,4 @@
-// Deprecated: migration reference only. The live catalog now comes from Shopify.
+// Live native catalog, shared by the shop and build-time product SEO.
 export const SHOP_PRODUCTS = [
   {
     id: "PF-001",

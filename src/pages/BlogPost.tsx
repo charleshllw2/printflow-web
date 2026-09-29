@@ -1,3 +1,4 @@
+import SEO from "../components/SEO";
 import Layout from "../components/Layout";
 import { useParams, Link } from "react-router-dom";
 import { BLOG_POSTS } from "../data/blogPosts";
@@ -10,6 +11,7 @@ export default function BlogPost() {
     if (!post) {
         return (
             <Layout>
+                <SEO noindex title="Post Not Found | PrintFlow Studio" description="This article could not be found." />
                 <div className="section text-center not-found-section">
                     <div className="container">
                         <h1>Post Not Found</h1>
@@ -25,6 +27,7 @@ export default function BlogPost() {
 
     return (
         <Layout>
+            <SEO title={`${post.title} | PrintFlow Studio`} description={post.excerpt} />
             <div className="blog-page">
                 <header className="post-header">
                     <div className="container">
