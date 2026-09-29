@@ -16,7 +16,7 @@
     { "source": "/kss-mock.zip", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
   ],
   "rewrites": [
-    { "source": "/admin", "destination": "/app-shell.html" },
-    { "source": "/login", "destination": "/app-shell.html" }
+    { "source": "/admin", "destination": "/app-shell" },
+    { "source": "/login", "destination": "/app-shell" }
   ]
 }
