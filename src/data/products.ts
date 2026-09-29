@@ -3,6 +3,7 @@ export type TransferSize = {
     label: string; // e.g. "Pocket", "Adult Standard"
     dimensions: string; // e.g. "approximately 4 inches"
     price: number;
+    inventory: number;
 };
 
 export type Product = {
@@ -27,3 +28,43 @@ export const defaultPressingInstructions = [
     "Peel the carrier film as directed.",
     "Cover the design with parchment paper or a finishing sheet and press again for 5 seconds."
 ];
+
+export const getStandardSizes = (): TransferSize[] => [
+    { id: 'size-pocket', label: 'Pocket', dimensions: 'approximately 4 inches', price: 6.99, inventory: 100 },
+    { id: 'size-youth', label: 'Youth', dimensions: 'approximately 8 inches', price: 8.99, inventory: 100 },
+    { id: 'size-adult', label: 'Adult Standard', dimensions: 'approximately 10–11 inches', price: 10.99, inventory: 100 },
+    { id: 'size-large', label: 'Adult Large', dimensions: 'approximately 12 inches', price: 12.99, inventory: 100 },
+    { id: 'size-oversized', label: 'Oversized', dimensions: 'approximately 13–14 inches', price: 15.99, inventory: 100 },
+];
+
+export const products: Product[] = [
+    {
+        id: 'prod-1',
+        title: 'Chattanooga River City Energy',
+        image: '/shop/chattanooga-bridge.jpg',
+        category: 'Chattanooga',
+        isBestSeller: true,
+        sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-2',
+        title: 'Social Battery Out of Office',
+        image: '/shop/social-battery.jpg',
+        category: 'Funny',
+        isNew: true,
+        sizes: getStandardSizes()
+    },
+    {
+        id: 'prod-3',
+        title: 'Management Has Gone To The Dogs',
+        image: '/shop/management-dogs.jpg',
+        category: 'Business',
+        sizes: getStandardSizes()
+    }
+];
+
+export const getActiveCategories = (): string[] => {
+    const cats = new Set<string>();
+    products.forEach(p => cats.add(p.category));
+    return Array.from(cats).sort();
+};

@@ -1,88 +1,87 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
-import { defaultPressingInstructions } from '../data/products';
-import { commerce, imageUrl, formatMoney } from '../lib/commerce';
-import type { Catalog, Product as ShopifyProduct } from '../lib/commerce';
-import { ShopState, ShopImage } from '../components/ShopUI';
+import { products, getActiveCategories, defaultDescription, defaultPressingInstructions } from '../data/products';
 import type { Product } from '../data/products';
 import CustomUploadModal from '../components/CustomUploadModal';
 import '../styles/Shop.css';
 
 export default function Shop() {
-
+    
     // Filtering and Sorting State
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('All Designs');
     const [sortOption, setSortOption] = useState('newest');
 
-    const navigate = useNavigate();
-    const [catalog, setCatalog] = useState<Catalog>({ nodes: [], pageInfo: { hasNextPage: false, endCursor: null } });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [attempt, setAttempt] = useState(0);
+    // Quick View Modal State
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [selectedSizeId, setSelectedSizeId] = useState('');
-    useEffect(() => {
-        let active = true;
-        commerce<Catalog>('resource=products&collection=transfers').then(data => { if (active) { setCatalog(data); setError(''); } }).catch(e => { if (active) setError(e.message); }).finally(() => { if (active) setLoading(false); });
-        return () => { active = false; };
-    }, [attempt]);
-    async function loadMore() {
-        setLoading(true);
-        try { const data = await commerce<Catalog>(`resource=products&collection=transfers&after=${encodeURIComponent(catalog.pageInfo.endCursor || '')}`); setCatalog(previous => ({ ...data, nodes: [...previous.nodes, ...data.nodes.filter(p => !previous.nodes.some(old => old.id === p.id))] })); }
-        catch (e) { setError(e instanceof Error ? e.message : 'Please try again.'); }
-        finally { setLoading(false); }
-    }
+    const [selectedSizeId, setSelectedSizeId] = useState<string>('');
+    const [quantity, setQuantity] = useState(1);
+    const [acknowledgmentChecked, setAcknowledgmentChecked] = useState(false);
+
     // Filtered and Sorted Products
     const filteredProducts = useMemo(() => {
-        let result = catalog.nodes;
+        let result = products;
 
         if (activeCategory !== 'All Designs') {
-            result = result.filter(p => p.productType === activeCategory);
+            result = result.filter(p => p.category === activeCategory);
         }
 
         if (searchQuery.trim() !== '') {
             const lowerQuery = searchQuery.toLowerCase();
-            result = result.filter(p => p.title.toLowerCase().includes(lowerQuery) || p.productType.toLowerCase().includes(lowerQuery));
+            result = result.filter(p => p.title.toLowerCase().includes(lowerQuery) || p.category.toLowerCase().includes(lowerQuery));
         }
 
         result = [...result].sort((a, b) => {
             if (sortOption === 'price-asc') {
-                return Number(a.priceRange.minVariantPrice.amount) - Number(b.priceRange.minVariantPrice.amount);
+                return a.sizes[0].price - b.sizes[0].price;
             } else if (sortOption === 'price-desc') {
-                return Number(b.priceRange.minVariantPrice.amount) - Number(a.priceRange.minVariantPrice.amount);
+                return b.sizes[0].price - a.sizes[0].price;
             } else {
-                // Keep the order provided by the Shopify collection.
-
+                // Newest sorting (placeholder logic relying on isNew)
+                if (a.isNew && !b.isNew) return -1;
+                if (!a.isNew && b.isNew) return 1;
                 return 0;
             }
         });
 
         return result;
-    }, [activeCategory, searchQuery, sortOption, catalog.nodes]);
+    }, [activeCategory, searchQuery, sortOption]);
 
-    const categories = ['All Designs', ...new Set(catalog.nodes.map(p => p.productType).filter(Boolean))];
+    const categories = ['All Designs', ...getActiveCategories()];
 
-    async function openQuickView(product: ShopifyProduct) {
-        if (product.productType !== 'Custom') { navigate(`/shop/${product.handle}`); return; }
-        try {
-            const full = await commerce<ShopifyProduct>(`resource=product&handle=${encodeURIComponent(product.handle)}`);
-            const sizes = full.variants.nodes.filter(v => v.availableForSale).map(v => ({ id: v.id, label: v.title, dimensions: v.selectedOptions.map(o => o.value).join(' · '), price: Number(v.price.amount) }));
-            if (!sizes.length) { setError('This product is currently unavailable.'); return; }
-            setSelectedProduct({ id: full.id, title: full.title, image: full.featuredImage ? imageUrl(full.featuredImage, 640) : '', category: full.productType, sizes });
-            setSelectedSizeId(sizes[0].id);
-        } catch (e) { setError(e instanceof Error ? e.message : 'Please try again.'); }
-    }
-    const closeQuickView = () => setSelectedProduct(null);
+    // Quick View Actions
+    const openQuickView = (product: Product) => {
+        setSelectedProduct(product);
+        setSelectedSizeId(product.sizes[0].id);
+        setQuantity(1);
+        setAcknowledgmentChecked(false);
+    };
+
+    const closeQuickView = () => {
+        setSelectedProduct(null);
+    };
+
+    const handleAddToCart = () => {
+        if (!acknowledgmentChecked) {
+            alert('Please check the box confirming you understand no garment is included.');
+            return;
+        }
+        
+        // Simulating Add to Cart / Checkout connection issue
+        alert('Item added to cart! (Checkout integration coming soon)');
+        closeQuickView();
+    };
+
+    // Derived states for active modal product
     const activeSize = selectedProduct?.sizes.find(s => s.id === selectedSizeId);
-
+    
     return (
         <Layout>
-            <SEO
-                title="Ready-to-Press DTF Transfers | PrintFlow Studio Chattanooga"
-                description="Shop ready-to-press DTF transfers from PrintFlow Studio in Chattanooga. Choose premade designs in multiple sizes or request custom transfers and gang sheets."
+            <SEO 
+                title="Ready-to-Press DTF Transfers | PrintFlow Studio Chattanooga" 
+                description="Shop ready-to-press DTF transfers from PrintFlow Studio in Chattanooga. Choose premade designs in multiple sizes or request custom transfers and gang sheets." 
             />
 
             {/* HERO SECTION */}
@@ -106,10 +105,10 @@ export default function Shop() {
             <section className="shop-filters" style={{background: '#f9fafb', borderBottom: '1px solid #eaeaea', padding: '2rem 0'}}>
                 <div className="container">
                     <div className="filter-bar" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem'}}>
-
+                        
                         <div className="category-filters">
                             {categories.map(cat => (
-                                <button
+                                <button 
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
                                     className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
@@ -120,16 +119,16 @@ export default function Shop() {
                         </div>
 
                         <div className="search-sort">
-                            <input
-                                type="text"
-                                placeholder="Search transfer designs..."
+                            <input 
+                                type="text" 
+                                placeholder="Search transfer designs..." 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className="search-input"
                                 aria-label="Search transfer designs"
                             />
-                            <select
-                                value={sortOption}
+                            <select 
+                                value={sortOption} 
                                 onChange={(e) => setSortOption(e.target.value)}
                                 className="sort-select"
                                 aria-label="Sort products"
@@ -147,9 +146,7 @@ export default function Shop() {
             {/* PRODUCT GRID */}
             <section id="product-grid" className="section">
                 <div className="container">
-                    {loading && <ShopState loading />}
-                    {error && <ShopState error={error} retry={() => setAttempt(attempt + 1)} />}
-                    {filteredProducts.length === 0 && !loading && !error ? (
+                    {filteredProducts.length === 0 ? (
                         <div className="text-center" style={{padding: '3rem 0', color: '#666'}}>
                             <h3>No designs found.</h3>
                             <p>Try adjusting your search or category filter.</p>
@@ -158,24 +155,24 @@ export default function Shop() {
                     ) : (
                         <div className="product-grid">
                             {filteredProducts.map(product => (
-                                <div key={product.id} className="product-card">
+                                <div key={product.id} className="product-card" onClick={() => openQuickView(product)}>
                                     <div className="product-image-container">
-                                        <ShopImage image={product.featuredImage} title={product.title} />
+                                        <img src={product.image} alt={product.title} className="product-image" loading="lazy" />
                                         <div className="transfer-label">Transfer Only</div>
                                         <div className="product-badges">
-                                            {!product.availableForSale && <span className="badge new">Sold Out</span>}
-
+                                            {product.isNew && <span className="badge new">New</span>}
+                                            {product.isBestSeller && <span className="badge best-seller">Best Seller</span>}
                                         </div>
                                         <div className="quick-view-overlay">
-                                            <button className="btn btn-primary" onClick={() => openQuickView(product)}>View options</button>
+                                            <span className="btn btn-primary">Quick View</span>
                                         </div>
                                     </div>
                                     <div className="product-info">
-                                        <span className="product-category">{product.productType}</span>
-                                        <h3 className="product-title"><Link to={`/shop/${product.handle}`}>{product.title}</Link></h3>
-                                        <div className="product-price">Starting at {formatMoney(product.priceRange.minVariantPrice)}</div>
+                                        <span className="product-category">{product.category}</span>
+                                        <h3 className="product-title">{product.title}</h3>
+                                        <div className="product-price">Starting at ${product.sizes[0].price.toFixed(2)}</div>
                                         <div className="product-sizes-preview">
-                                            {product.options.filter(o => o.name !== 'Title').map(o => `${o.values.length} ${o.name.toLowerCase()} options`).join(' · ')}
+                                            Available in {product.sizes.length} sizes
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +182,6 @@ export default function Shop() {
                 </div>
             </section>
 
-            {catalog.pageInfo.hasNextPage && <div className="container"><button className="btn btn-outline" disabled={loading} onClick={loadMore}>Load more transfers</button></div>}
             {/* MULTI-BUY PROMO */}
             <section className="multi-buy-promo section text-center" style={{background: 'var(--accent-primary, #D000E8)', color: 'white'}}>
                 <div className="container">
@@ -196,7 +192,7 @@ export default function Shop() {
                     <div className="promo-box" style={{display: 'inline-block', background: 'white', color: '#111', padding: '2rem', borderRadius: '0.5rem', boxShadow: '0 10px 25px rgba(0,0,0,0.2)'}}>
                         <div style={{fontWeight: 'bold', fontSize: '1.5rem', color: 'var(--accent-primary, #D000E8)', marginBottom: '0.5rem'}}>3 Transfers for $27.99</div>
                         <p style={{fontSize: '0.9rem', color: '#666', marginBottom: '1.5rem'}}>Mix and match eligible Adult Standard designs.</p>
-                        {/* Bundle feature hidden until ready */}
+                        <button className="btn btn-outline" disabled style={{opacity: 0.6, cursor: 'not-allowed'}}>Bundle Feature Coming Soon</button>
                     </div>
                 </div>
             </section>
@@ -316,7 +312,94 @@ export default function Shop() {
                 </div>
             </section>
 
-            {selectedProduct && activeSize && <div className="modal-overlay" onClick={closeQuickView}><CustomUploadModal product={selectedProduct} activeSize={activeSize} selectedSizeId={selectedSizeId} setSelectedSizeId={setSelectedSizeId} closeModal={closeQuickView} /></div>}
+            {/* QUICK VIEW MODAL */}
+            {selectedProduct && activeSize && (
+                <div className="modal-overlay" onClick={closeQuickView}>
+                    {selectedProduct.category === 'Custom' ? (
+                        <CustomUploadModal 
+                            product={selectedProduct} 
+                            activeSize={activeSize} 
+                            selectedSizeId={selectedSizeId} 
+                            setSelectedSizeId={setSelectedSizeId} 
+                            closeModal={closeQuickView} 
+                        />
+                    ) : (
+                        <div className="modal-content" onClick={e => e.stopPropagation()}>
+                            <button className="modal-close" onClick={closeQuickView} aria-label="Close modal">×</button>
+                            
+                            <div className="modal-grid">
+                                <div className="modal-image-col">
+                                    <img src={selectedProduct.image} alt={selectedProduct.title} className="modal-image" />
+                                </div>
+                                <div className="modal-info-col">
+                                    <div className="modal-category">{selectedProduct.category}</div>
+                                    <h2>{selectedProduct.title}</h2>
+                                    <div className="modal-price">${activeSize.price.toFixed(2)}</div>
+                                    
+                                    <p className="modal-desc">{selectedProduct.description || defaultDescription}</p>
+                                    
+                                    <div className="modal-form">
+                                        <div className="form-group">
+                                            <label htmlFor="size-select">Select Size</label>
+                                            <select 
+                                                id="size-select" 
+                                                value={selectedSizeId} 
+                                                onChange={(e) => setSelectedSizeId(e.target.value)}
+                                            >
+                                                {selectedProduct.sizes.map(size => (
+                                                    <option key={size.id} value={size.id}>
+                                                        {size.label} - ${size.price.toFixed(2)}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <p className="size-hint">Exact Dimensions: {activeSize.dimensions}</p>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="qty">Quantity</label>
+                                            <input 
+                                                type="number" 
+                                                id="qty" 
+                                                min="1" 
+                                                max={activeSize.inventory} 
+                                                value={quantity} 
+                                                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                                            />
+                                        </div>
+
+                                        <div className="checkout-notices">
+                                            <div className="transfer-only-notice">
+                                                <strong>TRANSFER ONLY</strong> — This purchase does not include a shirt or garment.
+                                            </div>
+                                            <label className="acknowledgment-checkbox">
+                                            <input 
+                                                type="checkbox" 
+                                                checked={acknowledgmentChecked}
+                                                onChange={(e) => setAcknowledgmentChecked(e.target.checked)}
+                                            />
+                                            I understand that I am purchasing a DTF transfer only and that no garment is included.
+                                        </label>
+                                        <p style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>
+                                            Colors may vary slightly between screens. Customers are responsible for proper pressing. All sales final unless damaged/defective. Designs may not be reproduced.
+                                        </p>
+                                    </div>
+
+                                    <div className="modal-actions" style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+                                        <button className="btn btn-primary" onClick={handleAddToCart}>
+                                            Add to Cart — ${(activeSize.price * quantity).toFixed(2)}
+                                        </button>
+                                        <button className="btn btn-outline" disabled style={{opacity: 0.6}}>Buy Now</button>
+                                    </div>
+                                    <p className="text-center text-xs text-gray-400 mt-2" style={{textAlign: 'center', fontSize: '0.8rem', color: '#888', marginTop: '0.5rem'}}>
+                                        Checkout integration coming soon.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    )}
+                </div>
+            )}
         </Layout>
     );
 }

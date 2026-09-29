@@ -20,7 +20,6 @@ import CustomApparel from "./pages/Services/CustomApparel";
 import Services from "./pages/Services";
 const Shop = lazy(() => import("./pages/Shop"));
 import ShopCatalog from "./pages/ShopPage";
-import ShopCart from "./pages/ShopCart";
 import ShopProductPage from "./pages/ShopProductPage";
 import Quote from "./pages/Quote";
 import FAQ from "./pages/FAQ";
@@ -79,7 +78,6 @@ export default function App() {
 
           {/* Shop Routes */}
           <Route path="/shop" element={<ShopCatalog />} />
-          <Route path="/shop/cart" element={<ShopCart />} />
           <Route path="/shop/:slug" element={<ShopProductPage />} />
           <Route path="/dtf-transfers" element={<Shop />} />
 
