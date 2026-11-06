@@ -2,9 +2,6 @@ import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { storage, db } from '../lib/firebase';
 import "../styles/Quote.css";
 
 type GtagWindow = Window & {
@@ -92,6 +89,9 @@ export default function Quote() {
     setError("");
 
     try {
+      const [{ ref, uploadBytes, getDownloadURL }, { collection, addDoc, serverTimestamp }, { storage, db }] = await Promise.all([
+        import('firebase/storage'), import('firebase/firestore'), import('../lib/firebase'),
+      ]);
       let fileUrl = "";
       if (file) {
         const fileRef = ref(storage, `quotes/${Date.now()}_${file.name}`);

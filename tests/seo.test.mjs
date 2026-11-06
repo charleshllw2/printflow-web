@@ -22,6 +22,15 @@ for (const url of urls) test(url, async () => {
   assert.equal(schemas.length,1);
   const graph=schemas[0]['@graph'];
   assert.ok(graph.some(e=>e['@id']===origin+'/#organization'));
+  assert.ok(graph.some(e=>e['@type']==='WebPage' && e.url===url));
+  if(path.startsWith('/blog/')){
+    const article=graph.find(e=>e['@type']==='Article');
+    assert.ok(article?.image?.[0]?.startsWith(origin));
+    assert.match(article.datePublished,/^\d{4}-\d{2}-\d{2}$/);
+    assert.equal(article.publisher['@id'],origin+'/#organization');
+  }
+  assert.match(html,/src="\/printflow-logo-transparent\.png"/);
+  assert.doesNotMatch(html,/src="\/printflow-logo-original\.png"/);
   assert.ok(!graph.some(e=>e.aggregateRating||e.review||e.geo||e.address));
   if(path!=='/')assert.ok(graph.some(e=>e['@type']==='BreadcrumbList'));
   if(path.startsWith('/shop/')){const product=graph.find(e=>e['@type']==='Product');assert.ok(product);assert.equal(product.offers.price,'27.99');assert.ok(!product.offers.availability);}

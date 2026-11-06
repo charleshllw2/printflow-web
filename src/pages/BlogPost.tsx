@@ -583,6 +583,9 @@ export default function BlogPost() {
         "@type": "Article",
         "headline": post.title,
         "description": post.metaDescription,
+        "image": [`https://www.printflowstudio.com${post.image}`],
+        "datePublished": new Date(`${post.date} 12:00:00 GMT`).toISOString().slice(0, 10),
+        "publisher": { "@id": "https://www.printflowstudio.com/#organization" },
         "author": {
             "@type": "Person",
             "name": post.author

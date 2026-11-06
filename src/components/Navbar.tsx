@@ -171,10 +171,10 @@ export default function Navbar() {
                         aria-label="PrintFlow Studio home"
                     >
                         <img
-                            src="/printflow-logo-original.png"
-                            alt=""
-                            width={895}
-                            height={711}
+                            src="/printflow-logo-transparent.png"
+                            alt="PrintFlow Studio"
+                            width={1407}
+                            height={1118}
                             className="pf-brand-plate__mark"
                         />
 
@@ -440,10 +440,10 @@ export default function Navbar() {
                             onClick={() => setMobileOpen(false)}
                         >
                             <img
-                                src="/printflow-logo-original.png"
-                                alt=""
-                                width={895}
-                                height={711}
+                                src="/printflow-logo-transparent.png"
+                                alt="PrintFlow Studio"
+                                width={1407}
+                                height={1118}
                                 className="pf-brand-plate__mark"
                             />
 

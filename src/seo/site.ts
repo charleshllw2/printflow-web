@@ -13,9 +13,10 @@ export const pageNames: Record<string, string> = {
 };
 export const publicPaths = [...Object.keys(pageNames), ...SHOP_PRODUCTS.map(p => `/shop/${p.slug}`), ...BLOG_POSTS.map(p => `/blog/${p.id}`)];
 export const business = {
-  '@type': ['Organization', 'LocalBusiness'], '@id': `${SITE_URL}/#organization`,
-  name: 'PrintFlow Studio', url: `${SITE_URL}/`, logo: `${SITE_URL}/logo.png`,
-  description: 'Custom shirt printing and DTF transfers in Chattanooga, Tennessee.',
+  '@type': 'Organization', '@id': `${SITE_URL}/#organization`,
+  name: 'PrintFlow Studio', url: `${SITE_URL}/`, logo: { '@type': 'ImageObject', url: `${SITE_URL}/printflow-logo-original.png`, width: 895, height: 711 },
+  description: 'Custom T-shirts, hoodies, group apparel, and ready-to-press DTF transfers in Chattanooga, Tennessee, with nationwide shipping.',
+  image: `${SITE_URL}/hero-apparel-group.jpg`,
   telephone: '+1-423-681-2218', email: 'hello@printflowstudio.com',
   areaServed: { '@type': 'City', name: 'Chattanooga', containedInPlace: { '@type': 'State', name: 'Tennessee' } },
 };
@@ -23,6 +24,11 @@ export function structuredData(path: string, title: string, schema?: string) {
   const product = SHOP_PRODUCTS.find(p => path === `/shop/${p.slug}`);
   const post = BLOG_POSTS.find(p => path === `/blog/${p.id}`);
   const graph: object[] = [business, { '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: 'PrintFlow Studio', publisher: { '@id': business['@id'] } }];
+  if (publicPaths.includes(path)) graph.push({
+    '@type': 'WebPage', '@id': `${SITE_URL}${path}#webpage`,
+    url: path === '/' ? `${SITE_URL}/` : SITE_URL + path, name: title, inLanguage: 'en-US',
+    isPartOf: { '@id': `${SITE_URL}/#website` }, about: { '@id': business['@id'] },
+  });
   if (path !== '/' && publicPaths.includes(path)) {
     const crumbs = [{ name: 'Home', item: `${SITE_URL}/` }];
     if (product) crumbs.push({ name: 'Shop', item: `${SITE_URL}/shop` });

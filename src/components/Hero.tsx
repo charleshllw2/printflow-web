@@ -7,7 +7,7 @@ export default function Hero() {
             <div className="container hero-split">
                 <div className="hero-content-left">
                     <img
-                        src="/logo.png"
+                        src="/printflow-logo-transparent.png"
                         alt="PrintFlow Studio Brand Mark"
                         className="hero-brand-mark"
                     />

@@ -482,6 +482,6 @@
   .pf-site-header__brand .pf-brand-plate__mark { height:auto; width:100%; }
 }
 
-.pf-site-header__brand { width:142px; padding:6px; }
+.pf-site-header__brand { width:142px; padding:0; }
 .pf-site-header__inner { min-height:118px; }
-@media(max-width:640px) { .pf-site-header__brand {width:116px;padding:4px;} .pf-site-header__inner { min-height:98px; } }
+@media(max-width:640px) { .pf-site-header__brand {width:116px;padding:0;} .pf-site-header__inner { min-height:98px; } }

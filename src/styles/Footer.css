@@ -22,7 +22,7 @@
 .pf-footer__brand {
   width: 156px;
   justify-content: center;
-  padding: 8px 14px;
+  padding: 0;
 }
 
 .pf-footer__description {

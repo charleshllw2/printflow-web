@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-variable.woff2') format('woff2');
+}
+
 :root {
   color-scheme: dark;
 
@@ -371,14 +379,14 @@ p {
   }
 }
 
-/* Shared Brand Lockup Plate (crisp white plate preserving black shirt & lettering) */
+/* Original transparent PrintFlow logo on the dark storefront. */
 .pf-brand-plate {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   padding: 6px 12px;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: transparent;
+  color: var(--pf-text);
   border-radius: 0;
   line-height: 1;
   text-decoration: none;
@@ -786,4 +794,4 @@ p {
   }
 }
 
-.pf-brand-plate__mark { width:100%; height:auto; aspect-ratio:895 / 711; object-fit:contain; }
+.pf-brand-plate__mark { width:100%; height:auto; aspect-ratio:1407 / 1118; object-fit:contain; }
