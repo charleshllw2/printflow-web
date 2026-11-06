@@ -8,6 +8,6 @@ The shop return page verifies payment server-side with Stripe rather than trusti
 
 Register the production endpoint at https://www.printflowstudio.com/api/stripe-webhook in the correct Stripe account with checkout.session.completed, checkout.session.async_payment_succeeded, and checkout.session.async_payment_failed. Store the endpoint signing secret as STRIPE_WEBHOOK_SECRET in production and redeploy. Do not reuse a sandbox secret. Verify delivery in sandbox before treating order notifications as operational.
 
-Shipping price, pickup charges, and sales-tax registration details have not yet been supplied by the owner. This change does not alter checkout charges or enable Stripe Tax. Inspect existing Stripe Tax settings and registrations before configuring collection; confirm product tax classification and pickup location with the owner.
+Owner confirmed $5.99 flat U.S. shipping per order and free Chattanooga pickup. Product pages offer a delivery selector; the server validates it, sets the delivery metadata, charges shipping only for shipped orders, and omits shipping-address collection for pickup. Custom quote shipping remains quoted individually. Owner reports no sales-tax registrations, so automatic tax remains disabled; do not interpret this as a determination that registration is unnecessary.
 
 Validation: 64 automated tests, ESLint, and production build passed. No real payment was made. The webhook is not yet registered and no end-to-end paid-order delivery has been confirmed.

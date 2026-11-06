@@ -37,6 +37,7 @@ export default function ShopProductPage() {
     const [size, setSize] = useState(product?.sizes?.[1] || product?.sizes?.[0] || 'M');
     const [color, setColor] = useState(product?.colors?.[0] || 'Black');
     const [quantity, setQuantity] = useState(1);
+    const [deliveryMethod, setDeliveryMethod] = useState('shipping');
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState('');
 
@@ -91,6 +92,7 @@ export default function ShopProductPage() {
                     size: hasSizes ? size : undefined,
                     color: hasColors ? color : undefined,
                     quantity,
+                    deliveryMethod,
                 }),
             });
             const data = (await response.json()) as { url?: string; error?: string };
@@ -259,6 +261,14 @@ export default function ShopProductPage() {
                                 </div>
                             </div>
 
+                            <div className="pf-pdp-field" style={{ marginBottom: '1.5rem' }}>
+                                <label htmlFor="pdp-delivery-select">Delivery</label>
+                                <select id="pdp-delivery-select" className="pf-select" value={deliveryMethod} onChange={event => setDeliveryMethod(event.target.value)}>
+                                    <option value="shipping">U.S. shipping — $5.99 per order</option>
+                                    <option value="pickup">Chattanooga pickup — Free</option>
+                                </select>
+                            </div>
+
                             <details className="pf-pdp-disclosure">
                                 <summary>
                                     Sizing &amp; Fit Guide (Unisex{' '}
@@ -321,8 +331,9 @@ export default function ShopProductPage() {
                                 </button>
 
                                 <p className="pf-pdp-tax-note">
-                                    Shipping or Chattanooga pickup options and applicable tax are
-                                    confirmed at checkout.
+                                    {deliveryMethod === 'pickup'
+                                        ? 'Free Chattanooga-area pickup by arrangement. We will contact you to coordinate pickup after production.'
+                                        : 'U.S. shipping is $5.99 per order, added at checkout.'}
                                 </p>
 
                                 {product.etsyListingUrl && (

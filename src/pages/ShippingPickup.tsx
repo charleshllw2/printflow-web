@@ -19,12 +19,12 @@ export default function ShippingPickup() {
 
                     <h2 style={{ color: "var(--text-primary)", fontSize: "1.4rem", marginTop: "35px", marginBottom: "12px" }}>Chattanooga-Area Local Pickup</h2>
                     <p style={{ marginBottom: "20px" }}>
-                        Local pickup is available by arrangement in the Chattanooga, Tennessee area (serving Hamilton County, Hixson, Cleveland, and surrounding communities). When requesting a <Link to="/request-quote" style={{ color: "var(--accent-color)" }}>custom quote</Link>, simply select <strong>"Chattanooga-area pickup"</strong> as your delivery preference. Once your order is printed and passes our quality check, we will contact you directly to coordinate a convenient pickup time.
+                        Free local pickup is available by arrangement in the Chattanooga, Tennessee area (serving Hamilton County, Hixson, Cleveland, and surrounding communities). For standard shop tees, choose <strong>"Chattanooga pickup — Free"</strong> on the product page before checkout. When requesting a <Link to="/request-quote" style={{ color: "var(--accent-color)" }}>custom quote</Link>, simply select <strong>"Chattanooga-area pickup"</strong> as your delivery preference. Once your order is printed and passes our quality check, we will contact you directly to coordinate a convenient pickup time.
                     </p>
 
                     <h2 style={{ color: "var(--text-primary)", fontSize: "1.4rem", marginTop: "35px", marginBottom: "12px" }}>Nationwide Shipping</h2>
                     <p style={{ marginBottom: "20px" }}>
-                        We ship custom printed T-shirts, business and event apparel, original shop designs, and ready-to-press DTF transfers nationwide across the U.S. Please verify that your shipping address is complete and accurate at checkout or when confirming your custom quote.
+                        Standard shop tee orders placed through online checkout have a flat U.S. shipping charge of $5.99 per order. Shipping for custom quotes is confirmed with your quote. We ship custom printed T-shirts, business and event apparel, original shop designs, and ready-to-press DTF transfers nationwide across the U.S. Please verify that your shipping address is complete and accurate at checkout or when confirming your custom quote.
                     </p>
 
                     <h2 style={{ color: "var(--text-primary)", fontSize: "1.4rem", marginTop: "35px", marginBottom: "12px" }}>Production Schedules vs. Transit Times</h2>
