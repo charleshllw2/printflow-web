@@ -5,6 +5,7 @@ import { EXTERNAL_LINKS } from '../data/businessSettings';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import ProductCard from '../components/ProductCard';
+import CheckoutResult from '../components/CheckoutResult';
 import './shop.css';
 
 type SortOption = 'featured' | 'name-asc' | 'name-desc';
@@ -115,12 +116,7 @@ export default function ShopCatalog() {
                 </header>
 
                 <div className="pf-container pf-shop-body">
-                    {searchParams.get('paid') === '1' && (
-                        <div className="pf-status-banner pf-status-banner--success" role="status">
-                            Thank you. Your payment was received. PrintFlow Studio will review your
-                            order and follow up with production and delivery details.
-                        </div>
-                    )}
+                    {searchParams.get('paid') === '1' && <CheckoutResult key={searchParams.get('session_id') || 'missing'} sessionId={searchParams.get('session_id')} />}
 
                     {searchParams.get('checkout') === 'cancelled' && (
                         <div className="pf-status-banner pf-status-banner--notice" role="status">

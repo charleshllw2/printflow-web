@@ -47,7 +47,7 @@ export default async function handler(request, response) {
           },
         },
       }],
-      metadata: { designId: productId, designName: PRODUCTS[productId], size, color },
+      metadata: { storefront: "printflow-web", deliveryMethod: "shipping", designId: productId, designName: PRODUCTS[productId], size, color },
       success_url: `${SITE_URL}/shop?paid=1&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/shop?checkout=cancelled`,
     });
