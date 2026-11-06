@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { storage, db } from '../lib/firebase';
+import { useRef, useState } from 'react';
+import { submitInquiry } from '../lib/inquiries';
 import type { Product, TransferSize } from '../data/products';
 
 interface CustomUploadModalProps {
@@ -19,6 +17,7 @@ export default function CustomUploadModal({
     setSelectedSizeId,
     closeModal,
 }: CustomUploadModalProps) {
+    const requestId = useRef('');
     const [file, setFile] = useState<File | null>(null);
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -51,29 +50,21 @@ export default function CustomUploadModal({
         setIsUploading(true);
 
         try {
-            const storageRef = ref(storage, `custom_uploads/${Date.now()}_${file.name}`);
-            const snapshot = await uploadBytes(storageRef, file);
-            const downloadUrl = await getDownloadURL(snapshot.ref);
-
-            await addDoc(collection(db, 'custom_uploads'), {
-                name: name.trim(),
-                email: email.trim(),
-                fileUrl: downloadUrl,
-                fileName: file.name,
-                sizeLabel: activeSize.label,
-                sizeDimensions: activeSize.dimensions,
-                price: activeSize.price,
-                quantity,
-                notes: notes.trim(),
-                status: 'pending',
-                createdAt: serverTimestamp(),
-            });
+            requestId.current ||= crypto.randomUUID();
+            await submitInquiry({
+                kind: 'artwork', requestId: requestId.current,
+                contactName: name.trim(), contactEmail: email.trim(),
+                initialService: 'Custom DTF transfer', preselectedDesign: product.id,
+                preselectedDesignName: product.title,
+                preselectedSize: `${activeSize.label} (${activeSize.dimensions})`,
+                preselectedQty: String(quantity), notes: notes.trim(),
+            }, file);
 
             setUploadSuccess(true);
         } catch (err: unknown) {
             console.error('Upload error:', err);
             setError(
-                'Artwork upload could not be completed right now. Your details are still filled in—please try again or email hello@printflowstudio.com.'
+                err instanceof Error ? err.message : 'Artwork could not be sent. Your details are preserved; please try again or email hello@printflowstudio.com.'
             );
         } finally {
             setIsUploading(false);
@@ -148,13 +139,13 @@ export default function CustomUploadModal({
                             <input
                                 id="custom-upload-file"
                                 type="file"
-                                accept=".png,.svg,.pdf,.ai,.eps,.jpg,.jpeg"
+                                accept=".png,.jpg,.jpeg,.pdf,.svg"
                                 onChange={handleFileChange}
                                 required
                                 className="pf-input"
                             />
                             <span className="pf-dtf-field__hint">
-                                Recommended: 300 DPI transparent PNG or vector artwork.
+                                PNG, JPG, PDF, or SVG up to 2 MB. Email larger files to hello@printflowstudio.com.
                             </span>
                         </div>
 

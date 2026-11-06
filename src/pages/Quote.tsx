@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import "../styles/Quote.css";
+import { submitInquiry } from "../lib/inquiries";
 
 type GtagWindow = Window & {
   gtag?: (...args: unknown[]) => void;
@@ -44,6 +45,7 @@ export default function Quote() {
     prefilledNoteParts.push("Interested in: 10-Shirt Business Starter Pack (starting at $199)");
   }
 
+  const requestId = useRef('');
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -89,43 +91,20 @@ export default function Quote() {
     setError("");
 
     try {
-      const [{ ref, uploadBytes, getDownloadURL }, { collection, addDoc, serverTimestamp }, { storage, db }] = await Promise.all([
-        import('firebase/storage'), import('firebase/firestore'), import('../lib/firebase'),
-      ]);
-      let fileUrl = "";
-      if (file) {
-        const fileRef = ref(storage, `quotes/${Date.now()}_${file.name}`);
-        const snapshot = await uploadBytes(fileRef, file);
-        fileUrl = await getDownloadURL(snapshot.ref);
-      }
-
-      await addDoc(collection(db, "quote_requests"), {
-        quantity,
-        purpose,
-        locations,
-        artworkStatus,
-        fileUrl,
-        dateNeeded: date,
-        deliveryMethod: delivery,
-        contactName,
-        contactEmail,
-        contactPhone,
-        contactOrg,
-        notes: contactNotes,
-        initialService,
-        preselectedDesign,
-        preselectedDesignName,
-        preselectedSize,
-        preselectedQty,
-        preselectedVariant,
-        createdAt: serverTimestamp(),
-      });
+      requestId.current ||= crypto.randomUUID();
+      await submitInquiry({
+        kind: 'quote', requestId: requestId.current,
+        quantity, purpose, locations, artworkStatus, dateNeeded: date,
+        deliveryMethod: delivery, contactName, contactEmail, contactPhone,
+        contactOrg, notes: contactNotes, initialService, preselectedDesign,
+        preselectedDesignName, preselectedSize, preselectedQty, preselectedVariant,
+      }, file);
 
       trackEvent("quote_submitted", { method: "multi_step_form" });
       setSuccess(true);
     } catch (err: unknown) {
       console.error(err);
-      setError("An error occurred while submitting your quote. Please try again or email us directly at hello@printflowstudio.com.");
+      setError(err instanceof Error ? err.message : "Your quote could not be sent. Please try again or email hello@printflowstudio.com.");
     } finally {
       setIsSubmitting(false);
     }
@@ -139,7 +118,7 @@ export default function Quote() {
           <div className="container quote-container">
             <div className="quote-success-content">
               <h1>THANK YOU — WE&apos;VE GOT YOUR REQUEST.</h1>
-              <p>Your project details are in our queue. We will review your garment selections, timeline, and artwork and follow up with clear pricing, recommendations, and next steps before anything goes to print.</p>
+              <p>Your project details have been sent to PrintFlow Studio. We will review your garment selections, timeline, and artwork and follow up with clear pricing, recommendations, and next steps before anything goes to print.</p>
               <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap", marginTop: "20px" }}>
                 <Link to="/" className="btn btn-primary">Return to Home</Link>
                 <Link to="/blog/how-custom-shirt-orders-work" className="btn btn-outline">Read How Custom Orders Work</Link>
@@ -206,7 +185,7 @@ export default function Quote() {
 
             {artworkStatus && (
               <div className="quote-upload-section">
-                <label className="quote-label">Attach File (PNG, JPG, PDF, SVG) — Optional</label>
+                <label className="quote-label">Attach Artwork (PNG, JPG, PDF, SVG, up to 2 MB) — Optional</label>
                 <input type="file" accept=".png,.jpg,.jpeg,.pdf,.svg" onChange={handleFileChange} className="quote-file-input" />
                 {file && <p className="quote-file-name">Attached: {file.name}</p>}
                 <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: "8px" }}>

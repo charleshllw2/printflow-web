@@ -1,120 +1,40 @@
-import { useState } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
+import { submitInquiry } from '../lib/inquiries';
 import '../styles/ContactForm.css';
 
 export default function ContactForm() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setStatus('submitting');
-
+    const requestId = useRef('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [website, setWebsite] = useState('');
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+    const [error, setError] = useState('');
+    async function handleSubmit(event: FormEvent) {
+        event.preventDefault();
+        setStatus('sending');
+        setError('');
         try {
-            const response = await fetch("https://formsubmit.co/ajax/hello@printflowstudio.com", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: `New Inquiry from ${formData.name}`,
-                    name: formData.name,
-                    email: formData.email,
-                    message: formData.message
-                })
-            });
-
-            if (response.ok) {
-                setStatus('success');
-                setFormData({ name: '', email: '', message: '' });
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            console.error(error);
-            setStatus('error');
+            requestId.current ||= crypto.randomUUID();
+            await submitInquiry({ kind: 'contact', requestId: requestId.current, contactName: name, contactEmail: email, notes: message, website });
+            setStatus('success');
+        } catch (failure) {
+            setError(failure instanceof Error ? failure.message : 'Your message could not be sent. Please email hello@printflowstudio.com.');
+            setStatus('idle');
         }
-    };
-
-    return (
-        <section id="contact" className="section contact-section">
-            <div className="container">
-                <div className="contact-wrapper">
-
-                    <div className="contact-header text-center">
-                        <h2>Contact Us</h2>
-                        <p>Have a question or need a custom quote? Send us a message.</p>
-                    </div>
-
-                    {status === 'success' ? (
-                        <div className="contact-success text-center">
-                            <div className="success-icon">✅</div>
-                            <h3>Message Sent!</h3>
-                            <p>Thanks for reaching out. We'll get back to you shortly.</p>
-                            <button className="btn btn-secondary" onClick={() => setStatus('idle')}>Send Another Message</button>
-                        </div>
-                    ) : (
-                        <form className="contact-form" onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="Your Name"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="your@email.com"
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="message">Message</label>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    rows={5}
-                                    placeholder="How can we help you?"
-                                ></textarea>
-                            </div>
-
-                            <button type="submit" className="btn btn-primary full-width" disabled={status === 'submitting'}>
-                                {status === 'submitting' ? 'Sending...' : 'Send Message'}
-                            </button>
-
-                            {status === 'error' && (
-                                <p className="error-text text-center">Something went wrong. Please try again.</p>
-                            )}
-                        </form>
-                    )}
-
-                </div>
-            </div>
-        </section>
-    );
+    }
+    return <section id="contact" className="pf-section pf-section--alt pf-section--bordered pf-contact" aria-labelledby="contact-heading">
+        <div className="pf-container pf-contact__grid">
+            <div><p className="pf-eyebrow">GET IN TOUCH</p><h2 id="contact-heading" className="pf-section-title">SEND A<br />MESSAGE.</h2><p className="pf-copy">Questions about your order or next project? Your message goes to hello@printflowstudio.com.</p><a className="pf-text-link" href="mailto:hello@printflowstudio.com">hello@printflowstudio.com</a></div>
+            {status === 'success' ? <div role="status" className="pf-contact__confirmation"><h3>MESSAGE RECEIVED.</h3><p>Thank you for contacting PrintFlow Studio. We’ll review your message and reply to your email.</p><button className="pf-button pf-button--secondary" onClick={() => { setName(''); setEmail(''); setMessage(''); requestId.current = ''; setStatus('idle'); }}>Send another message</button></div> :
+                <form onSubmit={handleSubmit} className="pf-contact__form">
+                    <label htmlFor="contact-name">Name</label><input id="contact-name" className="pf-input" value={name} onChange={e => setName(e.target.value)} required maxLength={120} autoComplete="name" />
+                    <label htmlFor="contact-email">Email</label><input id="contact-email" className="pf-input" type="email" value={email} onChange={e => setEmail(e.target.value)} required maxLength={254} autoComplete="email" />
+                    <label htmlFor="contact-message">Message</label><textarea id="contact-message" className="pf-input" rows={6} value={message} onChange={e => setMessage(e.target.value)} required maxLength={6000} />
+                    <div hidden aria-hidden="true"><label htmlFor="contact-website">Leave empty</label><input id="contact-website" tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} /></div>
+                    {error && <p role="alert">{error}</p>}
+                    <button type="submit" disabled={status === 'sending'} className="pf-button pf-button--primary">{status === 'sending' ? 'Sending…' : 'Send message'}</button>
+                </form>}
+        </div>
+    </section>;
 }

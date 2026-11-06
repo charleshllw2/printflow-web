@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
+import ContactForm from "../components/ContactForm";
 import { BUSINESS_INFO, PRICING_OFFERS } from "../data/businessSettings";
 
 export default function About() {
@@ -153,6 +154,7 @@ export default function About() {
             </div>
           </div>
         </section>
+        <ContactForm />
       </main>
     </Layout>
   );

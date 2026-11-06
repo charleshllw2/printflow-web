@@ -92,7 +92,7 @@ export default function PrivacyPolicy() {
                     <h2 style={{ color: "var(--text-primary)", fontSize: "1.4rem", marginTop: "35px", marginBottom: "12px" }}>4. Infrastructure &amp; Fulfillment Partners</h2>
                     <ul style={{ marginLeft: "20px", marginBottom: "20px" }}>
                         <li style={{ marginBottom: "10px" }}>
-                            <strong>Firebase (Google Cloud):</strong> Custom quote submissions and uploaded artwork files are stored securely on Google Firebase infrastructure so PrintFlow Studio can review and fulfill your project.
+                            <strong>Inquiry delivery (Resend):</strong> Contact messages, custom quote details, and optional artwork attachments are transmitted through Resend to PrintFlow Studio’s business email inbox so we can review and respond to your project. Firebase is used for administrative access and historical records.
                         </li>
                         <li style={{ marginBottom: "10px" }}>
                             <strong>Stripe &amp; Print Partners:</strong> Direct shop checkout transactions are processed by Stripe. Certain ready-made garment styles or external storefront orders may be fulfilled in coordination with PrintFlow Studio&apos;s production partners or Printify/Etsy storefronts using only the shipping details needed to deliver your order.
