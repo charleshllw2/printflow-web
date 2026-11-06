@@ -72,6 +72,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+img { height: auto; }
+
 img,
 svg,
 video {
