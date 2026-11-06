@@ -11,3 +11,7 @@ Artwork supports PNG, JPG, PDF and SVG up to 2 MB, attached directly to the noti
 The UI retains all entries on failure and shows success only after the email provider accepts delivery. A stable reference and deterministic provider idempotency key protect retries from duplicate notifications. Origin checks, a fixed recipient, bounded per-instance rate limiting, and a contact-form honeypot reduce abuse. Rate limits are per server instance; they are not a distributed quota.
 
 Tests cover recipient/reply-to, complete project details, attachments, invalid requests, missing credentials, provider errors, network failures, duplicate retries and rate limits. Production delivery must also be verified in the owner inbox; provider acceptance alone is not proof of inbox arrival.
+
+## Live verification — November 6, 2026
+
+Submitted the actual live contact form and seven-step quote form. Both showed confirmation and both test emails arrived in the owner Gmail inbox, not just the provider queue. The quote notification included the SVG artwork attachment. Tests were clearly labeled owner verification / no customer order. DTF custom-upload calls to action use the same repaired quote path.

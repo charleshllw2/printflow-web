@@ -102,6 +102,7 @@ export default function Quote() {
 
       trackEvent("quote_submitted", { method: "multi_step_form" });
       setSuccess(true);
+      requestAnimationFrame(() => window.scrollTo(0, 0));
     } catch (err: unknown) {
       console.error(err);
       setError(err instanceof Error ? err.message : "Your quote could not be sent. Please try again or email hello@printflowstudio.com.");
