@@ -46,7 +46,7 @@
 
 .benefit-item:hover .benefit-icon {
     border-color: var(--accent-color);
-    background-color: rgba(255, 0, 127, 0.1);
+    background-color: rgba(102, 45, 145, 0.1);
     transform: scale(1.1);
 }
 

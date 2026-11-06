@@ -1,0 +1,4 @@
+import { Link } from 'react-router-dom';
+import ProductCard from '../ProductCard';
+import { SHOP_PRODUCTS } from '../../data/shopProducts';
+export default function FeaturedProducts() { return <section className="pf-section" aria-labelledby="featured-heading"><div className="pf-container"><div className="pf-section-header"><div className="pf-section-header__main"><p className="pf-eyebrow">THE PRINTFLOW EDIT</p><h2 id="featured-heading" className="pf-section-title">FIND YOUR<br/>NEXT FAVORITE.</h2></div><div><p className="pf-copy pf-section-header__copy">Discover printed apparel with personality, made for everyday wear and meaningful moments.</p><Link to="/shop" className="pf-text-link">SHOP ALL APPAREL →</Link></div></div><div className="pf-product-grid">{SHOP_PRODUCTS.filter(p=>p.featured).slice(0,4).map(product=><ProductCard key={product.id} product={product}/>)}</div></div></section>; }

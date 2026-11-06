@@ -6,7 +6,7 @@ export default function BehindTheScenes() {
           <h2>SEE HOW YOUR SHIRT GETS MADE.</h2>
           <p>REAL WORK. REAL PRINTING. REAL PRINTFLOW.</p>
         </div>
-        
+
         <div className="bts-grid">
           {/* Video/Photo placeholders */}
           <div className="bts-item placeholder-video"></div>

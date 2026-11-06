@@ -8,7 +8,7 @@ export default function OrderOptions() {
                 <div className="section-header text-center">
                     <h2>Custom Apparel for Every Kind of Order</h2>
                 </div>
-                
+
                 <div className="options-grid">
                     <div className="option-card">
                         <div className="option-content">

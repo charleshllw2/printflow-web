@@ -12,7 +12,13 @@ interface CustomUploadModalProps {
     closeModal: () => void;
 }
 
-export default function CustomUploadModal({ product, activeSize, selectedSizeId, setSelectedSizeId, closeModal }: CustomUploadModalProps) {
+export default function CustomUploadModal({
+    product,
+    activeSize,
+    selectedSizeId,
+    setSelectedSizeId,
+    closeModal,
+}: CustomUploadModalProps) {
     const [file, setFile] = useState<File | null>(null);
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -22,56 +28,53 @@ export default function CustomUploadModal({ product, activeSize, selectedSizeId,
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [error, setError] = useState('');
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            setFile(event.target.files[0]);
         }
     };
 
-    const handleUploadSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleUploadSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         setError('');
 
         if (!file) {
-            setError('Please select a file to upload.');
+            setError('Please select an artwork file to upload.');
             return;
         }
 
-        if (!name || !email) {
-            setError('Name and Email are required.');
+        if (!name.trim() || !email.trim()) {
+            setError('Name and email address are required.');
             return;
         }
 
         setIsUploading(true);
 
         try {
-            // 1. Upload to Firebase Storage
             const storageRef = ref(storage, `custom_uploads/${Date.now()}_${file.name}`);
             const snapshot = await uploadBytes(storageRef, file);
             const downloadUrl = await getDownloadURL(snapshot.ref);
 
-            // 2. Save metadata to Firestore
             await addDoc(collection(db, 'custom_uploads'), {
-                name,
-                email,
+                name: name.trim(),
+                email: email.trim(),
                 fileUrl: downloadUrl,
                 fileName: file.name,
                 sizeLabel: activeSize.label,
                 sizeDimensions: activeSize.dimensions,
                 price: activeSize.price,
                 quantity,
-                notes,
+                notes: notes.trim(),
                 status: 'pending',
-                createdAt: serverTimestamp()
+                createdAt: serverTimestamp(),
             });
 
             setUploadSuccess(true);
-            setTimeout(() => {
-                closeModal();
-            }, 3000);
         } catch (err: unknown) {
             console.error('Upload error:', err);
-            setError('An error occurred during upload. Please try again.');
+            setError(
+                'Artwork upload could not be completed right now. Your details are still filled in—please try again or email hello@printflowstudio.com.'
+            );
         } finally {
             setIsUploading(false);
         }
@@ -79,90 +82,161 @@ export default function CustomUploadModal({ product, activeSize, selectedSizeId,
 
     if (uploadSuccess) {
         return (
-            <div className="modal-content" onClick={e => e.stopPropagation()} style={{textAlign: 'center', padding: '4rem 2rem'}}>
-                <div style={{fontSize: '4rem', color: '#10B981', marginBottom: '1rem'}}>✓</div>
-                <h2>Upload Successful!</h2>
-                <p>We've received your custom design. We'll review it and contact you at {email} with the next steps.</p>
+            <div className="pf-dtf-modal pf-dtf-modal--centered">
+                <p className="pf-eyebrow">UPLOAD CONFIRMED</p>
+                <h2 className="pf-dtf-modal__title">ARTWORK RECEIVED.</h2>
+                <p className="pf-copy">
+                    PrintFlow Studio received your file and will follow up at{' '}
+                    <strong>{email}</strong> with review details and invoice steps.
+                </p>
+                <button
+                    type="button"
+                    className="pf-button pf-button--primary"
+                    onClick={closeModal}
+                >
+                    DONE
+                </button>
             </div>
         );
     }
 
     return (
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal} aria-label="Close modal">×</button>
-            
-            <div className="modal-grid">
-                <div className="modal-image-col">
-                    <div style={{background: '#f3f4f6', height: '100%', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', padding: '2rem', textAlign: 'center'}}>
-                        {file ? (
-                            <>
-                                <div style={{fontSize: '3rem', color: 'var(--accent-primary, #D000E8)', marginBottom: '1rem'}}>📄</div>
-                                <strong>{file.name}</strong>
-                                <span style={{fontSize: '0.8rem', color: '#666'}}>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
-                            </>
-                        ) : (
-                            <img src={product.image} alt={product.title} style={{maxWidth: '100%', borderRadius: '8px'}} />
-                        )}
-                    </div>
+        <div className="pf-dtf-modal">
+            <div className="pf-dtf-modal__top">
+                <span className="pf-eyebrow pf-dtf-modal__eyebrow">CUSTOM TRANSFER UPLOAD</span>
+                <button
+                    type="button"
+                    className="pf-dialog-close"
+                    onClick={closeModal}
+                    aria-label="Close custom upload dialog"
+                >
+                    Close ✕
+                </button>
+            </div>
+
+            <div className="pf-dtf-modal__grid">
+                <div className="pf-dtf-modal__media">
+                    {file ? (
+                        <div className="pf-dtf-file-preview">
+                            <span className="pf-eyebrow">SELECTED FILE</span>
+                            <strong>{file.name}</strong>
+                            <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                        </div>
+                    ) : (
+                        <img
+                            src={product.image}
+                            alt={product.alt}
+                            className="pf-dtf-modal__img"
+                        />
+                    )}
                 </div>
-                <div className="modal-info-col">
-                    <div className="modal-category">Custom Order</div>
-                    <h2>Upload Your Design</h2>
-                    
-                    {error && <div style={{background: '#FEE2E2', color: '#B91C1C', padding: '0.75rem', borderRadius: '4px', marginBottom: '1rem', fontSize: '0.9rem'}}>{error}</div>}
 
-                    <form onSubmit={handleUploadSubmit} className="modal-form">
-                        <div className="form-group">
-                            <label>Design File (PNG, SVG, PDF, AI)</label>
-                            <input type="file" accept=".png,.svg,.pdf,.ai,.eps,.jpg,.jpeg" onChange={handleFileChange} required style={{padding: '0.5rem 0'}} />
-                            <p style={{fontSize: '0.75rem', color: '#666'}}>For best results, upload a high-resolution PNG with a transparent background (300 DPI).</p>
+                <div className="pf-dtf-modal__info">
+                    <h2 className="pf-dtf-modal__title">UPLOAD YOUR DESIGN</h2>
+
+                    {error && (
+                        <div role="alert" className="pf-dtf-validation-box">
+                            {error}
+                        </div>
+                    )}
+
+                    <form onSubmit={handleUploadSubmit} className="pf-dtf-modal__form">
+                        <div className="pf-dtf-field">
+                            <label htmlFor="custom-upload-file">
+                                Design File (PNG, SVG, PDF, AI, EPS)
+                            </label>
+                            <input
+                                id="custom-upload-file"
+                                type="file"
+                                accept=".png,.svg,.pdf,.ai,.eps,.jpg,.jpeg"
+                                onChange={handleFileChange}
+                                required
+                                className="pf-input"
+                            />
+                            <span className="pf-dtf-field__hint">
+                                Recommended: 300 DPI transparent PNG or vector artwork.
+                            </span>
                         </div>
 
-                        <div className="form-group" style={{display: 'flex', gap: '1rem'}}>
-                            <div style={{flex: 1}}>
-                                <label>Your Name</label>
-                                <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="John Doe" />
+                        <div className="pf-dtf-field-row">
+                            <div className="pf-dtf-field">
+                                <label htmlFor="custom-upload-name">Your Name</label>
+                                <input
+                                    id="custom-upload-name"
+                                    type="text"
+                                    autoComplete="name"
+                                    value={name}
+                                    onChange={(event) => setName(event.target.value)}
+                                    required
+                                    className="pf-input"
+                                />
                             </div>
-                            <div style={{flex: 1}}>
-                                <label>Email Address</label>
-                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="john@example.com" />
+                            <div className="pf-dtf-field">
+                                <label htmlFor="custom-upload-email">Email Address</label>
+                                <input
+                                    id="custom-upload-email"
+                                    type="email"
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(event) => setEmail(event.target.value)}
+                                    required
+                                    className="pf-input"
+                                />
                             </div>
                         </div>
 
-                        <div className="form-group" style={{display: 'flex', gap: '1rem'}}>
-                            <div style={{flex: 2}}>
-                                <label>Desired Size</label>
-                                <select value={selectedSizeId} onChange={(e) => setSelectedSizeId(e.target.value)}>
-                                    {product.sizes.map(size => (
+                        <div className="pf-dtf-field-row">
+                            <div className="pf-dtf-field">
+                                <label htmlFor="custom-upload-size">Transfer Width</label>
+                                <select
+                                    id="custom-upload-size"
+                                    value={selectedSizeId}
+                                    onChange={(event) => setSelectedSizeId(event.target.value)}
+                                    className="pf-select"
+                                >
+                                    {product.sizes.map((size) => (
                                         <option key={size.id} value={size.id}>
-                                            {size.label} - ${size.price.toFixed(2)}
+                                            {size.label} — ${size.price.toFixed(2)}
                                         </option>
                                     ))}
                                 </select>
                             </div>
-                            <div style={{flex: 1}}>
-                                <label>Quantity</label>
-                                <input type="number" min="1" value={quantity} onChange={e => setQuantity(parseInt(e.target.value) || 1)} />
+
+                            <div className="pf-dtf-field">
+                                <label htmlFor="custom-upload-qty">Quantity</label>
+                                <input
+                                    id="custom-upload-qty"
+                                    type="number"
+                                    min={1}
+                                    value={quantity}
+                                    onChange={(event) =>
+                                        setQuantity(Math.max(1, parseInt(event.target.value, 10) || 1))
+                                    }
+                                    className="pf-input"
+                                />
                             </div>
                         </div>
 
-                        <div className="form-group">
-                            <label>Additional Notes (Optional)</label>
-                            <textarea 
-                                value={notes} 
-                                onChange={e => setNotes(e.target.value)}
-                                placeholder="Any specific instructions or multiple designs in a gang sheet?"
-                                rows={2}
+                        <div className="pf-dtf-field">
+                            <label htmlFor="custom-upload-notes">Project Notes (Optional)</label>
+                            <textarea
+                                id="custom-upload-notes"
+                                value={notes}
+                                onChange={(event) => setNotes(event.target.value)}
+                                placeholder="Placement details or gang sheet notes..."
+                                rows={3}
+                                className="pf-textarea"
                             />
                         </div>
 
-                        <div className="modal-actions" style={{marginTop: '1.5rem'}}>
-                            <button type="submit" className="btn btn-primary full-width" disabled={isUploading}>
-                                {isUploading ? 'Uploading...' : 'Upload & Submit Request'}
+                        <div className="pf-dtf-modal__actions">
+                            <button
+                                type="submit"
+                                className="pf-button pf-button--primary"
+                                disabled={isUploading}
+                            >
+                                {isUploading ? 'UPLOADING ARTWORK…' : 'UPLOAD & SUBMIT REQUEST'}
                             </button>
-                            <p className="text-center" style={{fontSize: '0.8rem', color: '#666', marginTop: '0.5rem'}}>
-                                We will review your file and email you a final invoice to complete the order.
-                            </p>
                         </div>
                     </form>
                 </div>

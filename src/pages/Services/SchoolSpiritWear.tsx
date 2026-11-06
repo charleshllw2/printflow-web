@@ -59,13 +59,13 @@ export default function SchoolSpiritWear() {
 
   return (
     <Layout>
-      <SEO 
-        title="Custom School Shirts Chattanooga TN | Spirit Wear & Apparel" 
+      <SEO
+        title="Custom School Shirts Chattanooga TN | Spirit Wear & Apparel"
         description="Looking for custom school shirts in Chattanooga? We print high-quality spirit wear, class shirts, club apparel, and teacher uniforms with fast local service."
         canonicalUrl="https://printflowstudio.com/school-shirts-chattanooga"
         schema={schema}
       />
-      
+
       <div className="bg-dark text-white py-16">
         <div className="container text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Custom School Shirts & Apparel in Chattanooga, TN</h1>

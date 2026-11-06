@@ -16,7 +16,10 @@ export default function OwnerStory() {
         <p style={{ fontSize: '1.1rem', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '40px' }}>
           PrintFlow Studio may be a growing custom apparel brand, but the experience behind the business isn't new. Owner Charles Holloway brings more than 20 years of business ownership and customer-service experience to every project.
         </p>
-        <Link to="/request-quote" className="btn btn-outline">LET'S WORK TOGETHER</Link>
+        <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/request-quote" className="btn btn-primary">LET'S WORK TOGETHER</Link>
+          <Link to="/about" className="btn btn-outline">ABOUT PRINTFLOW STUDIO</Link>
+        </div>
       </div>
     </section>
   );

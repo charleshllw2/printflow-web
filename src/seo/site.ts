@@ -2,7 +2,7 @@ import { SHOP_PRODUCTS } from '../data/shopProducts';
 import { BLOG_POSTS } from '../data/blogPosts';
 export const SITE_URL = 'https://www.printflowstudio.com';
 export const pageNames: Record<string, string> = {
-  '/': 'Home', '/services': 'Services', '/custom-t-shirts-chattanooga': 'Custom Shirts',
+  '/': 'Home', '/about': 'About Us', '/services': 'Services', '/custom-t-shirts-chattanooga': 'Custom Shirts',
   '/business-shirts-chattanooga': 'Business Apparel', '/dtf-transfers-chattanooga': 'DTF Transfers',
   '/church-shirts-chattanooga': 'Church Shirts', '/team-shirts-chattanooga': 'Team Shirts',
   '/event-shirts-chattanooga': 'Event Shirts', '/custom-shirts-no-minimum-chattanooga': 'Single Custom Shirts',
@@ -33,16 +33,17 @@ export function structuredData(path: string, title: string, schema?: string) {
   if (product) graph.push({
     '@type': 'Product', '@id': `${SITE_URL}${path}#product`, name: product.name, sku: product.id,
     url: SITE_URL + path, image: [SITE_URL + product.mockup, SITE_URL + product.artwork],
-    description: 'Original PrintFlow Studio design, printed in vibrant full color on a premium standard tee. Made to order.',
+    description: product.description,
     brand: { '@type': 'Brand', name: 'PrintFlow Studio' },
     offers: { '@type': 'Offer', url: SITE_URL + path, price: product.price.toFixed(2), priceCurrency: 'USD', seller: { '@id': business['@id'] } },
   });
   // Availability is deliberately omitted: the catalog has no verified stock field.
   if (schema) {
-    const parsed = JSON.parse(schema);
-    const entities = parsed['@graph'] || [parsed];
+    const parsed = JSON.parse(schema) as Record<string, unknown>;
+    const entities = (Array.isArray(parsed['@graph']) ? parsed['@graph'] : [parsed]) as Record<string, unknown>[];
     for (const entity of entities) {
-      const { '@context': _context, ...value } = entity;
+      const value = { ...entity };
+      delete value['@context'];
       if (value['@type'] === 'Service') value.provider = { '@id': business['@id'] };
       graph.push(value);
     }

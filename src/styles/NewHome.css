@@ -132,30 +132,122 @@
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   line-height: 1.1;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
+}
+
+.portfolio-lead {
+  color: var(--text-secondary);
+  font-size: 1.12rem;
+  line-height: 1.65;
+  max-width: 780px;
+  margin-bottom: 36px;
+}
+
+.portfolio-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.portfolio-filter-btn {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.portfolio-filter-btn:hover,
+.portfolio-filter-btn.is-active {
+  background: var(--accent-color);
+  color: #ffffff;
+  border-color: var(--accent-color);
 }
 
 .portfolio-editorial-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 36px;
+}
+
+.portfolio-item {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .portfolio-image {
+  width: 100%;
+  height: auto;
   aspect-ratio: 4/5;
+  object-fit: cover;
+  display: block;
   background: var(--bg-tertiary);
   border-radius: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.portfolio-image--contain {
+  object-fit: contain;
+  padding: 24px;
+  background: #141418;
+}
+
+.portfolio-video {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  background: #0a0a0c;
+}
+
+.portfolio-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 6px;
 }
 
 .portfolio-meta h3 {
-  font-size: 1.5rem;
-  margin-bottom: 5px;
+  font-size: 1.35rem;
+  margin-bottom: 6px;
 }
 
-.portfolio-meta p {
+.portfolio-meta .portfolio-format {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.portfolio-meta .portfolio-caption {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.portfolio-footer-cta {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.portfolio-videos-block {
+  margin-top: 64px;
+}
+
+.portfolio-subheading {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 24px;
 }
 
 /* HOW IT WORKS */

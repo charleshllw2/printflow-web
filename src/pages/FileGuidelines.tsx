@@ -50,11 +50,11 @@ export default function FileGuidelines() {
                         <h2>Need Help?</h2>
                         <p>
                             If you're unsure if your file is print-ready, select the
-                            <strong> "File Setup Assistance"</strong> add-on when placing your order.
-                            Our team will review and prepare your file for a perfect print.
+                            <strong> "I have artwork but need help"</strong> option when requesting a quote, or read our step-by-step guide on <Link to="/blog/how-to-prepare-artwork-for-dtf-printing">How to Prepare Artwork for DTF Printing</Link>.
+                            Our team will review and prepare your file for a clean print.
                         </p>
                         <div style={{ marginTop: '20px' }}>
-                            <a href="/#order" className="btn btn-primary">Start Your Order</a>
+                            <Link to="/request-quote" className="btn btn-primary">Start Your Order</Link>
                         </div>
                     </div>
 

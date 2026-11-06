@@ -29,7 +29,7 @@
   .sticky-mobile-cta {
     display: block;
   }
-  
+
   /* Ensure content doesn't get hidden behind the sticky bar */
   body {
     padding-bottom: 80px;

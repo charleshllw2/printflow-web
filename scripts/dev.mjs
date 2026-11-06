@@ -1,19 +1,20 @@
-// Vite and the same API handlers used by Vercel.
 import { createServer } from 'vite';
-import commerce from '../api/commerce.js';
+import checkout from '../api/create-shop-checkout.js';
 const server = await createServer({
   server: { port: Number(process.env.PORT || 5173), strictPort: true },
-  plugins: [{ name: 'local-commerce-api', configureServer(vite) {
-    vite.middlewares.use('/api/commerce', async (req, res) => {
+  plugins: [{ name: 'local-checkout-api', configureServer(vite) {
+    vite.middlewares.use('/api/create-shop-checkout', async (req, res) => {
+      res.status = code => { res.statusCode = code; return res; };
+      res.json = data => { res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(data)); return res; };
       try {
-        req.query = Object.fromEntries(new URL(req.url, 'http://localhost').searchParams);
         let raw = '';
-        for await (const chunk of req) { raw += chunk; if (raw.length > 8192) { res.statusCode = 413; res.end(); return; } }
+        for await (const chunk of req) {
+          raw += chunk;
+          if (Buffer.byteLength(raw) > 8192) return res.status(413).json({ error: 'Request too large.' });
+        }
         req.body = raw ? JSON.parse(raw) : {};
-        res.status = code => { res.statusCode = code; return res; };
-        res.json = data => { res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(data)); return res; };
-        await commerce(req, res);
-      } catch { res.statusCode = 400; res.end(JSON.stringify({ error: 'Invalid request.' })); }
+        await checkout(req, res);
+      } catch { res.status(400).json({ error: 'Invalid request.' }); }
     });
   } }],
 });

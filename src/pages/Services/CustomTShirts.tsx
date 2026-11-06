@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
+import { PRICING_OFFERS } from "../../data/businessSettings";
 
 export default function CustomTShirts() {
   const schema = JSON.stringify({
@@ -20,9 +21,9 @@ export default function CustomTShirts() {
 
   return (
     <Layout>
-      <SEO 
-        title="Custom T-Shirt Printing Chattanooga TN | PrintFlow Studio" 
-        description="Premium custom T-shirt printing in Chattanooga. No complicated ordering. From one single shirt to bulk orders for your business or event. Get a fast quote today."
+      <SEO
+        title="Custom T-Shirt Printing Chattanooga TN | PrintFlow Studio"
+        description="Custom T-shirt printing in Chattanooga, TN. No complicated ordering—from one single shirt to group orders for businesses, churches, reunions, and events."
         canonicalUrl="https://www.printflowstudio.com/custom-t-shirts-chattanooga"
         schema={schema}
       />
@@ -31,30 +32,36 @@ export default function CustomTShirts() {
           <div className="container">
             <p className="hero-eyebrow">PRINTFLOW STUDIO SERVICES</p>
             <h1>Custom T-Shirt Printing in Chattanooga, TN</h1>
-            <p className="hero-support">We turn your logo, artwork, or idea into premium custom apparel. Whether you need a single special shirt or matching apparel for your entire organization, we make the printing process simple.</p>
-            <Link to="/request-quote" className="btn btn-primary mt-4">Get a Custom Quote</Link>
+            <p className="hero-support">We turn your logo, artwork, or idea into custom apparel you will be proud to wear. Whether you need a single special shirt or matching apparel for your entire organization, we make the printing process simple.</p>
+            <div className="hero-ctas mt-4" style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link to="/request-quote" className="btn btn-primary">Get a Custom Quote</Link>
+              <Link to="/our-work" className="btn btn-outline">See Printed Examples</Link>
+            </div>
           </div>
         </section>
 
         <section className="seo-process section bg-secondary">
           <div className="container">
             <h2>How Ordering Works</h2>
+            <p style={{ maxWidth: '720px', margin: '0 auto 36px', textAlign: 'center', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+              Want the full breakdown from file submission to pickup day? Read our <Link to="/blog/how-custom-shirt-orders-work">Step-by-Step Custom Order Guide</Link>.
+            </p>
             <div className="process-grid">
               <div className="process-step">
                 <h3>1. Tell Us Your Idea</h3>
-                <p>Fill out our fast quote form to let us know how many shirts you need and upload any artwork or logos you have.</p>
+                <p>Fill out our quote form to let us know how many shirts you need, your target needed-by date, and upload any artwork or logos you have.</p>
               </div>
               <div className="process-step">
                 <h3>2. Review Your Proof</h3>
-                <p>We'll ensure your artwork is print-ready, help you choose the best garment, and provide a clear quote and mockup.</p>
+                <p>We check your artwork resolution and sizing, help select the right blank garment, and provide a clear written quote and digital mockup.</p>
               </div>
               <div className="process-step">
                 <h3>3. We Print It</h3>
-                <p>Your shirts are professionally printed using high-quality DTF technology right here in the Chattanooga area.</p>
+                <p>Once approved, your shirts are printed in full color using Direct-to-Film technology right here in Chattanooga.</p>
               </div>
               <div className="process-step">
                 <h3>4. Pick Up or Ship</h3>
-                <p>Grab your order locally from our Chattanooga facility, or we can ship it directly to your door.</p>
+                <p>Coordinate local pickup by arrangement in the Chattanooga area, or have your completed order shipped directly to your door.</p>
               </div>
             </div>
           </div>
@@ -63,46 +70,36 @@ export default function CustomTShirts() {
         <section className="seo-faqs section">
           <div className="container">
             <h2>Common Questions About Custom Shirts</h2>
-            
+
             <div className="faq-grid">
               <div className="faq-item">
                 <h3>Can you make one shirt?</h3>
-                <p>Yes. While we regularly handle bulk orders for businesses, we proudly print single custom shirts. Your one special design still receives our professional printing process.</p>
+                <p>Yes. While we regularly handle group orders for businesses and events, we also print <Link to="/custom-shirts-no-minimum-chattanooga">single custom shirts</Link> with no minimum order requirement on standard tees.</p>
               </div>
-              
+
               <div className="faq-item">
                 <h3>How much does it cost?</h3>
-                <p>Custom shirts start at $27.99 for a standard tee. Final pricing depends on the specific garment chosen, quantity, and print locations (e.g., front and back). <Link to="/request-quote">Get a quote for exact pricing.</Link></p>
-              </div>
-              
-              <div className="faq-item">
-                <h3>Can you print my logo?</h3>
-                <p>Absolutely. We regularly print highly detailed, full-color business and organizational logos. Just upload your highest resolution file (PNG, JPG, PDF, or SVG) when requesting a quote.</p>
-              </div>
-              
-              <div className="faq-item">
-                <h3>Can you print front and back?</h3>
-                <p>Yes. We can print on the front, back, and even the sleeves of most garments.</p>
+                <p>Custom shirts start at ${PRICING_OFFERS.customShirtStartingPrice.toFixed(2)} for a standard tee. Final pricing depends on the blank garment chosen, quantity, and print locations (e.g., front only vs. front and back). <Link to="/request-quote">Request a quote for exact pricing.</Link></p>
               </div>
 
               <div className="faq-item">
-                <h3>Can I choose different sizes and colors?</h3>
-                <p>Yes, you can mix and match sizes (S, M, L, XL, etc.) and shirt colors within the same order.</p>
+                <h3>Can you print my logo in full color?</h3>
+                <p>Yes. Full-color logos, shading, and fine details print cleanly without per-color screen setup fees. Check our <Link to="/blog/how-to-prepare-artwork-for-dtf-printing">Artwork Prep Guide</Link> for file tips.</p>
               </div>
 
               <div className="faq-item">
-                <h3>Can you help with my design?</h3>
-                <p>If your artwork isn't perfectly print-ready, we will help optimize it for the best possible result before it goes to production.</p>
+                <h3>What print size should I ask for?</h3>
+                <p>Left-chest logos are typically ~4&quot; wide, youth fronts ~8&quot; wide, and adult standard chest/back prints ~10–11&quot; wide. See our <Link to="/blog/choosing-the-right-shirt-print-size">Print Size Guide</Link>.</p>
               </div>
-              
+
               <div className="faq-item">
-                <h3>What kinds of shirts can I choose?</h3>
-                <p>We offer everything from standard economy tees to premium, ultra-soft fashion fits, hoodies, and crewnecks from top brands.</p>
+                <h3>Can I mix sizes and shirt colors?</h3>
+                <p>Yes, you can mix and match sizes (Youth and Adult S–3XL where available) and garment colors within the same custom order.</p>
               </div>
-              
+
               <div className="faq-item">
-                <h3>Can I pick it up locally or have it shipped?</h3>
-                <p>Both! Local customers can pick up their orders in Chattanooga, or we can ship nationwide.</p>
+                <h3>How do I wash custom printed shirts?</h3>
+                <p>Turn inside out, machine wash cold with mild detergent, skip bleach and liquid softener, and tumble dry low or hang dry. Read our <Link to="/blog/caring-for-dtf-printed-apparel">DTF Care Guide</Link>.</p>
               </div>
             </div>
           </div>
@@ -111,7 +108,7 @@ export default function CustomTShirts() {
         <section className="seo-cta section bg-secondary" style={{ textAlign: 'center' }}>
           <div className="container">
             <h2>Ready to Make Your Shirt?</h2>
-            <p style={{ margin: '20px auto', maxWidth: '600px', color: 'var(--text-secondary)' }}>Get started in less than a minute. Tell us what you need and we'll send you pricing and a timeline.</p>
+            <p style={{ margin: '20px auto', maxWidth: '600px', color: 'var(--text-secondary)' }}>Tell us what garments and quantities you need, include your target date, and we will put together a clear quote.</p>
             <Link to="/request-quote" className="btn btn-primary">Start My Order</Link>
           </div>
         </section>

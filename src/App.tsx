@@ -25,6 +25,7 @@ import ShopProductPage from "./pages/ShopProductPage";
 import Quote from "./pages/Quote";
 import FAQ from "./pages/FAQ";
 import OurWork from "./pages/OurWork";
+import About from "./pages/About";
 
 // Policies
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -46,16 +47,17 @@ export function AppRoutes() {
       <Suspense fallback={<div role="status" style={{ padding: "120px 24px" }}>Loading…</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/file-guidelines" element={<FileGuidelines />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/login" element={<AdminLogin />} />
           <Route path="/admin" element={<Admin />} />
-          
+
           {/* Legacy Redirects */}
           <Route path="/business-apparel-chattanooga" element={<Navigate to="/business-shirts-chattanooga" replace />} />
           <Route path="/custom-tshirts-chattanooga" element={<Navigate to="/custom-t-shirts-chattanooga" replace />} />
-          
+
           {/* Service Pages */}
           <Route path="/services" element={<Services />} />
           <Route path="/custom-t-shirts-chattanooga" element={<CustomTShirts />} />
@@ -66,7 +68,7 @@ export function AppRoutes() {
           <Route path="/event-shirts-chattanooga" element={<EventShirts />} />
           <Route path="/custom-shirts-no-minimum-chattanooga" element={<NoMinimumShirts />} />
           <Route path="/custom-apparel-chattanooga" element={<CustomApparel />} />
-          
+
           {/* Core Pages */}
           <Route path="/our-work" element={<OurWork />} />
           <Route path="/faq" element={<FAQ />} />

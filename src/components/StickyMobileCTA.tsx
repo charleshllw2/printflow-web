@@ -3,7 +3,7 @@ import '../styles/StickyMobileCTA.css';
 
 export default function StickyMobileCTA() {
   const location = useLocation();
-  
+
   // Hide on quote page itself to prevent redundancy
   if (location.pathname === '/request-quote') {
     return null;

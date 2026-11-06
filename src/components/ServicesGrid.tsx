@@ -13,49 +13,49 @@ export default function ServicesGrid() {
                     {/* Card 1 */}
                     <div className="service-card">
                         <h3>Custom T-Shirts</h3>
-                        <p>High-quality custom T-shirt printing for businesses, events, and individuals in Chattanooga.</p>
+                        <p>Full-color custom T-shirt printing for businesses, events, gifts, and individuals in Chattanooga.</p>
                         <Link to="/custom-t-shirts-chattanooga" className="btn btn-primary">Learn More</Link>
                     </div>
 
                     {/* Card 2 */}
                     <div className="service-card">
-                        <h3>DTF Transfers</h3>
-                        <p>Order individual prints or gang sheets. Perfect for press-at-home creators and apparel brands.</p>
-                        <Link to="/dtf-transfers-chattanooga" className="btn btn-primary">Order Transfers</Link>
+                        <h3>Custom DTF Transfers</h3>
+                        <p>Order individual custom transfers or multi-logo gang sheets printed from your artwork for your heat press.</p>
+                        <Link to="/dtf-transfers-chattanooga" className="btn btn-primary">Order Custom Transfers</Link>
                     </div>
 
                     {/* Card 2b */}
                     <div className="service-card">
-                        <h3>DIY DTF Print Sheets / Iron Ons</h3>
-                        <p>Order ready-to-press sheets delivered right to your door. (Shipping is extra). Perfect for crafters!</p>
-                        <Link to="/dtf-transfers-chattanooga" className="btn btn-primary">Order DIY Sheets</Link>
+                        <h3>Ready-to-Press DTF Designs</h3>
+                        <p>Browse premade PrintFlow Studio transfer designs in 5 widths—ready to apply with a commercial heat press.</p>
+                        <Link to="/dtf-transfers" className="btn btn-primary">Browse Premade Transfers</Link>
                     </div>
 
                     {/* Card 3 */}
                     <div className="service-card">
                         <h3>Business Apparel</h3>
-                        <p>Professional branded shirts and uniforms to give your team a cohesive look.</p>
+                        <p>Professional branded work shirts, polos, and hoodies to give your crew a consistent look.</p>
                         <Link to="/business-shirts-chattanooga" className="btn btn-primary">Outfit Your Team</Link>
                     </div>
 
                     {/* Card 4 */}
                     <div className="service-card">
-                        <h3>Church & Organization Shirts</h3>
-                        <p>Custom group shirts for youth groups, praise teams, volunteers, and events.</p>
-                        <Link to="/church-shirts-chattanooga" className="btn btn-secondary">Get a Quote</Link>
+                        <h3>Church &amp; Ministry Shirts</h3>
+                        <p>Custom group shirts for youth groups, VBS, praise teams, volunteers, and outreach events.</p>
+                        <Link to="/church-shirts-chattanooga" className="btn btn-secondary">Explore Church Shirts</Link>
                     </div>
 
                     {/* Card 5 */}
                     <div className="service-card">
-                        <h3>School & Team Apparel</h3>
-                        <p>Show your spirit with custom school shirts, club apparel, and sports team gear.</p>
+                        <h3>School &amp; Team Apparel</h3>
+                        <p>Show your spirit with custom school shirts, club apparel, booster merch, and sports team gear.</p>
                         <Link to="/team-shirts-chattanooga" className="btn btn-secondary">Learn More</Link>
                     </div>
 
                     {/* Card 6 */}
                     <div className="service-card">
-                        <h3>Event & Reunion Shirts</h3>
-                        <p>Memorable custom shirts for family reunions, 5Ks, fundraisers, and community events.</p>
+                        <h3>Event &amp; Reunion Shirts</h3>
+                        <p>Memorable custom shirts for family reunions, 5Ks, fundraisers, and local community gatherings.</p>
                         <Link to="/event-shirts-chattanooga" className="btn btn-secondary">Start Planning</Link>
                     </div>
                 </div>

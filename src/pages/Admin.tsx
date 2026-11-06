@@ -157,9 +157,9 @@ export default function Admin() {
                             {u.notes && <p><strong>Notes:</strong> {u.notes}</p>}
 
                             <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-                                <a 
-                                    href={u.fileUrl} 
-                                    target="_blank" 
+                                <a
+                                    href={u.fileUrl}
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ padding: '8px 16px', background: '#2563EB', color: 'white', textDecoration: 'none', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 'bold' }}
                                 >

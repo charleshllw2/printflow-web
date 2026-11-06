@@ -1,0 +1,1 @@
+export default function BrandTicker() { return <div className="pf-ticker"><div className="pf-container pf-ticker-static">CUSTOM APPAREL <span>•</span> READY-TO-PRESS DTF <span>•</span> CHURCH &amp; EVENT MERCH <span>•</span> PERSONALIZED PRINTS <span>•</span> PRINTFLOW STUDIO</div></div>; }

@@ -10,7 +10,7 @@ export default function StarterPackPromo() {
                     <p className="promo-description">
                         Outfit your employees with custom shirts featuring your logo and brand colors. The PrintFlow Studio Business Apparel Starter Pack is designed for Chattanooga businesses that want professional apparel without complicated ordering or oversized minimums.
                     </p>
-                    
+
                     <div className="promo-offer">
                         <span className="offer-highlight">10 Custom Business Shirts Starting at $199</span>
                     </div>
@@ -39,11 +39,11 @@ export default function StarterPackPromo() {
                         </a>
                     </div>
                 </div>
-                
+
                 <div className="promo-image-container">
-                    <img 
-                        src="/business-team.jpg" 
-                        alt="Professional business team wearing custom logo apparel" 
+                    <img
+                        src="/business-team.jpg"
+                        alt="Professional business team wearing custom logo apparel"
                         className="promo-image"
                     />
                 </div>

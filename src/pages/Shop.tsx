@@ -1,36 +1,63 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
-import { products, getActiveCategories, defaultDescription, defaultPressingInstructions } from '../data/products';
+import {
+    products,
+    getActiveCategories,
+    defaultDescription,
+    defaultPressingInstructions,
+} from '../data/products';
 import type { Product } from '../data/products';
+import { PRICING_OFFERS, CARE_INSTRUCTIONS } from '../data/businessSettings';
 import CustomUploadModal from '../components/CustomUploadModal';
 import '../styles/Shop.css';
 
 export default function Shop() {
-    
-    // Filtering and Sorting State
+    const navigate = useNavigate();
+    const quickViewDialogRef = useRef<HTMLDialogElement>(null);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('All Designs');
     const [sortOption, setSortOption] = useState('newest');
 
-    // Quick View Modal State
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [selectedSizeId, setSelectedSizeId] = useState<string>('');
     const [quantity, setQuantity] = useState(1);
     const [acknowledgmentChecked, setAcknowledgmentChecked] = useState(false);
+    const [modalValidationMsg, setModalValidationMsg] = useState('');
 
-    // Filtered and Sorted Products
+    useEffect(() => {
+        const dialog = quickViewDialogRef.current;
+        if (!dialog) return;
+
+        if (selectedProduct && !dialog.open) {
+            dialog.showModal();
+            document.body.style.overflow = 'hidden';
+        } else if (!selectedProduct && dialog.open) {
+            dialog.close();
+            document.body.style.overflow = '';
+        }
+
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [selectedProduct]);
+
     const filteredProducts = useMemo(() => {
         let result = products;
 
         if (activeCategory !== 'All Designs') {
-            result = result.filter(p => p.category === activeCategory);
+            result = result.filter((p) => p.category === activeCategory);
         }
 
         if (searchQuery.trim() !== '') {
             const lowerQuery = searchQuery.toLowerCase();
-            result = result.filter(p => p.title.toLowerCase().includes(lowerQuery) || p.category.toLowerCase().includes(lowerQuery));
+            result = result.filter(
+                (p) =>
+                    p.title.toLowerCase().includes(lowerQuery) ||
+                    p.category.toLowerCase().includes(lowerQuery)
+            );
         }
 
         result = [...result].sort((a, b) => {
@@ -38,12 +65,8 @@ export default function Shop() {
                 return a.sizes[0].price - b.sizes[0].price;
             } else if (sortOption === 'price-desc') {
                 return b.sizes[0].price - a.sizes[0].price;
-            } else {
-                // Newest sorting (placeholder logic relying on isNew)
-                if (a.isNew && !b.isNew) return -1;
-                if (!a.isNew && b.isNew) return 1;
-                return 0;
             }
+            return 0;
         });
 
         return result;
@@ -51,355 +74,683 @@ export default function Shop() {
 
     const categories = ['All Designs', ...getActiveCategories()];
 
-    // Quick View Actions
     const openQuickView = (product: Product) => {
         setSelectedProduct(product);
         setSelectedSizeId(product.sizes[0].id);
         setQuantity(1);
         setAcknowledgmentChecked(false);
+        setModalValidationMsg('');
     };
 
     const closeQuickView = () => {
         setSelectedProduct(null);
+        setModalValidationMsg('');
     };
 
-    const handleAddToCart = () => {
+    const handleDialogBackdropClick = (event: MouseEvent<HTMLDialogElement>) => {
+        if (event.target === event.currentTarget) {
+            closeQuickView();
+        }
+    };
+
+    const activeSize = selectedProduct?.sizes.find((s) => s.id === selectedSizeId);
+
+    const handleProceedOrder = () => {
+        if (!selectedProduct || !activeSize) return;
         if (!acknowledgmentChecked) {
-            alert('Please check the box confirming you understand no garment is included.');
+            setModalValidationMsg(
+                'Please confirm that you understand this item is a ready-to-press DTF transfer only (no blank garment included).'
+            );
             return;
         }
-        
-        // Simulating Add to Cart / Checkout connection issue
-        alert('Item added to cart! (Checkout integration coming soon)');
+        setModalValidationMsg('');
+
+        if (selectedProduct.checkoutUrl && selectedProduct.checkoutUrl.trim() !== '') {
+            window.location.href = selectedProduct.checkoutUrl;
+            return;
+        }
+
+        const params = new URLSearchParams({
+            service: 'dtf-transfers',
+            design: selectedProduct.id,
+            designName: selectedProduct.title,
+            size: `${activeSize.label} (${activeSize.dimensions})`,
+            qty: String(quantity),
+        });
         closeQuickView();
+        navigate(`/request-quote?${params.toString()}`);
     };
 
-    // Derived states for active modal product
-    const activeSize = selectedProduct?.sizes.find(s => s.id === selectedSizeId);
-    
     return (
         <Layout>
-            <SEO 
-                title="Ready-to-Press DTF Transfers | PrintFlow Studio Chattanooga" 
-                description="Shop ready-to-press DTF transfers from PrintFlow Studio in Chattanooga. Choose premade designs in multiple sizes or request custom transfers and gang sheets." 
+            <SEO
+                title="Ready-to-Press DTF Transfers | PrintFlow Studio Chattanooga"
+                description="Browse ready-to-press DTF transfers from PrintFlow Studio in Chattanooga. Choose premade full-color designs in 5 sizes or request custom transfers and gang sheets."
+                canonicalUrl="https://www.printflowstudio.com/dtf-transfers"
             />
 
-            {/* HERO SECTION */}
-            <section className="shop-hero">
-                <div className="container text-center">
-                    <h1 style={{fontSize: '3rem', marginBottom: '1rem'}}>Ready-to-Press DTF Transfers</h1>
-                    <p style={{fontSize: '1.2rem', color: '#ccc', maxWidth: '800px', margin: '0 auto 2rem'}}>
-                        Shop vibrant, professionally printed DTF transfers designed for shirts, hoodies, tote bags and more. Choose your design, select your size and press it onto your garment.
-                    </p>
-                    <div className="shop-hero-actions" style={{display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1.5rem', flexWrap: 'wrap'}}>
-                        <a href="#product-grid" className="btn btn-primary">Shop Transfers</a>
-                        <Link to="/request-quote?service=custom-t-shirts" className="btn btn-outline" style={{borderColor: 'white', color: 'white'}}>Need a Finished Shirt?</Link>
-                    </div>
-                    <div style={{display: 'inline-block', background: 'rgba(208, 0, 232, 0.1)', border: '1px solid #D000E8', borderRadius: '2rem', padding: '0.5rem 1rem', fontSize: '0.9rem', color: '#f3e8ff'}}>
-                        ⚠️ Heat press required for the most reliable results. Household irons are not recommended.
-                    </div>
-                </div>
-            </section>
+            <div className="pf-dtf-page">
+                {/* Editorial Hero */}
+                <header className="pf-dtf-hero">
+                    <div className="pf-container">
+                        <p className="pf-eyebrow">READY-TO-PRESS DIRECT-TO-FILM</p>
+                        <h1 className="pf-page-title">DTF TRANSFERS.</h1>
+                        <p className="pf-copy pf-dtf-hero__copy">
+                            Full-color Direct-to-Film transfers cured on release film for cotton,
+                            polyester, and blended tees, hoodies, and totes. Select a premade
+                            PrintFlow Studio graphic in five widths or submit your own print-ready
+                            artwork.
+                        </p>
 
-            {/* FILTER & SORTING */}
-            <section className="shop-filters" style={{background: '#f9fafb', borderBottom: '1px solid #eaeaea', padding: '2rem 0'}}>
-                <div className="container">
-                    <div className="filter-bar" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem'}}>
-                        
-                        <div className="category-filters">
-                            {categories.map(cat => (
-                                <button 
-                                    key={cat}
-                                    onClick={() => setActiveCategory(cat)}
-                                    className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
-                                >
-                                    {cat}
-                                </button>
-                            ))}
-                        </div>
-
-                        <div className="search-sort">
-                            <input 
-                                type="text" 
-                                placeholder="Search transfer designs..." 
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="search-input"
-                                aria-label="Search transfer designs"
-                            />
-                            <select 
-                                value={sortOption} 
-                                onChange={(e) => setSortOption(e.target.value)}
-                                className="sort-select"
-                                aria-label="Sort products"
+                        <div className="pf-dtf-hero__actions">
+                            <a href="#product-grid" className="pf-button pf-button--primary">
+                                BROWSE TRANSFERS
+                            </a>
+                            <Link
+                                to="/request-quote?service=dtf-transfers"
+                                className="pf-button pf-button--secondary"
                             >
-                                <option value="newest">Newest</option>
-                                <option value="price-asc">Price: Low to High</option>
-                                <option value="price-desc">Price: High to Low</option>
-                            </select>
+                                UPLOAD CUSTOM TRANSFER ART
+                            </Link>
+                            <Link to="/shop" className="pf-button pf-button--dark">
+                                SHOP PRINTED APPAREL
+                            </Link>
                         </div>
 
+                        <p className="pf-dtf-press-notice">
+                            <strong>COMMERCIAL HEAT PRESS REQUIRED:</strong> Apply at 300–320°F
+                            with medium-to-heavy pressure (cold peel). Household irons are not
+                            recommended.
+                        </p>
                     </div>
-                </div>
-            </section>
+                </header>
 
-            {/* PRODUCT GRID */}
-            <section id="product-grid" className="section">
-                <div className="container">
-                    {filteredProducts.length === 0 ? (
-                        <div className="text-center" style={{padding: '3rem 0', color: '#666'}}>
-                            <h3>No designs found.</h3>
-                            <p>Try adjusting your search or category filter.</p>
-                            <button className="btn btn-outline" style={{marginTop: '1rem'}} onClick={() => { setSearchQuery(''); setActiveCategory('All Designs'); }}>Clear Filters</button>
-                        </div>
-                    ) : (
-                        <div className="product-grid">
-                            {filteredProducts.map(product => (
-                                <div key={product.id} className="product-card" onClick={() => openQuickView(product)}>
-                                    <div className="product-image-container">
-                                        <img src={product.image} alt={product.title} className="product-image" loading="lazy" />
-                                        <div className="transfer-label">Transfer Only</div>
-                                        <div className="product-badges">
-                                            {product.isNew && <span className="badge new">New</span>}
-                                            {product.isBestSeller && <span className="badge best-seller">Best Seller</span>}
+                {/* Filter & Search Toolbar */}
+                <section className="pf-dtf-toolbar-band">
+                    <div className="pf-container">
+                        <search
+                            className="pf-dtf-toolbar"
+                            aria-label="Filter and search ready-to-press DTF transfers"
+                        >
+                            <div
+                                className="pf-dtf-categories"
+                                role="group"
+                                aria-label="Transfer categories"
+                            >
+                                {categories.map((cat) => {
+                                    const active = activeCategory === cat;
+                                    return (
+                                        <button
+                                            key={cat}
+                                            type="button"
+                                            onClick={() => setActiveCategory(cat)}
+                                            aria-pressed={active}
+                                            className={`pf-dtf-cat-btn ${
+                                                active ? 'is-active' : ''
+                                            }`}
+                                        >
+                                            {cat}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="pf-dtf-controls">
+                                <label htmlFor="dtf-search-input" className="visually-hidden">
+                                    Search transfer designs
+                                </label>
+                                <input
+                                    id="dtf-search-input"
+                                    type="search"
+                                    placeholder="Search transfer designs..."
+                                    value={searchQuery}
+                                    onChange={(event) => setSearchQuery(event.target.value)}
+                                    className="pf-input pf-dtf-search"
+                                />
+
+                                <label htmlFor="dtf-sort-select" className="visually-hidden">
+                                    Sort transfers
+                                </label>
+                                <select
+                                    id="dtf-sort-select"
+                                    value={sortOption}
+                                    onChange={(event) => setSortOption(event.target.value)}
+                                    className="pf-select pf-dtf-sort"
+                                >
+                                    <option value="newest">Sort: Catalog Order</option>
+                                    <option value="price-asc">Price: Low to High</option>
+                                    <option value="price-desc">Price: High to Low</option>
+                                </select>
+                            </div>
+                        </search>
+                    </div>
+                </section>
+
+                {/* Transfer Catalog Grid */}
+                <section id="product-grid" className="pf-section">
+                    <div className="pf-container">
+                        {filteredProducts.length === 0 ? (
+                            <div className="pf-dtf-empty" role="status">
+                                <h2>NO TRANSFER DESIGNS MATCH THAT FILTER.</h2>
+                                <p>Clear your search query or switch back to All Designs.</p>
+                                <button
+                                    type="button"
+                                    className="pf-button pf-button--primary"
+                                    onClick={() => {
+                                        setSearchQuery('');
+                                        setActiveCategory('All Designs');
+                                    }}
+                                >
+                                    SHOW ALL TRANSFERS
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="pf-dtf-grid">
+                                {filteredProducts.map((product) => (
+                                    <article key={product.id} className="pf-dtf-card">
+                                        <div className="pf-dtf-card__media">
+                                            <img
+                                                src={product.image}
+                                                alt={product.alt}
+                                                className="pf-dtf-card__img"
+                                                loading="lazy"
+                                                width={600}
+                                                height={600}
+                                            />
+                                            <span className="pf-dtf-card__tag">TRANSFER ONLY</span>
                                         </div>
-                                        <div className="quick-view-overlay">
-                                            <span className="btn btn-primary">Quick View</span>
+
+                                        <div className="pf-dtf-card__body">
+                                            <span className="pf-dtf-card__category">
+                                                {product.category}
+                                            </span>
+                                            <div className="pf-dtf-card__row">
+                                                <h2 className="pf-dtf-card__title">
+                                                    <button
+                                                        type="button"
+                                                        className="pf-dtf-card__trigger"
+                                                        onClick={() => openQuickView(product)}
+                                                    >
+                                                        {product.title}
+                                                    </button>
+                                                </h2>
+                                                <span className="pf-dtf-card__price">
+                                                    From ${product.sizes[0].price.toFixed(2)}
+                                                </span>
+                                            </div>
+                                            <p className="pf-dtf-card__widths">
+                                                {product.sizes.length} widths (Pocket 4&quot; to
+                                                Oversized 13–14&quot;)
+                                            </p>
                                         </div>
-                                    </div>
-                                    <div className="product-info">
-                                        <span className="product-category">{product.category}</span>
-                                        <h3 className="product-title">{product.title}</h3>
-                                        <div className="product-price">Starting at ${product.sizes[0].price.toFixed(2)}</div>
-                                        <div className="product-sizes-preview">
-                                            Available in {product.sizes.length} sizes
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </section>
-
-            {/* MULTI-BUY PROMO */}
-            <section className="multi-buy-promo section text-center" style={{background: 'var(--accent-primary, #D000E8)', color: 'white'}}>
-                <div className="container">
-                    <h2 style={{color: 'white', marginBottom: '1rem'}}>Press More. Save More.</h2>
-                    <p style={{fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 2rem'}}>
-                        Stock up on your favorite designs for personal projects, small businesses, teams and special events.
-                    </p>
-                    <div className="promo-box" style={{display: 'inline-block', background: 'white', color: '#111', padding: '2rem', borderRadius: '0.5rem', boxShadow: '0 10px 25px rgba(0,0,0,0.2)'}}>
-                        <div style={{fontWeight: 'bold', fontSize: '1.5rem', color: 'var(--accent-primary, #D000E8)', marginBottom: '0.5rem'}}>3 Transfers for $27.99</div>
-                        <p style={{fontSize: '0.9rem', color: '#666', marginBottom: '1.5rem'}}>Mix and match eligible Adult Standard designs.</p>
-                        <button className="btn btn-outline" disabled style={{opacity: 0.6, cursor: 'not-allowed'}}>Bundle Feature Coming Soon</button>
+                                    </article>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* HOW IT WORKS */}
-            <section className="shop-how-it-works section" style={{background: '#f9fafb'}}>
-                <div className="container">
-                    <div className="section-header text-center">
-                        <h2>How It Works</h2>
-                    </div>
-                    <div className="steps-grid">
-                        <div className="step-item">
-                            <div className="step-number">1</div>
-                            <h3>Choose Your Design</h3>
-                            <p>Select a ready-to-press design from the collection.</p>
-                        </div>
-                        <div className="step-item">
-                            <div className="step-number">2</div>
-                            <h3>Select Your Size</h3>
-                            <p>Choose the size that works best for your garment.</p>
-                        </div>
-                        <div className="step-item">
-                            <div className="step-number">3</div>
-                            <h3>Place Your Order</h3>
-                            <p>Your transfer will be professionally prepared and shipped to you.</p>
-                        </div>
-                        <div className="step-item">
-                            <div className="step-number">4</div>
-                            <h3>Press and Wear</h3>
-                            <p>Apply it using the included heat-press instructions.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* PRESSING & CARE INSTRUCTIONS */}
-            <section className="shop-instructions section" style={{borderTop: '1px solid #eaeaea'}}>
-                <div className="container">
-                    <div className="grid-2-col" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem'}}>
+                {/* Existing Verified Transfer Bundle Band */}
+                <section
+                    className="pf-section pf-section--alt pf-section--bordered"
+                    aria-labelledby="dtf-bundle-heading"
+                >
+                    <div className="pf-container pf-dtf-bundle">
                         <div>
-                            <h2 style={{borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1.5rem'}}>Pressing Instructions</h2>
-                            <ol className="instruction-list">
+                            <p className="pf-eyebrow">MULTI-TRANSFER PACK</p>
+                            <h2 id="dtf-bundle-heading" className="pf-section-title">
+                                {PRICING_OFFERS.transferBundleQty} ADULT STANDARD TRANSFERS FOR $
+                                {PRICING_OFFERS.transferBundlePrice.toFixed(2)}.
+                            </h2>
+                            <p className="pf-copy pf-dtf-bundle__copy">
+                                Mix and match any {PRICING_OFFERS.transferBundleQty} eligible Adult
+                                Standard (10–11&quot;) premade designs for personal projects, craft
+                                runs, or apparel testing. List your chosen titles in the order
+                                request.
+                            </p>
+                        </div>
+
+                        <div className="pf-dtf-bundle__cta">
+                            <Link
+                                to={`/request-quote?service=dtf-transfer-bundle&designName=${encodeURIComponent(
+                                    `${PRICING_OFFERS.transferBundleQty} Adult Standard Transfer Bundle ($${PRICING_OFFERS.transferBundlePrice.toFixed(
+                                        2
+                                    )})`
+                                )}`}
+                                className="pf-button pf-button--primary"
+                            >
+                                REQUEST {PRICING_OFFERS.transferBundleQty}-TRANSFER BUNDLE
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+
+                {/* How Ordering Works */}
+                <section
+                    className="pf-section pf-section--bordered"
+                    aria-labelledby="dtf-steps-heading"
+                >
+                    <div className="pf-container">
+                        <p className="pf-eyebrow">ORDER FLOW</p>
+                        <h2 id="dtf-steps-heading" className="pf-section-title">
+                            HOW PREMADE TRANSFERS WORK.
+                        </h2>
+
+                        <div className="process-grid">
+                            <div className="process-step">
+                                <h3>01 / Choose Design</h3>
+                                <p>
+                                    Select any graphic from our Chattanooga, faith, humor, or
+                                    seasonal ready-to-press transfer catalog.
+                                </p>
+                            </div>
+                            <div className="process-step">
+                                <h3>02 / Select Print Width</h3>
+                                <p>
+                                    Pick Pocket (4&quot;), Youth (8&quot;), Adult Standard
+                                    (10–11&quot;), Adult Large (12&quot;), or Oversized
+                                    (13–14&quot;).
+                                </p>
+                            </div>
+                            <div className="process-step">
+                                <h3>03 / Confirm Request</h3>
+                                <p>
+                                    Submit your selected widths and quantities—or combine multiple
+                                    graphics onto a custom gang sheet.
+                                </p>
+                            </div>
+                            <div className="process-step">
+                                <h3>04 / Heat Press</h3>
+                                <p>
+                                    Arrange local Chattanooga pickup or receive flat-packed
+                                    nationwide shipping ready for your press.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Pressing & Care Instructions */}
+                <section
+                    className="pf-section pf-section--alt pf-section--bordered"
+                    aria-labelledby="dtf-pressing-heading"
+                >
+                    <div className="pf-container pf-dtf-specs-grid">
+                        <div className="pf-dtf-spec-panel">
+                            <p className="pf-eyebrow">APPLICATION</p>
+                            <h2 id="dtf-pressing-heading">PRESSING INSTRUCTIONS</h2>
+                            <ol className="pf-dtf-ordered-list">
                                 {defaultPressingInstructions.map((instruction, idx) => (
                                     <li key={idx}>{instruction}</li>
                                 ))}
                             </ol>
-                            <p style={{fontSize: '0.85rem', color: '#666', marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '0.25rem'}}>
-                                <em>Disclaimer: Time, temperature, pressure and peeling method may vary by garment and transfer material. Test before completing large orders.</em>
+                            <p className="pf-dtf-panel-note">
+                                Exact temperature, pressure, and dwell time vary slightly by fabric
+                                composition and platen. Test before pressing a full run.
                             </p>
                         </div>
-                        <div>
-                            <h2 style={{borderBottom: '1px solid #eaeaea', paddingBottom: '0.5rem', marginBottom: '1.5rem'}}>Care Instructions</h2>
-                            <ul className="care-list">
-                                <li>Wait at least 24 hours before washing.</li>
-                                <li>Wash inside out in cold water.</li>
-                                <li>Use mild detergent.</li>
-                                <li>Do not use bleach or fabric softener.</li>
-                                <li>Tumble dry on low or hang dry.</li>
-                                <li>Do not iron directly over the design.</li>
+
+                        <div className="pf-dtf-spec-panel">
+                            <p className="pf-eyebrow">LONGEVITY</p>
+                            <h2>GARMENT CARE &amp; GUIDES</h2>
+                            <ul className="pf-dtf-bullet-list">
+                                {CARE_INSTRUCTIONS.map((item, idx) => (
+                                    <li key={idx}>{item}</li>
+                                ))}
                             </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            {/* FAQ */}
-            <section className="shop-faq section" style={{background: 'white'}}>
-                <div className="container" style={{maxWidth: '900px'}}>
-                    <div className="section-header text-center">
-                        <h2>Frequently Asked Questions</h2>
-                    </div>
-                    <div className="faq-grid">
-                        <div className="faq-item">
-                            <h4>What is a DTF transfer?</h4>
-                            <p>Direct-to-Film (DTF) transfers are high-quality, full-color designs printed onto a clear film, ready to be heat-pressed onto almost any fabric.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>Does this purchase include a shirt?</h4>
-                            <p>No, this purchase is for the ready-to-press transfer only. Garments are not included.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>Can I use a household iron?</h4>
-                            <p>We highly recommend using a commercial heat press for even pressure and accurate temperature. Household irons may result in peeling and are not recommended.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>What materials can the transfers be applied to?</h4>
-                            <p>Our DTF transfers work beautifully on 100% cotton, 100% polyester, cotton/poly blends, triblends, and more.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>Which size should I order?</h4>
-                            <p>It depends on your garment! Pocket (4") is great for left-chest. Youth (8") fits smaller shirts, and Adult Standard (10-11") is perfect for most adult apparel.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>Do you offer custom transfers?</h4>
-                            <p>Yes! We can print your custom logos and gang sheets. Use the custom order form below.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>Can I order transfers in bulk?</h4>
-                            <p>Absolutely. Contact us for bulk pricing and gang sheet printing for large orders.</p>
-                        </div>
-                        <div className="faq-item">
-                            <h4>What happens if my order arrives damaged?</h4>
-                            <p>If your transfer arrives damaged or defective, please contact us immediately for a replacement. Because items are made to order, all other sales are final.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CUSTOM ORDER CTA */}
-            <section className="custom-order-cta section text-center" style={{background: 'var(--bg-primary, #050505)', color: 'white'}}>
-                <div className="container">
-                    <h2 style={{color: 'white', marginBottom: '1rem'}}>Need Your Own Design Printed?</h2>
-                    <p style={{fontSize: '1.1rem', maxWidth: '800px', margin: '0 auto 2rem', color: '#ccc'}}>
-                        Upload your artwork or contact PrintFlow Studio for custom DTF transfers, business orders and gang sheets.
-                    </p>
-                    <Link to="/request-quote?service=dtf-transfers" className="btn btn-primary" style={{padding: '1rem 2rem', fontSize: '1.1rem'}}>Order Custom Transfers</Link>
-                </div>
-            </section>
-
-            {/* QUICK VIEW MODAL */}
-            {selectedProduct && activeSize && (
-                <div className="modal-overlay" onClick={closeQuickView}>
-                    {selectedProduct.category === 'Custom' ? (
-                        <CustomUploadModal 
-                            product={selectedProduct} 
-                            activeSize={activeSize} 
-                            selectedSizeId={selectedSizeId} 
-                            setSelectedSizeId={setSelectedSizeId} 
-                            closeModal={closeQuickView} 
-                        />
-                    ) : (
-                        <div className="modal-content" onClick={e => e.stopPropagation()}>
-                            <button className="modal-close" onClick={closeQuickView} aria-label="Close modal">×</button>
-                            
-                            <div className="modal-grid">
-                                <div className="modal-image-col">
-                                    <img src={selectedProduct.image} alt={selectedProduct.title} className="modal-image" />
-                                </div>
-                                <div className="modal-info-col">
-                                    <div className="modal-category">{selectedProduct.category}</div>
-                                    <h2>{selectedProduct.title}</h2>
-                                    <div className="modal-price">${activeSize.price.toFixed(2)}</div>
-                                    
-                                    <p className="modal-desc">{selectedProduct.description || defaultDescription}</p>
-                                    
-                                    <div className="modal-form">
-                                        <div className="form-group">
-                                            <label htmlFor="size-select">Select Size</label>
-                                            <select 
-                                                id="size-select" 
-                                                value={selectedSizeId} 
-                                                onChange={(e) => setSelectedSizeId(e.target.value)}
-                                            >
-                                                {selectedProduct.sizes.map(size => (
-                                                    <option key={size.id} value={size.id}>
-                                                        {size.label} - ${size.price.toFixed(2)}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <p className="size-hint">Exact Dimensions: {activeSize.dimensions}</p>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="qty">Quantity</label>
-                                            <input 
-                                                type="number" 
-                                                id="qty" 
-                                                min="1" 
-                                                max={activeSize.inventory} 
-                                                value={quantity} 
-                                                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                                            />
-                                        </div>
-
-                                        <div className="checkout-notices">
-                                            <div className="transfer-only-notice">
-                                                <strong>TRANSFER ONLY</strong> — This purchase does not include a shirt or garment.
-                                            </div>
-                                            <label className="acknowledgment-checkbox">
-                                            <input 
-                                                type="checkbox" 
-                                                checked={acknowledgmentChecked}
-                                                onChange={(e) => setAcknowledgmentChecked(e.target.checked)}
-                                            />
-                                            I understand that I am purchasing a DTF transfer only and that no garment is included.
-                                        </label>
-                                        <p style={{fontSize: '0.75rem', marginTop: '0.5rem', color: '#666'}}>
-                                            Colors may vary slightly between screens. Customers are responsible for proper pressing. All sales final unless damaged/defective. Designs may not be reproduced.
-                                        </p>
-                                    </div>
-
-                                    <div className="modal-actions" style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
-                                        <button className="btn btn-primary" onClick={handleAddToCart}>
-                                            Add to Cart — ${(activeSize.price * quantity).toFixed(2)}
-                                        </button>
-                                        <button className="btn btn-outline" disabled style={{opacity: 0.6}}>Buy Now</button>
-                                    </div>
-                                    <p className="text-center text-xs text-gray-400 mt-2" style={{textAlign: 'center', fontSize: '0.8rem', color: '#888', marginTop: '0.5rem'}}>
-                                        Checkout integration coming soon.
-                                    </p>
-                                </div>
+                            <div className="pf-dtf-guide-links">
+                                <h3>Related Technical Guides</h3>
+                                <ul role="list">
+                                    <li>
+                                        <Link to="/blog/choosing-the-right-shirt-print-size">
+                                            Choosing a Print Size: Pocket, Youth, Standard &amp;
+                                            Oversized →
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/blog/how-to-prepare-artwork-for-dtf-printing">
+                                            How to Prepare Artwork for DTF Printing →
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/blog/caring-for-dtf-printed-apparel">
+                                            Caring for DTF-Printed Apparel →
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/file-guidelines">
+                                            PrintFlow Studio Artwork &amp; File Guidelines →
+                                        </Link>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
+                </section>
+
+                {/* FAQs */}
+                <section
+                    className="pf-section pf-section--bordered"
+                    aria-labelledby="dtf-faq-heading"
+                >
+                    <div className="pf-container">
+                        <p className="pf-eyebrow">QUESTIONS</p>
+                        <h2 id="dtf-faq-heading" className="pf-section-title">
+                            TRANSFER FAQS.
+                        </h2>
+
+                        <div className="faq-grid">
+                            <div className="faq-item">
+                                <h3>What is a DTF transfer?</h3>
+                                <p>
+                                    Direct-to-Film (DTF) transfers are full-color graphics printed
+                                    onto specialized release film with heat-activated adhesive
+                                    backing, ready to press onto cotton, polyester, or blends.
+                                </p>
+                            </div>
+                            <div className="faq-item">
+                                <h3>Does a transfer order include a blank shirt?</h3>
+                                <p>
+                                    No—items on this page are ready-to-press transfers only. For
+                                    finished printed garments, visit{' '}
+                                    <Link to="/shop" className="pf-inline-link">
+                                        Shop Apparel
+                                    </Link>{' '}
+                                    or{' '}
+                                    <Link
+                                        to="/custom-t-shirts-chattanooga"
+                                        className="pf-inline-link"
+                                    >
+                                        Custom T-Shirts
+                                    </Link>
+                                    .
+                                </p>
+                            </div>
+                            <div className="faq-item">
+                                <h3>Can I apply these with a household iron?</h3>
+                                <p>
+                                    A commercial heat press is strongly recommended for uniform
+                                    temperature (300–320°F) and consistent platen pressure.
+                                </p>
+                            </div>
+                            <div className="faq-item">
+                                <h3>Which transfer width should I select?</h3>
+                                <p>
+                                    Pocket (~4&quot;) suits left-chest marks, Youth (~8&quot;) fits
+                                    youth tees, Adult Standard (~10–11&quot;) fits adult S–XL tees,
+                                    and 12&quot;–14&quot; suits 2XL+ tees and hoodies. See our{' '}
+                                    <Link
+                                        to="/blog/choosing-the-right-shirt-print-size"
+                                        className="pf-inline-link"
+                                    >
+                                        Print Size Guide
+                                    </Link>
+                                    .
+                                </p>
+                            </div>
+                            <div className="faq-item">
+                                <h3>Can you print my own logo or gang sheet?</h3>
+                                <p>
+                                    Yes. Visit{' '}
+                                    <Link
+                                        to="/dtf-transfers-chattanooga"
+                                        className="pf-inline-link"
+                                    >
+                                        Custom DTF Transfers
+                                    </Link>{' '}
+                                    or upload your file directly in our{' '}
+                                    <Link
+                                        to="/request-quote?service=dtf-transfers"
+                                        className="pf-inline-link"
+                                    >
+                                        Custom Quote Form
+                                    </Link>
+                                    .
+                                </p>
+                            </div>
+                            <div className="faq-item">
+                                <h3>What is the return policy on transfers?</h3>
+                                <p>
+                                    Because transfers are printed to order, sales are final unless
+                                    an item arrives damaged, defective, or has a printing error. See
+                                    our{' '}
+                                    <Link to="/returns" className="pf-inline-link">
+                                        Return &amp; Refund Policy
+                                    </Link>
+                                    .
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Custom Artwork CTA */}
+                <section
+                    className="pf-section pf-section--alt pf-section--bordered"
+                    aria-labelledby="dtf-custom-cta-heading"
+                >
+                    <div className="pf-container pf-dtf-bottom-cta">
+                        <p className="pf-eyebrow">CUSTOM FILM &amp; GANG SHEETS</p>
+                        <h2 id="dtf-custom-cta-heading" className="pf-section-title">
+                            HAVE YOUR OWN ARTWORK?
+                        </h2>
+                        <p className="pf-copy">
+                            Send your transparent PNG or vector file for single-design transfers,
+                            repeat logos, or multi-design gang sheets—available for Chattanooga
+                            pickup by arrangement or nationwide shipping.
+                        </p>
+                        <div className="pf-dtf-bottom-cta__actions">
+                            <Link
+                                to="/request-quote?service=dtf-transfers"
+                                className="pf-button pf-button--primary"
+                            >
+                                REQUEST CUSTOM DTF TRANSFERS
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Accessible Native Modal Dialog for Transfer Configuration */}
+                <dialog
+                    ref={quickViewDialogRef}
+                    className="pf-dtf-dialog"
+                    aria-label={
+                        selectedProduct
+                            ? `Configure ${selectedProduct.title}`
+                            : 'Transfer configuration'
+                    }
+                    onClose={closeQuickView}
+                    onClick={handleDialogBackdropClick}
+                >
+                    {selectedProduct && activeSize && (
+                        <>
+                            {selectedProduct.category === 'Custom' ? (
+                                <CustomUploadModal
+                                    product={selectedProduct}
+                                    activeSize={activeSize}
+                                    selectedSizeId={selectedSizeId}
+                                    setSelectedSizeId={setSelectedSizeId}
+                                    closeModal={closeQuickView}
+                                />
+                            ) : (
+                                <div className="pf-dtf-modal">
+                                    <div className="pf-dtf-modal__top">
+                                        <span className="pf-eyebrow pf-dtf-modal__eyebrow">
+                                            {selectedProduct.category} / READY-TO-PRESS FILM
+                                        </span>
+                                        <button
+                                            type="button"
+                                            className="pf-dialog-close"
+                                            onClick={closeQuickView}
+                                            aria-label="Close transfer details"
+                                        >
+                                            Close ✕
+                                        </button>
+                                    </div>
+
+                                    <div className="pf-dtf-modal__grid">
+                                        <div className="pf-dtf-modal__media">
+                                            <img
+                                                src={selectedProduct.image}
+                                                alt={selectedProduct.alt}
+                                                className="pf-dtf-modal__img"
+                                            />
+                                        </div>
+
+                                        <div className="pf-dtf-modal__info">
+                                            <h2 className="pf-dtf-modal__title">
+                                                {selectedProduct.title}
+                                            </h2>
+
+                                            <div className="pf-dtf-modal__price">
+                                                ${activeSize.price.toFixed(2)}{' '}
+                                                <span>/ transfer</span>
+                                            </div>
+
+                                            <p className="pf-dtf-modal__desc">
+                                                {selectedProduct.description || defaultDescription}
+                                            </p>
+
+                                            <div className="pf-dtf-modal__form">
+                                                <div className="pf-dtf-field">
+                                                    <label htmlFor="size-select">
+                                                        Transfer Width
+                                                    </label>
+                                                    <select
+                                                        id="size-select"
+                                                        className="pf-select"
+                                                        value={selectedSizeId}
+                                                        onChange={(event) =>
+                                                            setSelectedSizeId(event.target.value)
+                                                        }
+                                                    >
+                                                        {selectedProduct.sizes.map((sizeItem) => (
+                                                            <option
+                                                                key={sizeItem.id}
+                                                                value={sizeItem.id}
+                                                            >
+                                                                {sizeItem.label} — $
+                                                                {sizeItem.price.toFixed(2)}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    <span className="pf-dtf-field__hint">
+                                                        Approximate Width: {activeSize.dimensions}
+                                                    </span>
+                                                </div>
+
+                                                <div className="pf-dtf-field">
+                                                    <label htmlFor="dtf-qty-input">Quantity</label>
+                                                    <input
+                                                        type="number"
+                                                        id="dtf-qty-input"
+                                                        className="pf-input"
+                                                        min={1}
+                                                        max={activeSize.inventory}
+                                                        value={quantity}
+                                                        onChange={(event) =>
+                                                            setQuantity(
+                                                                Math.max(
+                                                                    1,
+                                                                    parseInt(
+                                                                        event.target.value,
+                                                                        10
+                                                                    ) || 1
+                                                                )
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+
+                                                <div className="pf-dtf-notice-box">
+                                                    <p className="pf-dtf-notice-box__badge">
+                                                        TRANSFER FILM ONLY — NO GARMENT INCLUDED
+                                                    </p>
+                                                    <label className="pf-dtf-ack">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={acknowledgmentChecked}
+                                                            onChange={(event) => {
+                                                                setAcknowledgmentChecked(
+                                                                    event.target.checked
+                                                                );
+                                                                if (event.target.checked) {
+                                                                    setModalValidationMsg('');
+                                                                }
+                                                            }}
+                                                        />
+                                                        <span>
+                                                            I understand I am requesting a
+                                                            ready-to-press DTF transfer only
+                                                            (commercial heat press required; blank
+                                                            shirt not included).
+                                                        </span>
+                                                    </label>
+
+                                                    {modalValidationMsg && (
+                                                        <p
+                                                            role="alert"
+                                                            className="pf-dtf-validation"
+                                                        >
+                                                            {modalValidationMsg}
+                                                        </p>
+                                                    )}
+
+                                                    <p className="pf-dtf-subtotal-note">
+                                                        Estimated subtotal:{' '}
+                                                        <strong>
+                                                            $
+                                                            {(
+                                                                activeSize.price * quantity
+                                                            ).toFixed(2)}
+                                                        </strong>{' '}
+                                                        before shipping or Chattanooga pickup
+                                                        arrangement.
+                                                    </p>
+                                                </div>
+
+                                                <div className="pf-dtf-modal__actions">
+                                                    <button
+                                                        type="button"
+                                                        className="pf-button pf-button--primary"
+                                                        onClick={handleProceedOrder}
+                                                    >
+                                                        {selectedProduct.checkoutUrl
+                                                            ? `CONTINUE TO CHECKOUT — $${(
+                                                                  activeSize.price * quantity
+                                                              ).toFixed(2)}`
+                                                            : `REQUEST TRANSFER ORDER — $${(
+                                                                  activeSize.price * quantity
+                                                              ).toFixed(2)}`}
+                                                    </button>
+
+                                                    <Link
+                                                        to="/shop"
+                                                        className="pf-button pf-button--secondary"
+                                                        onClick={closeQuickView}
+                                                    >
+                                                        PREFER A FINISHED SHIRT? BROWSE SHOP
+                                                    </Link>
+                                                </div>
+
+                                                {!selectedProduct.checkoutUrl && (
+                                                    <p className="pf-dtf-handoff-note">
+                                                        Opens the PrintFlow order form with your
+                                                        design, width, and quantity pre-filled so we
+                                                        can confirm pickup/shipping and send an
+                                                        invoice link.
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </>
                     )}
-                </div>
-            )}
+                </dialog>
+            </div>
         </Layout>
     );
 }

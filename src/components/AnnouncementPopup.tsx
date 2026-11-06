@@ -5,10 +5,8 @@ export default function AnnouncementPopup() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // Check if user already dismissed it in this session
         const dismissed = sessionStorage.getItem('announcementDismissed');
         if (!dismissed) {
-            // Show popup slightly after page load
             const timer = setTimeout(() => {
                 setIsVisible(true);
             }, 1500);
@@ -25,10 +23,10 @@ export default function AnnouncementPopup() {
 
     return (
         <div className="announcement-popup">
-            <button className="announcement-close" onClick={handleClose} aria-label="Close">
+            <button type="button" className="announcement-close" onClick={handleClose} aria-label="Close">
                 &times;
             </button>
-            <p><strong>Fast turnaround available</strong><br/>Local Chattanooga pickup &bull; Nationwide shipping</p>
+            <p><strong>No-minimum custom shirts &amp; DTF transfers</strong><br/>Chattanooga pickup by arrangement &bull; Nationwide shipping</p>
         </div>
     );
 }

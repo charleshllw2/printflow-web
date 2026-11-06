@@ -166,11 +166,11 @@
         grid-template-columns: 1fr;
         gap: 40px;
     }
-    
+
     .featured-card {
         transform: none;
     }
-    
+
     .featured-card:hover {
         transform: translateY(-5px);
     }

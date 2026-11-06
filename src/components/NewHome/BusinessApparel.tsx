@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { PRICING_OFFERS } from '../../data/businessSettings';
 
 export default function BusinessApparel() {
   return (
@@ -7,11 +8,11 @@ export default function BusinessApparel() {
         <div className="bp-content">
           <h2>MAKE YOUR BUSINESS LOOK LIKE A BRAND.</h2>
           <div className="bp-price-block">
-            <span className="bp-qty">10 CUSTOM BUSINESS SHIRTS</span>
-            <span className="bp-price">STARTING AT $199</span>
+            <span className="bp-qty">{PRICING_OFFERS.businessStarterPackQty} CUSTOM BUSINESS SHIRTS</span>
+            <span className="bp-price">STARTING AT ${PRICING_OFFERS.businessStarterPackStartingPrice}</span>
           </div>
           <p className="bp-support">Give your crew a consistent, professional look without making apparel ordering complicated.</p>
-          
+
           <ul className="bp-process">
             <li>UPLOAD YOUR LOGO</li>
             <li>CHOOSE YOUR SHIRTS</li>
@@ -19,7 +20,7 @@ export default function BusinessApparel() {
             <li>WE PRINT</li>
             <li>PICK UP OR SHIP</li>
           </ul>
-          
+
           <Link to="/business-shirts-chattanooga" className="btn btn-primary">BUILD MY BUSINESS PACKAGE</Link>
         </div>
       </div>

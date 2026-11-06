@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 export default function DIYPrintSheets() {
     return (
         <Layout>
-            <SEO 
-                title="DIY DTF Print Sheets & Iron Ons | PrintFlow Studio" 
+            <SEO
+                title="DIY DTF Print Sheets & Iron Ons | PrintFlow Studio"
                 description="Order custom DIY DTF print sheets and iron-ons. Press them yourself at home. Nationwide shipping available (shipping is extra)."
             />
             <div className="section bg-light">
@@ -25,11 +25,11 @@ export default function DIYPrintSheets() {
                     </div>
                 </div>
             </div>
-            
+
             <div className="section">
                 <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
                     <h2 style={{ marginBottom: '30px' }}>Why Choose Our DIY Print Sheets?</h2>
-                    
+
                     <div style={{ marginBottom: '25px' }}>
                         <h3 style={{ marginBottom: '10px' }}>Incredible Quality</h3>
                         <p style={{ color: 'var(--text-secondary)' }}>Our DTF (Direct-to-Film) transfers provide vibrant colors, crisp details, and stretchability that traditional iron-on paper can't match.</p>

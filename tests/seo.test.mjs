@@ -38,7 +38,7 @@ for (const url of urls) test(url, async () => {
   }
 });
 test('error pages excluded and sitemap URLs unique',async()=>{
- assert.equal(new Set(urls).size,urls.length);assert.equal(urls.length,33);
+ assert.equal(new Set(urls).size,urls.length);assert.equal(urls.length,40);
  assert.ok(urls.every(u=>u.startsWith(origin)&&!u.includes('?')&&!/admin|login|404|api/.test(u)));
  assert.match(await readFile('dist/404.html','utf8'),/noindex/);
  assert.match(await readFile('dist/app-shell.html','utf8'),/noindex/);

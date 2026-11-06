@@ -6,8 +6,8 @@ import OrderOptions from "../components/OrderOptions";
 export default function Services() {
     return (
         <Layout>
-            <SEO 
-                title="Our Services | PrintFlow Studio Chattanooga" 
+            <SEO
+                title="Our Services | PrintFlow Studio Chattanooga"
                 description="Explore our custom apparel services, DTF transfers, DIY print sheets, and business apparel options at PrintFlow Studio."
             />
             <div className="section bg-light text-center" style={{ paddingTop: '100px', paddingBottom: '40px' }}>
@@ -18,7 +18,7 @@ export default function Services() {
                     </p>
                 </div>
             </div>
-            
+
             <OrderOptions />
             <div style={{ paddingBottom: '40px' }}></div>
             <ServicesGrid />

@@ -6,9 +6,9 @@ export default function Hero() {
         <section className="hero-section">
             <div className="container hero-split">
                 <div className="hero-content-left">
-                    <img 
-                        src="/logo.png" 
-                        alt="PrintFlow Studio Brand Mark" 
+                    <img
+                        src="/logo.png"
+                        alt="PrintFlow Studio Brand Mark"
                         className="hero-brand-mark"
                     />
                     <h1 className="hero-headline">
@@ -38,9 +38,9 @@ export default function Hero() {
                 </div>
                 <div className="hero-image-right">
                     <div className="hero-image-wrapper">
-                        <img 
-                            src="/hero-apparel-group.jpg" 
-                            alt="Group of people wearing custom printed t-shirts and hoodies" 
+                        <img
+                            src="/hero-apparel-group.jpg"
+                            alt="Group of people wearing custom printed t-shirts and hoodies"
                             className="hero-apparel-img"
                         />
                         {/* Subtle background glow effect */}

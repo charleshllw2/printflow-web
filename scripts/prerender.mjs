@@ -25,4 +25,5 @@ for (const path of [...publicPaths, '/404']) {
 }
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicPaths.map(path => `  <url><loc>https://www.printflowstudio.com${path}</loc></url>`).join('\n')}\n</urlset>\n`;
 await writeFile('dist/sitemap.xml', xml);
+await writeFile('public/sitemap.xml', xml);
 console.log(`Prerendered ${publicPaths.length} public pages; sitemap generated from current routes and products.`);
