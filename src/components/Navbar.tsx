@@ -71,6 +71,8 @@ export default function Navbar() {
     }, [searchOpen, mobileOpen]);
 
 
+    useEffect(() => () => { document.body.style.overflow = ''; }, []);
+
     const normalizedQuery = query.trim().toLowerCase();
 
     const searchResults = useMemo(() => {
