@@ -34,8 +34,8 @@ export default function StarterPackPromo() {
                         <Link to="/request-quote?package=business-starter-pack" className="btn btn-primary promo-btn">
                             Get My Business Starter Pack
                         </Link>
-                        <a href="tel:4236812218" className="promo-secondary-link">
-                            Call or Text 423-681-2218
+                        <a href="tel:+14236407705" className="promo-secondary-link">
+                            Call (423) 640-7705
                         </a>
                     </div>
                 </div>

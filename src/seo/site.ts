@@ -17,7 +17,7 @@ export const business = {
   name: 'PrintFlow Studio', url: `${SITE_URL}/`, logo: { '@type': 'ImageObject', url: `${SITE_URL}/printflow-logo-original.png`, width: 895, height: 711 },
   description: 'Custom T-shirts, hoodies, group apparel, and ready-to-press DTF transfers in Chattanooga, Tennessee, with nationwide shipping.',
   image: `${SITE_URL}/hero-apparel-group.jpg`,
-  telephone: '+1-423-681-2218', email: 'hello@printflowstudio.com',
+  telephone: '+14236407705', email: 'hello@printflowstudio.com',
   areaServed: { '@type': 'City', name: 'Chattanooga', containedInPlace: { '@type': 'State', name: 'Tennessee' } },
 };
 export function structuredData(path: string, title: string, schema?: string) {

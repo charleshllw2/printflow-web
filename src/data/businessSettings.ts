@@ -4,8 +4,8 @@
 export const BUSINESS_INFO = {
   name: "PrintFlow Studio",
   ownerName: "Charles Holloway",
-  phone: "423-681-2218",
-  phoneHref: "tel:423-681-2218",
+  phone: "(423) 640-7705",
+  phoneHref: "tel:+14236407705",
   email: "hello@printflowstudio.com",
   emailHref: "mailto:hello@printflowstudio.com",
   primaryMarket: "Chattanooga, Tennessee",
