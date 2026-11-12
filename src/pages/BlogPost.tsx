@@ -495,35 +495,16 @@ function renderArticleBody(id: string) {
         case "optimizing-files-for-dtf":
             return (
                 <>
-                    <h2>Why Artwork Preparation Matters</h2>
-                    <p>
-                        Direct-to-Film (DTF) transfers capture every detail in your digital file. Preparing your artwork properly before submitting ensures crisp edges, accurate sizing, and a clean bond on the shirt. For a full walkthrough of file formats and pre-press checks, read our comprehensive guide on <Link to="/blog/how-to-prepare-artwork-for-dtf-printing">How to Prepare Artwork for DTF Printing</Link> and review our <Link to="/file-guidelines">Artwork &amp; File Guidelines</Link>.
-                    </p>
-
-                    <h3>1. Design at 300 DPI at Full Print Size</h3>
-                    <p>
-                        Always build your canvas at 300 DPI at the physical dimensions you intend to print (for example, 10 inches wide for a standard adult front). Enlarging a low-resolution web graphic will result in blurry or pixelated edges.
-                    </p>
-
-                    <h3>2. Export with a Transparent Background</h3>
-                    <p>
-                        Save your file as a PNG or vector format with the background layer turned off. Anything visible in the file—including an accidental white background box—will be printed onto the transfer film.
-                    </p>
-
-                    <h3>3. Watch Out for Soft Glows and Semi-Transparency</h3>
-                    <p>
-                        Because DTF uses a white ink underbase and adhesive powder, very faint outer glows or semi-transparent shadows can pick up white ink and create a visible halo. Use solid drop shadows or crisp halftones instead.
-                    </p>
-
-                    <h3>4. Convert Fonts to Outlines</h3>
-                    <p>
-                        When sending vector files (SVG, AI, PDF), convert all text layers to outlines or curves so your typography stays locked in place.
-                    </p>
-
-                    <h3>5. Check Contrast Against Your Shirt Color</h3>
-                    <p>
-                        Preview your design on a background color that matches your chosen garment. Dark grey text that looks great on a white screen will disappear on a black tee unless you adjust the fill color or add a clean outline.
-                    </p>
+                    <h2>Check a finished transfer file before you send it</h2>
+                    <p>Open the exported file in a fresh document. A design can look right in the editor while its exported PNG includes empty margins, a background layer or smaller lettering than you intended.</p>
+                    <h3>The artwork looks smaller than the proof</h3>
+                    <p>Imagine a 3,000-pixel canvas with 300 empty pixels on either side. If you size the entire canvas to 10 inches, the visible artwork spans only 8 inches. Trim the transparent margins, measure the visible graphic again, then enter that width in our <Link to="/file-guidelines#print-size-check">print-size calculator</Link>.</p>
+                    <h3>A white rectangle or pale fringe appears</h3>
+                    <p>Place a temporary dark layer under the exported PNG. A solid white rectangle shows that the background survived export. If only the edges turn pale, inspect the outline at full resolution for leftover background pixels or a soft glow. Correct the source layers and export again with the temporary layer hidden. Repeat the check on a light background to catch dark stray pixels.</p>
+                    <h3>Small type disappears at the intended size</h3>
+                    <p>Print a paper proof at actual size with scaling turned off. Measure the printed graphic with a ruler before judging the text. If a small date or name is hard to read, enlarge that element in the source file or simplify the layout. A paper proof can check size and spacing. Fabric texture and ink color still require a garment sample.</p>
+                    <h3>Send the dimensions with the file</h3>
+                    <p>Include the final visible width, placement and garment color with your order. For example, “8 inches wide, center front, navy shirt” gives the reviewer three details they can compare against the proof. Keep the layered original so you can adjust an individual element if the proof needs a change.</p>
                 </>
             );
 

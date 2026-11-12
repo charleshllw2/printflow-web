@@ -1,9 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import Layout from "../components/Layout";
 import "../styles/FileGuidelines.css";
 
 export default function FileGuidelines() {
+    const [pixels, setPixels] = useState("2400");
+    const [inches, setInches] = useState("10");
+    const width = Number(pixels);
+    const printWidth = Number(inches);
+    const density = width / printWidth;
+    const valid = Number.isSafeInteger(width) && width > 0 && printWidth > 0 && Number.isFinite(density);
     return (
         <Layout>
             <SEO title="Artwork & File Guidelines | PrintFlow Studio" description="Prepare artwork for custom shirts and DTF transfers: file formats, transparent backgrounds, resolution and print sizing from PrintFlow Studio." />
@@ -36,6 +43,15 @@ export default function FileGuidelines() {
                             </li>
                         </ul>
                     </div>
+
+                    <section className="guideline-section" id="print-size-check">
+                        <h2>Check your artwork at print size</h2>
+                        <p>Enter the width of the visible design after trimming transparent margins. Use the pixel dimensions of the original PNG, before any enlargement.</p>
+                        <p><label>Artwork width in pixels <input type="number" min="1" step="1" value={pixels} onChange={event => setPixels(event.target.value)} /></label></p>
+                        <p><label>Desired print width in inches <input type="number" min="0" step="any" value={inches} onChange={event => setInches(event.target.value)} /></label></p>
+                        <p aria-live="polite">{valid ? <><strong>{Number(density.toFixed(1))} pixels per inch</strong> at your chosen width. {density >= 300 ? "Your file meets the studio’s 300 PPI resolution target at this size." : "For this print width, use an original at least " + Math.ceil(printWidth * 300).toLocaleString("en-US") + " pixels wide."}</> : "Enter a positive whole pixel count and a positive print width."}</p>
+                        <p>For example, a 2,400-pixel design prints at 300 pixels per inch across 8 inches. At 10 inches it delivers 240. Changing the resolution label alone preserves the same pixels. Check edges, lettering and background transparency separately.</p>
+                    </section>
 
                     <div className="guideline-section warning-section">
                         <h2>What We Do Not Print</h2>
