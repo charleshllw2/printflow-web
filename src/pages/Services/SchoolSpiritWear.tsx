@@ -11,7 +11,7 @@ export default function SchoolSpiritWear() {
         "name": "PrintFlow Studio",
         "image": "https://printflowstudio.com/logo.png",
         "url": "https://printflowstudio.com",
-        "telephone": "+14236407705",
+        "telephone": "+14235583692",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Chattanooga",

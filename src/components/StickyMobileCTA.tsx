@@ -15,7 +15,7 @@ export default function StickyMobileCTA() {
         <Link to="/request-quote" className="btn btn-primary cta-btn">
           START MY SHIRT
         </Link>
-        <a href="tel:+14236407705" aria-label="Call PrintFlow Studio at (423) 640-7705" className="btn btn-outline cta-btn">
+        <a href="tel:+14235583692" aria-label="Call PrintFlow Studio at (423) 558-3692" className="btn btn-outline cta-btn">
           CALL
         </a>
       </div>

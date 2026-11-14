@@ -39,7 +39,7 @@ export default function Terms() {
 
                     <h2 style={{ color: "var(--text-primary)", fontSize: "1.4rem", marginTop: "35px", marginBottom: "12px" }}>5. Contact Information</h2>
                     <p style={{ marginBottom: "20px" }}>
-                        Questions regarding these Terms and Conditions may be directed to PrintFlow Studio at <a href="mailto:hello@printflowstudio.com" style={{ color: "var(--accent-color)" }}>hello@printflowstudio.com</a> or <a href="tel:+14236407705" style={{ color: "var(--accent-color)" }}>(423) 640-7705</a>.
+                        Questions regarding these Terms and Conditions may be directed to PrintFlow Studio at <a href="mailto:hello@printflowstudio.com" style={{ color: "var(--accent-color)" }}>hello@printflowstudio.com</a> or <a href="tel:+14235583692" style={{ color: "var(--accent-color)" }}>(423) 558-3692</a>.
                     </p>
                 </div>
             </div>
