@@ -15,11 +15,11 @@ Uses existing Standard Firestore database `(default)` in `printflow-studio-e4a98
 - `trackerJobs`: owner-only job details/history with optimistic version checks.
 - `trackerViews`: minimal per-token projection: opaque job ID, reference, stage, requested time, delivery method and server timestamp. Single-document reads only; collection listings are denied even for the owner.
 
-No contact information, customer names, job titles, items, artwork or internal notes are included in a view. Rules allowlist fields and validate every write. Private/public stage changes are atomic. All unrecognized collections remain denied except the pre-existing legacy `/orders` rule, which is preserved unchanged; the new tracker never stores data there. Legacy Sites Order Desk uses a separate D1 database and ChatGPT authentication. Its records were not migrated or modified.
+No contact information, customer names, job titles, items, artwork or internal notes are included in a view. Rules allowlist fields and validate every write. Private/public stage changes are atomic. All unrecognized collections remain denied. A final audit found three records in the legacy `/orders` collection behind public read/write rules. Those legacy rules are now owner-only, retaining their prior status constraints; trusted Admin SDK/server integrations bypass client rules as before. The current Stripe checkout does not read this collection anonymously. The new tracker never stores data there. Legacy Sites Order Desk uses a separate D1 database and ChatGPT authentication. Its records were not migrated or modified.
 
 Private owner and tracking routes use an advertising/analytics-free HTML shell, no-index/no-referrer headers, private/no-store caching, and are excluded from sitemap and robots indexing. Tracking data is never prerendered into public HTML.
 
-Rules source: `firestore.rules`. Configuration: `firebase.json`. Deploy only rules with `firebase deploy --only firestore:rules --project printflow-studio-e4a98`. Preserve unrelated rules; back up the current release first.
+Rules source: `firestore.rules`. Configuration: `firebase.json`. Deploy only rules with `firebase deploy --only firestore:rules --project printflow-studio-e4a98`. Review rule changes and back up the current release first. Do not restore the historical public-access legacy orders rules.
 
 ## Validation
 

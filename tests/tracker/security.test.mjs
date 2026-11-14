@@ -15,6 +15,9 @@ const view=(id,j)=>({jobId:id,reference:j.reference,stage:j.stage,requestedAt:j.
 async function addJob(id,t,overrides={}){const j={...job(t),...overrides},b=writeBatch(owner);b.set(doc(owner,'trackerJobs',id),j);b.set(doc(owner,'trackerViews',t),view(id,j));return b.commit();}
 test('owner directory, returning customer history, privacy and realtime isolation',async()=>{
  await assertSucceeds(setDoc(doc(owner,'trackerCustomers','12025550143'),{...customer,createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+ await assertFails(getDocs(collection(guest,'orders')));await assertFails(setDoc(doc(guest,'orders','public-injection'),{status:'Paid'}));
+ await assertSucceeds(setDoc(doc(owner,'orders','legacy-owner-check'),{status:'Paid'}));
+ await assertFails(getDoc(doc(guest,'orders','legacy-owner-check')));await assertSucceeds(getDoc(doc(owner,'orders','legacy-owner-check')));
  await assertFails(getDocs(collection(guest,'trackerCustomers')));await assertFails(getDoc(doc(stranger,'trackerCustomers','12025550143')));
  await assertFails(setDoc(doc(stranger,'trackerCustomers','12025550144'),{...customer,createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
  await assertSucceeds(addJob('job-one',token));await assertSucceeds(addJob('job-two',token2));
