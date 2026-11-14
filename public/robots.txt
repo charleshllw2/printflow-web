@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /orders
+Disallow: /track/
+Disallow: /order-shell
 Disallow: /shop/cart
 Disallow: /kss-mock
 

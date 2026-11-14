@@ -13,9 +13,12 @@ const analytics = ga ? `<script async src="https://www.googletagmanager.com/gtag
 // Fail if a new static public route has not been considered for the sitemap.
 const app = await readFile('src/App.tsx', 'utf8');
 for (const [, route] of app.matchAll(/<Route path="([^"]+)"/g)) {
-  if (!route.includes(':') && route !== '*' && !['/admin','/login','/business-apparel-chattanooga','/custom-tshirts-chattanooga'].includes(route) && !publicPaths.includes(route)) throw new Error(`Add public route to SEO registry: ${route}`);
+  if (!route.includes(':') && route !== '*' && !['/admin','/login','/orders','/business-apparel-chattanooga','/custom-tshirts-chattanooga'].includes(route) && !publicPaths.includes(route)) throw new Error(`Add public route to SEO registry: ${route}`);
 }
 await writeFile('dist/app-shell.html', template.replace('</head>', '<meta data-prerender="true" name="robots" content="noindex,follow"></head>'));
+// Tracking pages never load advertising or analytics, and never send their bearer link in referrers.
+const trackerShell = template.replace(/<script[^>]*src="https:\/\/pagead2[^>]*>[\s\S]*?<\/script>/g, '').replace('</head>', '<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"></head>');
+await writeFile('dist/order-shell.html', trackerShell);
 for (const path of [...publicPaths, '/404']) {
   const { body, head } = await render(path);
   const html = template.replace('</head>', `${head}${path === "/dtf-transfers" && transferCss ? `<link rel="stylesheet" href="/assets/${transferCss}">` : ""}${verification}${path === '/404' ? '' : analytics}</head>`).replace('<div id="root"></div>', `<div id="root">${body}</div>`);

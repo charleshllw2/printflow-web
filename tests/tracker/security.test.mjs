@@ -1,0 +1,38 @@
+import { test, before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+const require = createRequire(process.env.TRACKER_TEST_MODULES ? process.env.TRACKER_TEST_MODULES + '/package.json' : import.meta.url);
+const { initializeTestEnvironment, assertFails, assertSucceeds } = require('@firebase/rules-unit-testing');
+const { doc, setDoc, getDoc, getDocs, collection, query, where, writeBatch, serverTimestamp, onSnapshot, updateDoc } = require('firebase/firestore');
+const uid='WH28CTpx3kaOk5prZp9EO4DfVTw1', token='a'.repeat(64), token2='b'.repeat(64);
+let env, owner, guest, stranger;
+before(async()=>{env=await initializeTestEnvironment({projectId:'demo-printflow-tracker',firestore:{host:'127.0.0.1',port:8188,rules:await readFile('firestore.rules','utf8')}});owner=env.authenticatedContext(uid).firestore();guest=env.unauthenticatedContext().firestore();stranger=env.authenticatedContext('not-owner',{email:'charleshllw2@gmail.com'}).firestore();});
+after(async()=>{if(env){await env.clearFirestore();await env.cleanup();}});
+const customer={name:'Sample Customer',phone:'202-555-0143',email:'sample@example.invalid'};
+const job=(token)=>({customerId:'12025550143',reference:'PF-SAMPLE',title:'Private artwork title',items:[{description:'White tees',size:'M',quantity:2}],artwork:'Private artwork location',notes:'Private internal note',requestedAt:'2026-12-01T20:00:00.000Z',delivery:'pickup',stage:0,token,version:1,trackingEnabled:true,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
+const view=(id,j)=>({jobId:id,reference:j.reference,stage:j.stage,requestedAt:j.requestedAt,delivery:j.delivery,updatedAt:serverTimestamp()});
+async function addJob(id,t,overrides={}){const j={...job(t),...overrides},b=writeBatch(owner);b.set(doc(owner,'trackerJobs',id),j);b.set(doc(owner,'trackerViews',t),view(id,j));return b.commit();}
+test('owner directory, returning customer history, privacy and realtime isolation',async()=>{
+ await assertSucceeds(setDoc(doc(owner,'trackerCustomers','12025550143'),{...customer,createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+ await assertFails(getDocs(collection(guest,'trackerCustomers')));await assertFails(getDoc(doc(stranger,'trackerCustomers','12025550143')));
+ await assertFails(setDoc(doc(stranger,'trackerCustomers','12025550144'),{...customer,createdAt:serverTimestamp(),updatedAt:serverTimestamp()}));
+ await assertSucceeds(addJob('job-one',token));await assertSucceeds(addJob('job-two',token2));
+ const reconnected=env.authenticatedContext(uid).firestore();
+ assert.equal((await getDocs(query(collection(reconnected,'trackerJobs'),where('customerId','==','12025550143')))).size,2);
+ assert.equal((await getDocs(collection(reconnected,'trackerCustomers'))).size,1);
+ const publicData=(await getDoc(doc(guest,'trackerViews',token))).data();
+ assert.deepEqual(Object.keys(publicData).sort(),['delivery','jobId','reference','requestedAt','stage','updatedAt'].sort());
+ assert.ok(!JSON.stringify(publicData).includes('sample@example.invalid'));assert.ok(!JSON.stringify(publicData).includes('Private'));
+ await assertFails(getDoc(doc(guest,'trackerJobs','job-one')));await assertFails(getDocs(collection(guest,'trackerJobs')));
+ await assertFails(getDocs(collection(guest,'trackerViews')));await assertFails(getDoc(doc(guest,'trackerViews','guessable')));
+ await assertFails(updateDoc(doc(stranger,'trackerJobs','job-one'),{stage:1,version:2,updatedAt:serverTimestamp()}));
+ await assertFails(updateDoc(doc(owner,'trackerJobs','job-one'),{stage:1,version:2,updatedAt:serverTimestamp()}));
+ await assertFails(updateDoc(doc(owner,'trackerViews',token),{email:'leak@example.invalid'}));
+ const changed=new Promise((resolve,reject)=>{const timer=setTimeout(()=>{stop();reject(Error('No live update'));},10000);const stop=onSnapshot(doc(guest,'trackerViews',token),s=>{if(s.data()?.stage===1){clearTimeout(timer);stop();resolve(s.data());}},reject);});
+ const b=writeBatch(owner);b.update(doc(owner,'trackerJobs','job-one'),{stage:1,version:2,updatedAt:serverTimestamp()});b.set(doc(owner,'trackerViews',token),view('job-one',{...job(token),stage:1}));await assertSucceeds(b.commit());
+ assert.equal((await changed).stage,1);assert.equal((await getDoc(doc(guest,'trackerViews',token2))).data().stage,0);
+ await assertFails(addJob('bad-stage','c'.repeat(64),{stage:6}));await assertFails(addJob('bad-items','d'.repeat(64),{items:[{description:'tee',size:'M',quantity:0}]}));
+ const revoke=writeBatch(owner);revoke.update(doc(owner,'trackerJobs','job-one'),{trackingEnabled:false,version:3,updatedAt:serverTimestamp()});revoke.delete(doc(owner,'trackerViews',token));await assertSucceeds(revoke.commit());
+ assert.equal((await getDoc(doc(guest,'trackerViews',token))).exists(),false);
+});

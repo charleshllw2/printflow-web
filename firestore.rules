@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /orders/{orderId} {
+      allow read: if true;
+      allow create: if request.resource.data.status == "Paid";
+      allow update: if
+        request.resource.data.status in ["Paid","In Production","Shipped"] ||
+        request.resource.data.shippingEmailSent == true;
+    }
+
+
+    // Tracker model: customers have name/phone/optional email and server timestamps.
+    // Private jobs contain customerId, title/items/artwork/notes, random token, stage,
+    // requestedAt/delivery and an optimistic version. Public views contain only the
+    // allowlisted reference/stage/handoff preference, updatedAt and opaque jobId.
+    function trackerOwner() { return request.auth != null && request.auth.uid == 'WH28CTpx3kaOk5prZp9EO4DfVTw1'; }
+    function text(v, max) { return v is string && v.size() <= max; }
+    function validCustomer(d) {
+      return d.keys().hasOnly(['name','phone','email','createdAt','updatedAt'])
+        && text(d.name,120) && d.name.size() > 0 && text(d.phone,32) && d.phone.size() >= 10
+        && text(d.email,254) && d.createdAt is timestamp && d.updatedAt == request.time;
+    }
+    function validItem(i) { return i.keys().hasOnly(['description','size','quantity']) && text(i.description,120) && i.description.size()>0 && text(i.size,80) && i.quantity is int && i.quantity>=1 && i.quantity<=10000; }
+    function validItems(items) {
+      return items is list && items.size()>=1 && items.size()<=10
+        && validItem(items[0])
+        && (items.size()<2 || validItem(items[1])) && (items.size()<3 || validItem(items[2]))
+        && (items.size()<4 || validItem(items[3])) && (items.size()<5 || validItem(items[4]))
+        && (items.size()<6 || validItem(items[5])) && (items.size()<7 || validItem(items[6]))
+        && (items.size()<8 || validItem(items[7])) && (items.size()<9 || validItem(items[8]))
+        && (items.size()<10 || validItem(items[9]));
+    }
+    function validJob(d, id) {
+      return d.keys().hasOnly(['customerId','reference','title','items','artwork','notes','requestedAt','delivery','stage','token','version','trackingEnabled','createdAt','updatedAt'])
+        && text(d.customerId,15) && existsAfter(/databases/$(database)/documents/trackerCustomers/$(d.customerId))
+        && text(d.reference,20) && text(d.title,160) && d.title.size()>0 && validItems(d.items)
+        && text(d.artwork,3000) && text(d.notes,3000) && text(d.requestedAt,40)
+        && d.delivery in ['pickup','delivery'] && d.stage is int && d.stage>=0 && d.stage<=5
+        && d.token is string && d.token.matches('^[a-f0-9]{64}$') && d.version is int
+        && d.trackingEnabled is bool && d.createdAt is timestamp && d.updatedAt == request.time
+        && (d.trackingEnabled ? getAfter(/databases/$(database)/documents/trackerViews/$(d.token)).data.stage == d.stage
+          && getAfter(/databases/$(database)/documents/trackerViews/$(d.token)).data.jobId == id
+          && getAfter(/databases/$(database)/documents/trackerViews/$(d.token)).data.updatedAt == request.time
+          : !existsAfter(/databases/$(database)/documents/trackerViews/$(d.token)));
+    }
+    function validView(d, token) {
+      let job = getAfter(/databases/$(database)/documents/trackerJobs/$(d.jobId)).data;
+      return d.keys().hasOnly(['jobId','reference','stage','requestedAt','delivery','updatedAt'])
+        && job.token == token && job.trackingEnabled == true && d.reference == job.reference
+        && d.stage == job.stage && d.requestedAt == job.requestedAt && d.delivery == job.delivery
+        && d.updatedAt == request.time;
+    }
+    match /trackerCustomers/{id} {
+      allow read: if trackerOwner();
+      allow create: if trackerOwner() && id.matches('^[0-9]{10,15}$') && validCustomer(request.resource.data) && request.resource.data.createdAt == request.time;
+      allow update: if trackerOwner() && validCustomer(request.resource.data) && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if trackerOwner();
+    }
+    match /trackerJobs/{id} {
+      allow read: if trackerOwner();
+      allow create: if trackerOwner() && validJob(request.resource.data,id) && request.resource.data.version == 1 && request.resource.data.stage == 0 && request.resource.data.createdAt == request.time;
+      allow update: if trackerOwner() && validJob(request.resource.data,id)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['stage','trackingEnabled','version','updatedAt'])
+        && request.resource.data.version == resource.data.version + 1;
+      allow delete: if trackerOwner() && !existsAfter(/databases/$(database)/documents/trackerViews/$(resource.data.token));
+    }
+    match /trackerViews/{token} {
+      // Bearer-link access to exactly one minimal view; no directory/list queries.
+      allow get: if token.matches('^[a-f0-9]{64}$');
+      allow list: if false;
+      allow create, update: if trackerOwner() && validView(request.resource.data,token);
+      allow delete: if trackerOwner();
+    }
+  }
+}

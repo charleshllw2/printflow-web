@@ -2,21 +2,150 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/business-apparel-chattanooga", "destination": "/business-shirts-chattanooga", "permanent": true },
-    { "source": "/custom-tshirts-chattanooga", "destination": "/custom-t-shirts-chattanooga", "permanent": true },
-    { "source": "/diy-dtf-print-sheets", "destination": "/dtf-transfers-chattanooga", "permanent": true },
-    { "source": "/school-shirts-chattanooga", "destination": "/team-shirts-chattanooga", "permanent": true }
+    {
+      "source": "/business-apparel-chattanooga",
+      "destination": "/business-shirts-chattanooga",
+      "permanent": true
+    },
+    {
+      "source": "/custom-tshirts-chattanooga",
+      "destination": "/custom-t-shirts-chattanooga",
+      "permanent": true
+    },
+    {
+      "source": "/diy-dtf-print-sheets",
+      "destination": "/dtf-transfers-chattanooga",
+      "permanent": true
+    },
+    {
+      "source": "/school-shirts-chattanooga",
+      "destination": "/team-shirts-chattanooga",
+      "permanent": true
+    }
   ],
   "headers": [
-    { "source": "/api/:path*", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/admin", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/login", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/app-shell", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/kss-mock/:path*", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
-    { "source": "/kss-mock.zip", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/admin",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/login",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/app-shell",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/kss-mock/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/kss-mock.zip",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/orders",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        }
+      ]
+    },
+    {
+      "source": "/track/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        }
+      ]
+    },
+    {
+      "source": "/order-shell",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store"
+        }
+      ]
+    }
   ],
   "rewrites": [
-    { "source": "/admin", "destination": "/app-shell" },
-    { "source": "/login", "destination": "/app-shell" }
+    {
+      "source": "/admin",
+      "destination": "/app-shell"
+    },
+    {
+      "source": "/login",
+      "destination": "/app-shell"
+    },
+    {
+      "source": "/orders",
+      "destination": "/order-shell"
+    },
+    {
+      "source": "/track/:token",
+      "destination": "/order-shell"
+    }
   ]
 }

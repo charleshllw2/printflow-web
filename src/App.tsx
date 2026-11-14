@@ -3,6 +3,8 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import FileGuidelines from "./pages/FileGuidelines";
+const OrderDesk = lazy(() => import("./pages/OrderDesk"));
+const OrderTracker = lazy(() => import("./pages/OrderTracker"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 import Blog from "./pages/Blog";
@@ -53,6 +55,8 @@ export function AppRoutes() {
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/login" element={<AdminLogin />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/orders" element={<OrderDesk />} />
+          <Route path="/track/:token" element={<OrderTracker />} />
 
           {/* Legacy Redirects */}
           <Route path="/business-apparel-chattanooga" element={<Navigate to="/business-shirts-chattanooga" replace />} />

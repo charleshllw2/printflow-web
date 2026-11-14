@@ -1,7 +1,7 @@
 const ADMIN_EMAIL = "charleshllw2@gmail.com";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
     collection,
     onSnapshot,
@@ -114,6 +114,7 @@ export default function Admin() {
         <div style={{ padding: 40, fontFamily: 'sans-serif' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h1>Admin Dashboard</h1>
+            <p><Link to="/orders">Open customer directory &amp; live order tracker →</Link></p>
                 <button
                     onClick={async () => {
                         await signOut(auth);
