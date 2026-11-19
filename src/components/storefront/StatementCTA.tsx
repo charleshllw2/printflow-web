@@ -23,11 +23,11 @@ export default function StatementCTA() {
                 </p>
 
                 <div className="pf-statement__actions">
-                    <Link to="/shop" className="pf-button pf-button--primary">
-                        SHOP PRINTFLOW
+                    <Link to="/request-quote" className="pf-button pf-button--primary">
+                        START A CUSTOM ORDER
                     </Link>
-                    <Link to="/request-quote" className="pf-button pf-button--secondary">
-                        START YOUR PROJECT
+                    <Link to="/shop" className="pf-button pf-button--secondary">
+                        SHOP DESIGNS
                     </Link>
                 </div>
             </div>

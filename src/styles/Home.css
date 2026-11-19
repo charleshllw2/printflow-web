@@ -72,7 +72,10 @@
   margin-bottom: 20px;
 }
 
-.pf-hero__title {
+.pf-hero .pf-hero__title {
+  font-size: clamp(2.2rem, 5.2vw, 5rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
   margin-bottom: 24px;
 }
 
@@ -243,7 +246,7 @@
 /* 5. Shop by Category Grid */
 .pf-category-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -536,9 +539,6 @@
     max-width: 72%;
   }
 
-  .pf-category-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 900px) {
@@ -649,3 +649,64 @@
 .pf-hero__img { object-position:center; }
 .pf-hero__scrim { background:linear-gradient(90deg,#080808 0%,rgba(8,8,8,.35) 35%,rgba(8,8,8,.12) 100%); }
 @media(max-width:767px) { .pf-hero { min-height:680px; justify-content:flex-end; } .pf-hero__media { position:absolute;inset:0;aspect-ratio:auto;max-height:none; } .pf-hero__img { object-position:65% center; } .pf-hero__scrim { background:linear-gradient(180deg,rgba(8,8,8,.15),rgba(8,8,8,.65) 35%,#080808 95%); } .pf-hero__container { padding-top:160px; } .pf-ticker-static {font-size:9px;gap:8px 14px;} }
+
+.pf-home-work {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+
+.pf-home-work figure {
+  margin: 0;
+}
+
+.pf-home-work img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.pf-home-work figcaption {
+  margin-top: 10px;
+}
+
+.pf-home-benefits {
+  padding-inline-start: 1.25rem;
+  margin-block: 24px;
+  list-style: disc;
+}
+
+.pf-home-faq {
+  margin-block: 24px;
+  max-width: 56rem;
+}
+
+.pf-home-faq details {
+  border-bottom: 1px solid var(--pf-border);
+}
+
+.pf-home-faq summary {
+  cursor: pointer;
+  padding-block: 14px;
+}
+
+.pf-seasonal-transfer {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--pf-text);
+}
+
+.pf-seasonal-transfer img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 1px solid var(--pf-border);
+}
+
+.pf-seasonal-transfer:hover span {
+  text-decoration: underline;
+}
