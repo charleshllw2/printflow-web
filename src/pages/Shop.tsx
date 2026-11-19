@@ -144,17 +144,20 @@ export default function Shop() {
 
                         <div className="pf-dtf-hero__actions">
                             <a href="#product-grid" className="pf-button pf-button--primary">
-                                BROWSE TRANSFERS
+                                ORDER DTF TRANSFERS
                             </a>
                             <Link
                                 to="/request-quote?service=dtf-transfers"
                                 className="pf-button pf-button--secondary"
                             >
-                                UPLOAD CUSTOM TRANSFER ART
+                                UPLOAD YOUR ARTWORK
                             </Link>
-                            <Link to="/shop" className="pf-button pf-button--dark">
-                                SHOP PRINTED APPAREL
-                            </Link>
+                            <a href="#dtf-custom-cta-heading" className="pf-button pf-button--dark">
+                                CUSTOM GANG SHEETS
+                            </a>
+                            <a href="#dtf-pressing-heading" className="pf-button pf-button--dark">
+                                VIEW PRESSING INSTRUCTIONS
+                            </a>
                         </div>
 
                         <p className="pf-dtf-press-notice">
@@ -247,7 +250,7 @@ export default function Shop() {
                         ) : (
                             <div className="pf-dtf-grid">
                                 {filteredProducts.map((product) => (
-                                    <article key={product.id} className="pf-dtf-card">
+                                    <article id={product.id} key={product.id} className="pf-dtf-card">
                                         <div className="pf-dtf-card__media">
                                             <img
                                                 src={product.image}
@@ -533,7 +536,7 @@ export default function Shop() {
                     <div className="pf-container pf-dtf-bottom-cta">
                         <p className="pf-eyebrow">CUSTOM FILM &amp; GANG SHEETS</p>
                         <h2 id="dtf-custom-cta-heading" className="pf-section-title">
-                            HAVE YOUR OWN ARTWORK?
+                            CUSTOM DTF GANG SHEETS
                         </h2>
                         <p className="pf-copy">
                             Send your transparent PNG or vector file for single-design transfers,
@@ -542,10 +545,10 @@ export default function Shop() {
                         </p>
                         <div className="pf-dtf-bottom-cta__actions">
                             <Link
-                                to="/request-quote?service=dtf-transfers"
+                                to="/request-quote?service=dtf-transfers&amp;variant=Gang%20sheet"
                                 className="pf-button pf-button--primary"
                             >
-                                REQUEST CUSTOM DTF TRANSFERS
+                                REQUEST A GANG SHEET QUOTE
                             </Link>
                         </div>
                     </div>

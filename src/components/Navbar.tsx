@@ -78,7 +78,7 @@ export default function Navbar() {
     const searchResults = useMemo(() => {
         if (!normalizedQuery) {
             return {
-                apparel: SHOP_PRODUCTS.slice(0, 4),
+                apparel: [],
                 transfers: DTF_PRODUCTS.slice(0, 2),
                 guides: BLOG_POSTS.slice(0, 2),
             };

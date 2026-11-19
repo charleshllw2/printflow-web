@@ -30,7 +30,8 @@ export default function CustomApparel() {
         <section className="seo-hero">
           <div className="container">
             <p className="hero-eyebrow">BEYOND T-SHIRTS</p>
-            <h1>Premium Custom Apparel</h1>
+            <h1>Custom Shirts for Your Business, Church, Event, or Brand</h1>
+            <p>From one custom shirt to a full team order, PrintFlow Studio helps bring your ideas to life with professional apparel printing, quality materials, and personalized service.</p>
             <p className="hero-support">We print more than just tees. Outfit your team or build your brand with custom printed hoodies, crewneck sweatshirts, long sleeves, and premium garments.</p>
             <Link to="/request-quote" className="btn btn-primary mt-4">Quote Custom Apparel</Link>
           </div>

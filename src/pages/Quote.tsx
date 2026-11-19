@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import "../styles/Quote.css";
-import { submitInquiry } from "../lib/inquiries";
+import { MAX_ARTWORK_BYTES, submitInquiry } from "../lib/inquiries";
 
 type GtagWindow = Window & {
   gtag?: (...args: unknown[]) => void;
@@ -22,6 +22,7 @@ const trackEvent = (eventName: string, params: Record<string, unknown> = {}) => 
 export default function Quote() {
   const [searchParams] = useSearchParams();
   const initialService = searchParams.get("service") || "";
+  const occasion = searchParams.get("occasion") || "";
   const preselectedDesign = searchParams.get("design") || "";
   const preselectedDesignName = searchParams.get("designName") || "";
   const preselectedSize = searchParams.get("size") || "";
@@ -63,7 +64,11 @@ export default function Quote() {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [contactOrg, setContactOrg] = useState("");
-  const [contactNotes, setContactNotes] = useState(() => prefilledNoteParts.join(" | "));
+  const [garmentType, setGarmentType] = useState(preselectedVariant);
+  const [sizeBreakdown, setSizeBreakdown] = useState("");
+  const [garmentColors, setGarmentColors] = useState("");
+  const [contactNotes, setContactNotes] = useState("");
+  const [fileError, setFileError] = useState("");
 
   const handleNext = (currentStepName: string) => {
     trackEvent("quote_step_completed", { step, step_name: currentStepName });
@@ -74,15 +79,22 @@ export default function Quote() {
   const handlePrev = () => setStep(s => s - 1);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-      trackEvent("artwork_uploaded", { file_type: e.target.files[0].type });
+    const selectedFile = e.target.files?.[0] ?? null;
+    const allowedTypes = ["image/png", "image/jpeg", "application/pdf", "image/svg+xml"];
+    if (selectedFile && (!allowedTypes.includes(selectedFile.type) || selectedFile.size === 0 || selectedFile.size > MAX_ARTWORK_BYTES)) {
+      setFile(null);
+      e.target.value = "";
+      setFileError("Choose a PNG, JPG, PDF, or SVG file up to 2 MB, or email larger artwork to hello@printflowstudio.com.");
+      return;
     }
+    setFile(selectedFile);
+    setFileError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactName || !contactEmail) {
+    if (isSubmitting || step !== 7) return;
+    if (!contactName.trim() || !contactEmail.trim()) {
       setError("Please provide at least your name and email.");
       return;
     }
@@ -95,11 +107,21 @@ export default function Quote() {
       await submitInquiry({
         kind: 'quote', requestId: requestId.current,
         quantity, purpose, locations, artworkStatus, dateNeeded: date,
-        deliveryMethod: delivery, contactName, contactEmail, contactPhone,
-        contactOrg, notes: contactNotes, initialService, preselectedDesign,
+        deliveryMethod: delivery, contactName: contactName.trim(), contactEmail: contactEmail.trim(), contactPhone,
+        contactOrg,
+        notes: [
+          ...prefilledNoteParts,
+          occasion && `Occasion: ${occasion.slice(0, 120)}`,
+          garmentType.trim() && `Garment / format: ${garmentType.trim()}`,
+          sizeBreakdown.trim() && `Size breakdown: ${sizeBreakdown.trim()}`,
+          garmentColors.trim() && `Garment colors: ${garmentColors.trim()}`,
+          contactNotes.trim(),
+        ].filter(Boolean).join("\n"),
+        initialService, preselectedDesign,
         preselectedDesignName, preselectedSize, preselectedQty, preselectedVariant,
       }, file);
 
+      trackEvent("generate_lead", { method: "custom_quote" });
       trackEvent("quote_submitted", { method: "multi_step_form" });
       setSuccess(true);
       requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -115,7 +137,7 @@ export default function Quote() {
     return (
       <Layout>
         <SEO title="Quote Requested | PrintFlow Studio" description="Thank you for requesting a custom apparel quote from PrintFlow Studio." />
-        <main className="quote-page quote-success-page">
+        <div className="quote-page quote-success-page">
           <div className="container quote-container">
             <div className="quote-success-content">
               <h1>THANK YOU — WE&apos;VE GOT YOUR REQUEST.</h1>
@@ -126,7 +148,7 @@ export default function Quote() {
               </div>
             </div>
           </div>
-        </main>
+        </div>
       </Layout>
     );
   }
@@ -186,13 +208,14 @@ export default function Quote() {
 
             {artworkStatus && (
               <div className="quote-upload-section">
-                <label className="quote-label">Attach Artwork (PNG, JPG, PDF, SVG, up to 2 MB) — Optional</label>
-                <input type="file" accept=".png,.jpg,.jpeg,.pdf,.svg" onChange={handleFileChange} className="quote-file-input" />
+                <label className="quote-label" htmlFor="quote-artwork">Attach Artwork (PNG, JPG, PDF, SVG, up to 2 MB) — Optional</label>
+                <input id="quote-artwork" type="file" accept=".png,.jpg,.jpeg,.pdf,.svg" onChange={handleFileChange} className="quote-file-input" />
+                {fileError && <p className="quote-error" role="alert">{fileError}</p>}
                 {file && <p className="quote-file-name">Attached: {file.name}</p>}
                 <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: "8px" }}>
                   Unsure about file specs? See our <Link to="/file-guidelines" style={{ color: "var(--accent-color)" }}>Artwork Guidelines</Link>.
                 </p>
-                <button type="button" className="btn btn-primary mt-4" onClick={() => handleNext("artwork")}>Continue</button>
+                <button type="button" className="btn btn-primary mt-4" onClick={() => handleNext("artwork")} disabled={!!fileError}>Continue</button>
               </div>
             )}
           </div>
@@ -224,11 +247,14 @@ export default function Quote() {
           <div className="quote-step-content animate-fade-in">
             <h2>ALMOST DONE. WHO ARE WE TALKING TO?</h2>
             <div className="quote-form-grid">
-              <input type="text" placeholder="Name *" className="quote-input" value={contactName} onChange={e => setContactName(e.target.value)} required />
-              <input type="email" placeholder="Email Address *" className="quote-input" value={contactEmail} onChange={e => setContactEmail(e.target.value)} required />
-              <input type="tel" placeholder="Phone Number" className="quote-input" value={contactPhone} onChange={e => setContactPhone(e.target.value)} />
-              <input type="text" placeholder="Business / Organization (Optional)" className="quote-input" value={contactOrg} onChange={e => setContactOrg(e.target.value)} />
-              <textarea placeholder="Garment colors, size breakdown, or any additional details?" className="quote-input quote-textarea" value={contactNotes} onChange={e => setContactNotes(e.target.value)}></textarea>
+              <input type="text" aria-label="Name" autoComplete="name" maxLength={120} placeholder="Name *" className="quote-input" value={contactName} onChange={e => setContactName(e.target.value)} required />
+              <input type="email" aria-label="Email address" autoComplete="email" maxLength={254} placeholder="Email Address *" className="quote-input" value={contactEmail} onChange={e => setContactEmail(e.target.value)} required />
+              <input type="tel" aria-label="Phone number" autoComplete="tel" maxLength={40} placeholder="Phone Number" className="quote-input" value={contactPhone} onChange={e => setContactPhone(e.target.value)} />
+              <input type="text" aria-label="Business or organization" maxLength={120} placeholder="Business / Organization (Optional)" className="quote-input" value={contactOrg} onChange={e => setContactOrg(e.target.value)} />
+              <input type="text" aria-label="Garment type or transfer format" placeholder="Garment type or transfer format" className="quote-input" maxLength={120} value={garmentType} onChange={e => setGarmentType(e.target.value)} />
+              <input type="text" aria-label="Preferred garment colors" placeholder="Preferred garment colors" className="quote-input" maxLength={120} value={garmentColors} onChange={e => setGarmentColors(e.target.value)} />
+              <input type="text" aria-label="Size breakdown" placeholder="Size breakdown (e.g. 5 M, 8 L)" className="quote-input" maxLength={250} value={sizeBreakdown} onChange={e => setSizeBreakdown(e.target.value)} />
+              <textarea aria-label="Additional instructions" maxLength={1500} placeholder="Additional instructions" className="quote-input quote-textarea" value={contactNotes} onChange={e => setContactNotes(e.target.value)}></textarea>
             </div>
 
             {error && <p className="quote-error" role="alert">{error}</p>}
@@ -250,7 +276,7 @@ export default function Quote() {
         description="Request a custom quote for printed T-shirts, business apparel, group shirts, or DTF transfers from PrintFlow Studio in Chattanooga, TN."
         canonicalUrl="https://www.printflowstudio.com/request-quote"
       />
-      <main className="quote-page">
+      <div className="quote-page">
         <div className="container quote-container">
           <header className="quote-header">
             <h1>LET&apos;S MAKE YOUR SHIRT.</h1>
@@ -289,7 +315,7 @@ export default function Quote() {
             </button>
           )}
         </div>
-      </main>
+      </div>
     </Layout>
   );
 }
