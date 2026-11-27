@@ -8,6 +8,7 @@ import CustomOrderSection from '../components/storefront/CustomOrderSection';
 import StatementCTA from '../components/storefront/StatementCTA';
 import { PORTFOLIO_ITEMS } from '../data/portfolioItems';
 import '../styles/Home.css';
+import { useBlackFridayOffer } from '../lib/blackFriday';
 
 const portfolio = PORTFOLIO_ITEMS.filter(item => item.featuredOnHome).slice(0, 3);
 
@@ -18,6 +19,7 @@ const questions = [
 ];
 
 export default function Home() {
+    const showBlackFriday = useBlackFridayOffer();
     return (
         <Layout>
             <SEO
@@ -26,6 +28,18 @@ export default function Home() {
                 canonicalUrl="https://www.printflowstudio.com/"
             />
             <div className="pf-homepage">
+                {showBlackFriday && (
+                    <aside aria-label="Black Friday weekend offer" style={{ background: '#201814', color: '#fff7ed', padding: '16px clamp(16px, 5vw, 64px)', borderBottom: '2px solid #ecaa69', textAlign: 'center', lineHeight: 1.55 }}>
+                        <strong style={{ color: '#ffbf83' }}>Black Friday Weekend: $24.99 each</strong>
+                        <div>Pumpkin Sips Become Twinkle-Light Nights &amp; Autumn Bows Before Christmas Glows. Standard tees only. Tax and shipping extra where applicable.</div>
+                        <div>
+                            <Link to="/request-quote?promo=BLACKFRIDAY" style={{ color: '#ffbf83', textDecoration: 'underline', fontWeight: 700 }}>Request the deal</Link>
+                            {' · Use '}
+                            <strong>BLACKFRIDAY</strong>
+                            {' in Additional instructions. Ends Nov. 30 at 11:59 p.m. Eastern.'}
+                        </div>
+                    </aside>
+                )}
                 <ApparelHero />
                 <CategoryGrid />
                 <FeaturedProducts />

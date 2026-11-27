@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import SEO from "../components/SEO";
 import "../styles/Quote.css";
+import { useBlackFridayOffer } from "../lib/blackFriday";
 import { MAX_ARTWORK_BYTES, submitInquiry } from "../lib/inquiries";
 
 type GtagWindow = Window & {
@@ -21,6 +22,8 @@ const trackEvent = (eventName: string, params: Record<string, unknown> = {}) => 
 
 export default function Quote() {
   const [searchParams] = useSearchParams();
+  const showBlackFriday = useBlackFridayOffer();
+  const blackFridayLink = searchParams.get("promo") === "BLACKFRIDAY";
   const initialService = searchParams.get("service") || "";
   const occasion = searchParams.get("occasion") || "";
   const preselectedDesign = searchParams.get("design") || "";
@@ -116,6 +119,7 @@ export default function Quote() {
           sizeBreakdown.trim() && `Size breakdown: ${sizeBreakdown.trim()}`,
           garmentColors.trim() && `Garment colors: ${garmentColors.trim()}`,
           contactNotes.trim(),
+          showBlackFriday && blackFridayLink && !contactNotes.toUpperCase().includes("BLACKFRIDAY") && "Promo: BLACKFRIDAY",
         ].filter(Boolean).join("\n"),
         initialService, preselectedDesign,
         preselectedDesignName, preselectedSize, preselectedQty, preselectedVariant,
@@ -254,7 +258,8 @@ export default function Quote() {
               <input type="text" aria-label="Garment type or transfer format" placeholder="Garment type or transfer format" className="quote-input" maxLength={120} value={garmentType} onChange={e => setGarmentType(e.target.value)} />
               <input type="text" aria-label="Preferred garment colors" placeholder="Preferred garment colors" className="quote-input" maxLength={120} value={garmentColors} onChange={e => setGarmentColors(e.target.value)} />
               <input type="text" aria-label="Size breakdown" placeholder="Size breakdown (e.g. 5 M, 8 L)" className="quote-input" maxLength={250} value={sizeBreakdown} onChange={e => setSizeBreakdown(e.target.value)} />
-              <textarea aria-label="Additional instructions" maxLength={1500} placeholder="Additional instructions" className="quote-input quote-textarea" value={contactNotes} onChange={e => setContactNotes(e.target.value)}></textarea>
+              {showBlackFriday && <p id="quote-holiday-tip" className="quote-subtext">{blackFridayLink ? "BLACKFRIDAY is attached to this request. " : "For the holiday-tee offer, enter BLACKFRIDAY here. "}Include your tee design and size.</p>}
+              <textarea aria-describedby={showBlackFriday ? "quote-holiday-tip" : undefined} aria-label="Additional instructions" maxLength={1500} placeholder="Additional instructions" className="quote-input quote-textarea" value={contactNotes} onChange={e => setContactNotes(e.target.value)}></textarea>
             </div>
 
             {error && <p className="quote-error" role="alert">{error}</p>}
