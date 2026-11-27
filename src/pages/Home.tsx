@@ -38,6 +38,16 @@ export default function Home() {
                             <strong>BLACKFRIDAY</strong>
                             {' in Additional instructions. Ends Nov. 30 at 11:59 p.m. Eastern.'}
                         </div>
+                        <div style={{ maxWidth: '960px', margin: '12px auto 0', paddingTop: '12px', borderTop: '1px solid #695344' }}>
+                            <strong style={{ color: '#ffbf83' }}>Make It Yours: $5 off your custom tee order</strong>
+                            <div>Order 2 or more standard tees with print-ready art and one print location. Extras are regular price. Offers cannot be combined.</div>
+                            <div>
+                                <Link to="/request-quote?promo=CUSTOM5" style={{ color: '#ffbf83', textDecoration: 'underline', fontWeight: 700 }}>Request a custom quote</Link>
+                                {' · Use '}
+                                <strong>CUSTOM5</strong>
+                                {' in Additional instructions. Same Nov. 30 deadline.'}
+                            </div>
+                        </div>
                     </aside>
                 )}
                 <ApparelHero />
